@@ -84,7 +84,7 @@ function SignUp() {
         <div className="form p-4 bg-white d-flex flex-column align-items-center justify-content-center">
             <div className='link'>
             <Link to="/employee-signup" id="forgot" className="text-muted ">
-            Are you an employee?
+            Are you a candidate?
             </Link>
             </div>
         

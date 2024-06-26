@@ -88,7 +88,7 @@ function SignUp() {
             </Link>
             </div>
         
-          <h2 className="mb-3">Employee Signup</h2>
+          <h2 className="mb-3">Candidate Signup</h2>
           <img
             src="https://i.pinimg.com/236x/4d/a8/bb/4da8bb993057c69a85b9b6f2775c9df2.jpg"
             alt="profile"
