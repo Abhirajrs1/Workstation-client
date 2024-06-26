@@ -1,0 +1,69 @@
+.job-listing {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.job-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.company-name {
+    color: #4285f4;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.job-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.job-details {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.detail-item {
+    margin-right: 15px;
+}
+
+.job-description {
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.view-job-button {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.view-job-button:hover {
+    background-color: #3367d6;
+}

@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200..1000&display=swap');
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  font-family: 'Mulish', sans-serif;    
+
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col-md-6 {
+  width: 50%;
+  padding: 10px;
+}
+
+/* Job Listing Styles */
+.job-listing {
+  cursor: pointer;
+}
+
+.job-listing:hover {
+  background-color: #f8f9fa;
+}
+
+/* Job Details Styles */
+.job-details {
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.job-details p {
+  margin: 0 0 1rem;
+}
+
+.sticky-top {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 80px;
+}
+
+.job-details-container {
+  background-color: #fff;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* Job Card Styles */
+.job-card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.job-card:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.job-card.active {
+  border-color: #1e90ff;
+}
+
+.job-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.job-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.btn-more {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.company-name {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.job-location {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.job-salary {
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.easy-apply {
+  margin-bottom: 10px;
+}
+
+.easy-apply-tag {
+  background-color: #e6f3ff;
+  color: #0066cc;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.job-highlights {
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+
+.job-posted {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+/* Action Buttons Styles */
+.action-buttons {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  width: 500px;
+}
+
+.action-buttons .btn {
+  margin-right: 10px;
+}
+
+/* Profile Insights Styles */
+.profile-insights {
+  margin-top: 30px;
+}
+
+.skills-section {
+  margin-bottom: 15px;
+}
+
+.skill-tag {
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-right: 10px;
+  font-size: 0.9rem;
+}
+
+.experience-buttons {
+  margin-top: 10px;
+}
+
+.experience-buttons .btn {
+  margin-right: 10px;
+}
+
+.education-level {
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.external-link {
+  font-size: 0.8rem;
+  color: #1e90ff;
+}
+
+@media (max-width: 768px) {
+  .sticky-top {
+    position: static;
+  }
+  .col-md-6 {
+    width: 100%;
+  }
+}
