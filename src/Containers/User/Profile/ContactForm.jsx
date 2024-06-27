@@ -84,6 +84,7 @@ const ContactForm = () => {
           timer: 5000,
           position: 'top-center'
         });
+        navigate('/employee-profile')
         setUser(response.data.user)
         localStorage.setItem('user', JSON.stringify(response.data.user));
       }else{
