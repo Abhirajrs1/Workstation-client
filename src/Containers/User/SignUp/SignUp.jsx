@@ -4,6 +4,7 @@ import logo from '../../../assets/logo2.png';
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateSignupForm } from '../../../Utilis/helper.js';
+import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 import './SignUp.css';
 
 function SignUp() {
@@ -16,7 +17,6 @@ function SignUp() {
     const navigate=useNavigate()
 
     
-    axios.defaults.withCredentials=true
  
     const handleSubmit=async(e)=>{
      e.preventDefault()
@@ -29,7 +29,7 @@ function SignUp() {
     }
 
      try {
-     const response=await axios.post('http://localhost:3000/employee-signup',{username:username.trim(),email:email.trim(),password:password.trim()})
+     const response=await axiosInstance.post('/employee-signup',{username:username.trim(),email:email.trim(),password:password.trim()})
      if(response.data.success){
         localStorage.setItem("email",email)
         console.log(response.data);

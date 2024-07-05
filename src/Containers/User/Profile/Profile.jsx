@@ -12,8 +12,6 @@ function Profile() {
     const {user,loading,isAuthenticated}=useContext(AuthContext)
     const navigate=useNavigate()
 
-    axios.defaults.withCredentials=true
-
     useEffect(() => {
       if (!isAuthenticated && !loading) {
           navigate("/employee-login");

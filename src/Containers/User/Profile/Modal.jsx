@@ -2,11 +2,11 @@ import React, { useContext, useState } from 'react';
 import './Modal.css';
 import { AuthContext } from '../../../Context/UserContext';
 import axios from 'axios';
+import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 
 function Modal({ show, onClose, type }) {
     const { user,setUser } = useContext(AuthContext);
 
-    axios.defaults.withCredentials = true;
 
     const initialEducation={
       level:'',
@@ -43,12 +43,12 @@ function Modal({ show, onClose, type }) {
             let response;
             if (type === 'education') {
                 
-                response = await axios.post(`http://localhost:3000/employee-addQualification/education/${user.email}`, {
+                response = await axiosInstance.post(`/employee-addQualification/education/${user.email}`, {
                     education
                 });
                 setEducation(initialEducation)
             } else if (type === 'skill') {
-                response = await axios.post(`http://localhost:3000/employee-addQualification/skill/${user.email}`, {
+                response = await axiosInstance.post(`/employee-addQualification/skill/${user.email}`, {
                     skill
                 });
                 setSkill(initialSkill)

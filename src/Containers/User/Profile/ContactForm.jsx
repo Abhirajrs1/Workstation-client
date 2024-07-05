@@ -4,6 +4,7 @@ import Navigation from '../../../Components/Navigation';
 import { AuthContext } from '../../../Context/UserContext';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 import { useNavigate } from 'react-router-dom';
 
 const ContactForm = () => {
@@ -71,7 +72,7 @@ const ContactForm = () => {
         contact:formData.contact,
         useraddress:[formData.useraddress]
       }
-      const response=await axios.put(`http://localhost:3000/employee-updateContact/${user.email}`,{updatedUserContact},{
+      const response=await axiosInstance.put(`/employee-updateContact/${user.email}`,{updatedUserContact},{
         headers:{
           'Authorization':`Bearer ${localStorage.getItem('token')}`
         }
