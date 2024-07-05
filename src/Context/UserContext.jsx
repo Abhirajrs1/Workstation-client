@@ -76,7 +76,7 @@ function UserContext({children}) {
 
            const logout=async()=>{
             try {
-                const response=await axios.get('/employee-logout')
+                const response=await axiosInstance.get('/employee-logout')
                 if(response.data.success){
                     setUser(null)
                     localStorage.removeItem('token')
