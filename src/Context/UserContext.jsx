@@ -1,6 +1,7 @@
 import axios from "axios";
 import React,{ useState,createContext, useEffect } from "react";
 import Swal from 'sweetalert2';
+import axiosInstance from "../Services/Interceptor/candidateInterceptor.js";
 export const AuthContext=createContext()
 
 
@@ -15,11 +16,7 @@ function UserContext({children}) {
             const token=localStorage.getItem('token')
             if(token){
                 try {
-                    const response=await axios.get('http://localhost:3000/verify',{
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
+                    const response=await axiosInstance.get('/verify')
                     if(response.data.success){
                         setUser(JSON.parse(localStorage.getItem('user')))
                     }else{
@@ -39,7 +36,7 @@ function UserContext({children}) {
 
      const login=async(email,password)=>{
              try {     
-                const response = await axios.post('http://localhost:3000/employee-login', { email, password});
+                const response = await axiosInstance.post('/employee-login', { email, password});
                 if(response.data.success){
                     setUser(response.data.user)
                     console.log(response.data.user);
@@ -81,7 +78,7 @@ function UserContext({children}) {
 
            const logout=async()=>{
             try {
-                const response=await axios.get('http://localhost:3000/employee-logout')
+                const response=await axios.get('/employee-logout')
                 if(response.data.success){
                     setUser(null)
                     localStorage.removeItem('token')
