@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 
 const axiosInstance=axios.create({
-    baseURL:process.env.CANDIDATE_BASE_URL,
+    baseURL:import.meta.env.CANDIDATE_BASE_URL,
     withCredentials:true
 })
 
