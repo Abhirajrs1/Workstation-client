@@ -1,6 +1,6 @@
 import axios from "axios";
-import dotenv from 'dotenv'
-dotenv.config()
+import Swal from 'sweetalert2';
+
 
 
 
@@ -37,7 +37,7 @@ axiosInstance.interceptors.response.use(
               }).then(() => {
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
-                window.location.href = '/employee-login';
+                window.location.href = '/employee-login'; 
               });
         }else{
             return Promise.reject(error)
