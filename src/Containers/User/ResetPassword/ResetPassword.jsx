@@ -27,7 +27,7 @@ function ResetPassword() {
     }
 
        try {
-         const response=await axiosInstance.post(`/employee-resetPassword/${token}`,{password:password.trim()})
+         const response=await axios.post(`http://localhost:3000/employee-resetPassword/${token}`,{password:password.trim()})
          if(response.data.success){
             console.log(response.data);
             Swal.fire({

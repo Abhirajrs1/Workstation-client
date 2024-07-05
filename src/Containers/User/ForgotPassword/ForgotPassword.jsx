@@ -16,7 +16,7 @@ function ForgotPassword() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const response = await axiosInstance.post('/employee-forgotPassword', { email });
+      const response = await axios.post('http://localhost:3000/employee-forgotPassword', { email });
       if (response.data.success) {
         Swal.fire({
           title: 'Success!',
