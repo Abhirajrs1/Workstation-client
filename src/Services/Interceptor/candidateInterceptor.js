@@ -2,10 +2,8 @@ import axios from "axios";
 import Swal from 'sweetalert2';
 
 
-
-
 const axiosInstance=axios.create({
-    baseURL:import.meta.env.CANDIDATE_BASE_URL,
+    baseURL:import.meta.env.VITE_CANDIDATE_BASE_URL,
     withCredentials:true
 })
 

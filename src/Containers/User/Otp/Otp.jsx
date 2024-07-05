@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 import './Otp.css';
 
 const Otp = () => {
@@ -39,7 +40,7 @@ const Otp = () => {
 
   const handleResend = async () => {
     try {
-      await axios.post('http://localhost:3000/employee-resentOtp', { email });
+      await axiosInstance.post('/employee-resentOtp', { email });
       setTimer(300);
       setShowResend(false);
       setError('');
@@ -72,7 +73,7 @@ const Otp = () => {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:3000/employee-verifyOtp', {
+      const response = await axiosInstance.post('/employee-verifyOtp', {
         email,
         otp: enteredOtp,
       });

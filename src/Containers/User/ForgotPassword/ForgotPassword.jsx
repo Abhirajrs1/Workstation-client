@@ -4,19 +4,19 @@ import { useNavigate,Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './ForgotPassword.css'; 
 import logo from '../../../assets/logo3.png'
+import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
    
-  axios.defaults.withCredentials = true;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const response = await axios.post('http://localhost:3000/employee-forgotPassword', { email });
+      const response = await axiosInstance.post('/employee-forgotPassword', { email });
       if (response.data.success) {
         Swal.fire({
           title: 'Success!',
