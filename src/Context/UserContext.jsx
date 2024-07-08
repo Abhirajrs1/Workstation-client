@@ -9,6 +9,9 @@ function UserContext({children}) {
      const [user,setUser]=useState(JSON.parse(localStorage.getItem('user')) || null);
      const [loading,setLoading]=useState(true)
 
+
+     axios.defaults.withCredentials = true;
+
      useEffect(()=>{
          const checkAuthenticated=async()=>{
             const token=localStorage.getItem('token')
@@ -102,7 +105,7 @@ function UserContext({children}) {
            }
            const handleGoogleCallback = async () => {
             try {
-              const response = await axiosInstance.get('/auth/google/callback');
+              const response = await axios.get('http:localhost:3000/auth/google/callback');
               if (response.data.success) {
                 console.log(response.data);
                 setUser(response.data.user);
@@ -115,6 +118,7 @@ function UserContext({children}) {
                   timer: 5000,
                   position: 'top-center',
                 });
+                window.location.href = '/'
                 return true;
               } else {
                 Swal.fire({
