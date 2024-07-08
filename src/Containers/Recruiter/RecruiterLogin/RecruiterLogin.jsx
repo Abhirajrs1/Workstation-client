@@ -14,7 +14,6 @@ function Login() {
   const navigate = useNavigate();
 const {RecruiterLogin}=useContext(RecruiterAuth)
 
-  axios.defaults.withCredentials = true;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

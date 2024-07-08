@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import logo from '../../assets/logo3.png'
 import '../User/ResetPassword/ResetPassword.css'
 import { validateResetPassword } from '../../Utilis/helper.js';
-
+import axiosInstance from '../../Services/Interceptor/recruiterInterceptor.js';
 function ResetPassword() {
 
     const[password,setPassword]=useState('')
@@ -27,7 +27,7 @@ function ResetPassword() {
     }
 
        try {
-         const response=await axios.post(`http://localhost:3000/recruiter-resetPassword/${token}`,{password:password.trim()})
+         const response=await axiosInstance.post(`/recruiter-resetPassword/${token}`,{password:password.trim()})
          if(response.data.success){
             console.log(response.data);
             Swal.fire({

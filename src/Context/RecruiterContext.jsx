@@ -1,6 +1,7 @@
-import React, { Children, createContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import Swal from 'sweetalert2';
+import axiosInstance from '../Services/Interceptor/recruiterInterceptor.js';
 
 
 export const RecruiterAuth=createContext()
@@ -17,11 +18,7 @@ function RecruiterContext({children}) {
             const token=localStorage.getItem('recruitertoken')
             if(token){
                 try {
-                    const response=await axios.get('http://localhost:3000/recruiter-verify',{
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
+                    const response=await axiosInstance.get('/recruiter-verify')
                     if(response.data.success){
                         setRecruiter(JSON.parse(localStorage.getItem('recruiter')))
                     }else{
@@ -41,7 +38,7 @@ function RecruiterContext({children}) {
 
     const RecruiterLogin=async(email,password)=>{
         try {
-            const response = await axios.post('http://localhost:3000/recruiter-login', { email, password});
+            const response = await axiosInstance.post('/recruiter-login', { email, password});
         if(response.data.success){
             console.log(response.data.recruiter);
             setRecruiter(response.data.recruiter)
@@ -82,7 +79,7 @@ function RecruiterContext({children}) {
     }
     const RecruiterLogout=async()=>{
         try {
-            const response=await axios.get('http://localhost:3000/recruiter-logout')
+            const response=await axiosInstance.get('/recruiter-logout')
                 if(response.data.success){
                     setRecruiter(null)
                     localStorage.removeItem('recruitertoken')

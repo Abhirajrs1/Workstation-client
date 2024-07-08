@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../User/Otp/Otp.css';
+import axiosInstance from '../../Services/Interceptor/recruiterInterceptor.js';
 
 const RecruiterOtp = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const RecruiterOtp = () => {
 
   const handleResend = async () => {
     try {
-      await axios.post('http://localhost:3000/recruiter-resentOtp', { email });
+      await axiosInstance.post('/recruiter-resentOtp', { email });
       setTimer(300);
       setShowResend(false);
       setError('');
@@ -71,7 +72,7 @@ const RecruiterOtp = () => {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:3000/recruiter-verifyOtp', {
+      const response = await axiosInstance.post('/recruiter-verifyOtp', {
         email,
         otp: enteredOtp,
       });

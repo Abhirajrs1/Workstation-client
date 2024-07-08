@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateRecruiterSignupForm } from '../../../Utilis/helper.js';
 import './RecruiterSignup.css';
+import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
 
 function SignUp() {
     const [recruitername,setRecruitername]=useState('')
@@ -16,7 +17,6 @@ function SignUp() {
     const navigate=useNavigate()
 
     
-    axios.defaults.withCredentials=true
  
     const handleSubmit=async(e)=>{
      e.preventDefault()
@@ -29,7 +29,7 @@ function SignUp() {
     }
 
      try {
-     const response=await axios.post('http://localhost:3000/recruiter-signup',{recruitername:recruitername.trim(),email:email.trim(),password:password.trim()})
+     const response=await axiosInstance.post('/recruiter-signup',{recruitername:recruitername.trim(),email:email.trim(),password:password.trim()})
      if(response.data.success){
         localStorage.setItem("recruiteremail",email)
         console.log(response.data);
