@@ -4,19 +4,18 @@ import SideNav from '../../../Components/SideNav';
 import ReNavigation from '../../../Components/ReNavigation';
 import axios from 'axios';
 import { RecruiterAuth } from '../../../Context/RecruiterContext';
+import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
 
 function JobListing() {
     const [jobs, setJobs] = useState([]);
     const {recruiter}=useContext(RecruiterAuth)
 
-    axios.defaults.withCredentials = true;
 
     useEffect(() => {
         const fetchJobs = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/recruiter-showJobs/${recruiter._id}`);
+                const response = await axiosInstance.get(`/recruiter-showJobs/${recruiter._id}`);
                 if (response.data.success) {
-                    // console.log(response.data);
                     console.log(response.data.jobs);
                     setJobs(response.data.jobs);
                 } else {

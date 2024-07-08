@@ -4,7 +4,7 @@ import axios from 'axios'
 import ReNavigation from '../../../Components/ReNavigation';
 import Swal from 'sweetalert2';
 import SideNav from '../../../Components/SideNav';
-
+import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
 function JobPosting() {
     const[formData,setFormData]=useState({
         jobTitle:'',
@@ -39,7 +39,7 @@ function JobPosting() {
     const handleSubmit=async(e)=>{
         e.preventDefault()
         try {
-            const response=await axios.post('http://localhost:3000/recruiter-postJob',formData)
+            const response=await axiosInstance.post('/recruiter-postJob',formData)
             if (response.data.success) {
                 console.log(response.data);
                 Swal.fire({

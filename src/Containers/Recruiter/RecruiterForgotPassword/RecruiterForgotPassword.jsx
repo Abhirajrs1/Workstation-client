@@ -4,6 +4,7 @@ import { useNavigate,Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './RecruiterForgotPassword.css'; 
 import logo from '../../../assets/logo3.png'
+import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ function ForgotPassword() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const response = await axios.post('http://localhost:3000/recruiter-forgotPassword', { email });
+      const response = await axiosInstance.post('/recruiter-forgotPassword', { email });
       if (response.data.success) {
         Swal.fire({
           title: 'Success!',
