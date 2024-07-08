@@ -102,16 +102,12 @@ function UserContext({children}) {
            }
            const handleGoogleCallback = async () => {
             try {
-              const urlParams = new URLSearchParams(window.location.search);
-              const token = urlParams.get('token');
-              const userString = urlParams.get('user');
-              const user = JSON.parse(userString);
-      
-              if (token) {
-                  // Save token and user data to localStorage
-                  localStorage.setItem('token', token);
-                  localStorage.setItem('user', JSON.stringify(user));
-                  setUser(user);
+              const response = await axiosInstance.get('/auth/google/callback');
+              if (response.data.success) {
+                console.log(response.data);
+                setUser(response.data.user);
+                localStorage.setItem('token', response.data.token);  // Store the token
+                localStorage.setItem('user', JSON.stringify(response.data.user));  // Store the user
                 Swal.fire({
                   title: 'Success!',
                   text: 'Google authentication successful',
@@ -142,7 +138,7 @@ function UserContext({children}) {
               return false;
             }
           };
-        
+          
         
   return (
     <div>
