@@ -44,16 +44,10 @@ function Home() {
                   </div>
                   <p className="company-name">{job.companyName}</p>
                   <p className="job-location">{job.jobLocation}</p>
-                  {job.minPrice && job.maxPrice && (
-                    <p className="job-salary">₹{job.minPrice} - ₹{job.maxPrice} a month</p>
-                  )}
                   <div className="easy-apply">
                     <span className="easy-apply-tag">🚀 Easily apply</span>
                   </div>
-                  <ul className="job-highlights">
-                    <p>{job.description}</p>
-                  </ul>
-                  <p className="job-posted">Active 3 days ago</p>
+                  <p className="job-posted">Posted on {job.jobPostedOn}</p>
                 </div>
               ))}
             </div>
@@ -103,20 +97,8 @@ function Home() {
                         <span key={index} className="skill-tag">{skill}</span>
                       ))}
                     </div>
-                    <p>Do you have experience in {selectedJob.skills.join(', ')}?</p>
-                    <div className="experience-buttons">
-                      <button className="btn btn-outline-primary">Yes</button>
-                      <button className="btn btn-outline-primary">No</button>
-                      <button className="btn btn-outline-primary">Skip</button>
-                    </div>
                     <h6>Education</h6>
                     <p className="education-level">Bachelor's degree</p>
-                    <p>Do you have a Bachelor's degree?</p>
-                    <div className="experience-buttons">
-                      <button className="btn btn-outline-primary">Yes</button>
-                      <button className="btn btn-outline-primary">No</button>
-                      <button className="btn btn-outline-primary">Skip</button>
-                    </div>
                   </div>
                 </div>
               ) : (
