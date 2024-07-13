@@ -4,6 +4,8 @@ import logo from '../../../Assets/logo2.png'
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateLoginForm } from '../../../Utilis/helper.js';
+import { AdminAuth } from '../../../Context/AdminContext.jsx';
+
 
 function AdminLogin() {
     const [email, setEmail] = useState('');
@@ -32,7 +34,7 @@ function AdminLogin() {
           position: 'top-center',
         }).then((result) => {
           if (result.isConfirmed) {
-            navigate('/recruiter-home');
+            navigate('/admin-home');
           }
         });
       } else {
@@ -53,7 +55,7 @@ function AdminLogin() {
             </Link>
             </div>
         
-          <h2 className="mb-3">Recruiter Login</h2>
+          <h2 className="mb-3">Admin Login</h2>
           <img
             src="https://i.pinimg.com/236x/4d/a8/bb/4da8bb993057c69a85b9b6f2775c9df2.jpg"
             alt="profile"
