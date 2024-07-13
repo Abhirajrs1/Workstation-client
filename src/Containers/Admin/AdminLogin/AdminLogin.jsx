@@ -4,7 +4,6 @@ import logo from '../../../Assets/logo2.png'
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateLoginForm } from '../../../Utilis/helper.js';
-import './RecruiterLogin.css';
 
 function AdminLogin() {
   return (
