@@ -23,6 +23,7 @@ import JobListing from "../Containers/Recruiter/JobListing/JobListing";
 import AdminLogin from "../Containers/Admin/AdminLogin/AdminLogin";
 import AdminContext from "../Context/AdminContext";
 import AdminHome from "../Containers/Admin/AdminHome/AdminHome";
+import Test from "../Components/Test";
 
 function Api() {
   return (
@@ -56,6 +57,8 @@ function Api() {
 
             <Route path="/admin-login" element={<AdminLogin/>}/>
             <Route path="/admin-home" element={<AdminHome/>}/>
+
+            <Route path="/test" element={<Test/>}/>
 
 
             <Route path="*" element={<PageNotFound/>}/>
