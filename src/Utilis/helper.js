@@ -1,6 +1,12 @@
 
 //Employee login form validation
-export const validateLoginForm = (email, password) => {
+export const  
+
+
+
+
+
+validateLoginForm = (email, password) => {
     const errors = {};
   
     if (!email) {
