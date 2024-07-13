@@ -21,12 +21,14 @@ import PageNotFound from "../Components/PageNotFound";
 import JobPosting from "../Containers/Recruiter/JobPosting/JobPosting";
 import JobListing from "../Containers/Recruiter/JobListing/JobListing";
 import AdminLogin from "../Containers/Admin/AdminLogin/AdminLogin";
+import AdminContext from "../Context/AdminContext";
 
 function Api() {
   return (
     <>
     <UserContext>
       <RecruiterContext>
+        <AdminContext>
       <Router>
         <Routes>
 
@@ -57,6 +59,7 @@ function Api() {
             <Route path="*" element={<PageNotFound/>}/>
         </Routes>
       </Router>
+      </AdminContext>
       </RecruiterContext>
       </UserContext>
     </>
