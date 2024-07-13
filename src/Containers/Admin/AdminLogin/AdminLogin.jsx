@@ -10,7 +10,7 @@ function AdminLogin() {
     const [password, setPassword] = useState('');
     const [errors,setErrors]=useState({})
     const navigate = useNavigate();
-  const {RecruiterLogin}=useContext(RecruiterAuth)
+  const {AdminLogin}=useContext(AdminAuth)
   
     axios.defaults.withCredentials = true;
   
@@ -22,7 +22,7 @@ function AdminLogin() {
       if (Object.keys(errors).length > 0) {
         return;
       }
-      const success=await RecruiterLogin(email,password)
+      const success=await AdminLogin(email,password)
       if (success) {
         Swal.fire({
           title: 'Success!',
