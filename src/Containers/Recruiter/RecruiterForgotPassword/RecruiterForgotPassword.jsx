@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate,Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './RecruiterForgotPassword.css'; 
-import logo from '../../../assets/logo3.png'
+import logo from '../../../Assets/logo3.png'
 import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
 
 function ForgotPassword() {

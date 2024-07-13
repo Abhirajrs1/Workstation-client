@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2';
-import logo from '../../assets/logo3.png'
+import logo from '../../Assets/logo3.png'
 import '../User/ResetPassword/ResetPassword.css'
 import { validateResetPassword } from '../../Utilis/helper.js';
 import axiosInstance from '../../Services/Interceptor/recruiterInterceptor.js';
