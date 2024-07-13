@@ -6,6 +6,40 @@ import { Link, useNavigate } from 'react-router-dom';
 import { validateLoginForm } from '../../../Utilis/helper.js';
 
 function AdminLogin() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [errors,setErrors]=useState({})
+    const navigate = useNavigate();
+  const {RecruiterLogin}=useContext(RecruiterAuth)
+  
+    axios.defaults.withCredentials = true;
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const errors = validateLoginForm(email, password);
+      setErrors(errors)
+  
+      if (Object.keys(errors).length > 0) {
+        return;
+      }
+      const success=await RecruiterLogin(email,password)
+      if (success) {
+        Swal.fire({
+          title: 'Success!',
+          text: "Recruiter login successfully",
+          icon: 'success',
+          timer: 5000,
+          position: 'top-center',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate('/recruiter-home');
+          }
+        });
+      } else {
+          setEmail("") 
+          setPassword("")     
+      }
+    };
   return (
     <div className="recruiterlogin-container d-flex align-items-center justify-content-center ">
       <div className="d-flex">
