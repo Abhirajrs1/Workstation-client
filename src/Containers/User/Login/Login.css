@@ -6,7 +6,7 @@
   justify-content: center;
   height: 100vh;
   min-width: 100%;
-  background: url("../../../assets/front.jpeg") no-repeat center center;
+  background: url("../../../Assets/front.jpeg") no-repeat center center;
   background-size: cover; 
   font-family: 'Mulish', sans-serif;    
   backdrop-filter: blur(7px);
