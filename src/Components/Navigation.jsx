@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Navbar, Nav, Container,Dropdown } from 'react-bootstrap';
 import { FaEnvelope, FaBell, FaUser } from 'react-icons/fa';
-import logo from '../assets/logo2.png';
+import logo from '../Assets/logo2.png';
 import { AuthContext } from '../Context/UserContext';
 
 import './Navigation.css'; 
