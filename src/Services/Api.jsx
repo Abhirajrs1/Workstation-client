@@ -20,6 +20,7 @@ import RecruiterContext from "../Context/RecruiterContext";
 import PageNotFound from "../Components/PageNotFound";
 import JobPosting from "../Containers/Recruiter/JobPosting/JobPosting";
 import JobListing from "../Containers/Recruiter/JobListing/JobListing";
+import AdminLogin from "../Containers/Admin/AdminLogin/AdminLogin";
 
 function Api() {
   return (
@@ -49,6 +50,8 @@ function Api() {
             <Route path="/recruiter-resetPassword/:token" element={<RecruiterResetPassword/>}/>
             <Route path='/recruiter-postJob' element={<JobPosting/>}/>
             <Route path="/recruiter-listJob" element={<JobListing/>}/>
+
+            <Route path="/admin-login" element={<AdminLogin/>}/>
 
 
             <Route path="*" element={<PageNotFound/>}/>
