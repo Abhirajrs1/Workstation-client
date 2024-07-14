@@ -28,7 +28,7 @@ function AdminLogin() {
       if (success) {
         Swal.fire({
           title: 'Success!',
-          text: "Recruiter login successfully",
+          text: "Admin login successfully",
           icon: 'success',
           timer: 5000,
           position: 'top-center',

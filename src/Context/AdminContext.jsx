@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { createContext, useEffect, useState } from 'react'
-import axiosInstance from '../Services/Interceptor/adminInterceptor.js'
+// import axiosInstance from '../Services/Interceptor/adminInterceptor.js'
+import Swal from 'sweetalert2';
 export const AdminAuth = createContext()
 
 function AdminContext({ children }) {
@@ -40,7 +41,6 @@ function AdminContext({ children }) {
     try {
       const response = await axiosInstance.post('/admin-login', { email, password });
       if (response.data.success) {
-        console.log(response.data.recruiter);
         setAdmin(response.data.admin)
         localStorage.setItem('admintoken', response.data.token)
         localStorage.setItem('admin', JSON.stringify(response.data.admin));

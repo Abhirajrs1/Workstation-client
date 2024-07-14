@@ -4,7 +4,9 @@ import { useNavigate,Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './RecruiterForgotPassword.css'; 
 import logo from '../../../Assets/logo3.png'
-import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
+<<<<<<< HEAD
+=======
+>>>>>>> admin
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');

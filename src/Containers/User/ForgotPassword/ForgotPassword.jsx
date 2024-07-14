@@ -4,7 +4,10 @@ import { useNavigate,Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './ForgotPassword.css'; 
 import logo from '../../../Assets/logo3.png'
+<<<<<<< HEAD
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
+=======
+>>>>>>> admin
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
