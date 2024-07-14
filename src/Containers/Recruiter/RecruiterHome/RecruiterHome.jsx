@@ -4,7 +4,7 @@ import SideNav from '../../../Components/SideNav'
 import './RecruiterHome.css'
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { RecruiterAuth } from '../../../Context/RecruiterContext';
-import employee from '../../../assets/employee.jpg'
+import employee from '../../../Assets/employee.jpg'
 import { useNavigate } from 'react-router-dom';
 
 function RecruiterHome() {

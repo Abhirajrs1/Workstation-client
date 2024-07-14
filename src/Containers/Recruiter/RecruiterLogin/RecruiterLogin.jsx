@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
-import logo from '../../../assets/logo2.png'
+import logo from '../../../Assets/logo2.png'
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateLoginForm } from '../../../Utilis/helper.js';
