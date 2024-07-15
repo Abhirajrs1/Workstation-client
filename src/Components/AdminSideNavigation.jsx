@@ -19,7 +19,7 @@ function AdminSideNavigation() {
         </Link>
       </Nav.Item>
       <Nav.Item className="side-nav-item">
-        <Link to="/candidates">
+        <Link to="/admin-candidates">
           <FaUsers /> Candidates
         </Link>
       </Nav.Item>
