@@ -8,17 +8,15 @@ function AdminContext({ children }) {
   const [admin, setAdmin] = useState(JSON.parse(localStorage.getItem('admin')) || null)
   const [loading, setLoading] = useState(true)
 
+  axios.defaults.withCredentials=true
+
 
   useEffect(() => {
     const checkAuthenticated = async () => {
       const token = localStorage.getItem('admintoken')
       if (token) {
         try {
-          const response = await axiosInstance.get('/admin-verify', {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          })
+          const response = await axiosInstance.get('/admin-verify')
           if (response.data.success) {
             setAdmin(JSON.parse(localStorage.getItem('admin')))
           } else {
@@ -41,6 +39,7 @@ function AdminContext({ children }) {
     try {
       const response = await axiosInstance.post('/admin-login', { email, password });
       if (response.data.success) {
+        console.log(response.data);
         setAdmin(response.data.admin)
         localStorage.setItem('admintoken', response.data.token)
         localStorage.setItem('admin', JSON.stringify(response.data.admin));
