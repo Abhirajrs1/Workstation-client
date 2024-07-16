@@ -23,8 +23,9 @@ import JobListing from "../Containers/Recruiter/JobListing/JobListing";
 import AdminLogin from "../Containers/Admin/AdminLogin/AdminLogin";
 import AdminContext from "../Context/AdminContext";
 import AdminHome from "../Containers/Admin/AdminHome/AdminHome";
-import Test from "../Components/Test";
 import Candidates from "../Containers/Admin/AdminCandidates/Candidates";
+import Recruiters from "../Containers/Admin/AdminRecruiters/Recruiters";
+import JobApplication from "../Containers/User/JobApplication/JobApplication";
 
 function Api() {
   return (
@@ -44,6 +45,7 @@ function Api() {
             <Route path="/employee-profile" element={<Profile/>}/>
             <Route path="/employee-profile/editcontact" element={<ContactForm/>}/>
             <Route path="/employee-profile/qualifications" element={<Qualifications/>}/>
+            <Route path="/employee-jobApplication" element={<JobApplication/>}/>
 
             
 
@@ -56,11 +58,13 @@ function Api() {
             <Route path='/recruiter-postJob' element={<JobPosting/>}/>
             <Route path="/recruiter-listJob" element={<JobListing/>}/>
 
+
+
             <Route path="/admin-login" element={<AdminLogin/>}/>
             <Route path="/admin-home" element={<AdminHome/>}/>
             <Route path="/admin-candidates" element={<Candidates/>}/>
+            <Route path="/admin-recruiters" element={<Recruiters/>}/>
 
-            <Route path="/test" element={<Test/>}/>
 
 
             <Route path="*" element={<PageNotFound/>}/>

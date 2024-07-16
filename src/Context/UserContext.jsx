@@ -9,9 +9,6 @@ function UserContext({children}) {
      const [user,setUser]=useState(JSON.parse(localStorage.getItem('user')) || null);
      const [loading,setLoading]=useState(true)
 
-
-     axios.defaults.withCredentials = true;
-
      useEffect(()=>{
          const checkAuthenticated=async()=>{
             const token=localStorage.getItem('token')

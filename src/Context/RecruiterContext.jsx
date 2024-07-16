@@ -11,8 +11,6 @@ function RecruiterContext({children}) {
     const[recruiter,setRecruiter]=useState(JSON.parse(localStorage.getItem('recruiter')) || null)
     const[loading,setLoading]=useState(true)
 
-    axios.defaults.withCredentials=true
-
     useEffect(()=>{
         const checkAuthenticated=async()=>{
             const token=localStorage.getItem('recruitertoken')

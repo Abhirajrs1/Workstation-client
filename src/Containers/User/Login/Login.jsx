@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import logo from '../../../Assets/logo2.png';
 import Swal from 'sweetalert2';
@@ -13,10 +13,14 @@ function Login() {
   const [password, setPassword] = useState('');
   const [errors,setErrors]=useState({})
   const navigate = useNavigate();
-  const {login,handleGoogleCallback} =useContext(AuthContext)
+  const {login,handleGoogleCallback,user} =useContext(AuthContext)
 
-  axios.defaults.withCredentials = true;
 
+  useEffect(()=>{
+    if(user){
+      navigate('/')
+    }
+  },[user,navigate])
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = validateLoginForm(email, password);
@@ -92,8 +96,8 @@ function Login() {
             <button type="submit" className="btn btn-primary mb-3 w-100">
               Sign In
             </button>
-
-          </form>
+            <Link to="/admin-login" className="text-muted text-center mb-3 d-block">Is Admin?</Link> 
+            </form>      
           <button onClick={handleGoogle} type="button" className="google-btn w-75 mb-3">
             <img src={google} alt="Google logo" className="google-logo" />
           </button>

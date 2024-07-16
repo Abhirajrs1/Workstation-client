@@ -38,13 +38,6 @@ function AdminNavigation() {
                             <FaEnvelope />
                             <span className="ms-1">Messages</span>
                         </Nav.Link>
-                        <NavDropdown
-                            title={<span className="text-dark">{admin.email}<FaCaretDown className="ms-1" /></span>}
-                            id="userDropdown"
-                            align="end"
-                        >
-                            <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item>
-                        </NavDropdown>
                         <Nav.Link onClick={handleLogout} className="text-dark me-3">
                             <FaSignOutAlt />
                             <span className="ms-1">Logout</span>

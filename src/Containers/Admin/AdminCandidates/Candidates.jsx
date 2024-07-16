@@ -1,68 +1,93 @@
-
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/adminInterceptor';
-import './Candidates.css'
+import './Candidates.css';
+import AdminSideNavigation from '../../../Components/AdminSideNavigation';
+import AdminNavigation from '../../../Components/AdminNavigation';
+import { AdminAuth } from '../../../Context/AdminContext';
+import { useNavigate } from 'react-router-dom';
+
 function Candidates() {
-    const [candidates,setCandidates]=useState([])
-    useEffect(()=>{
-        const fetchCandidates=async()=>{
+    const {Authenticated,loading}=useContext(AdminAuth)
+    const navigate=useNavigate()
+    const [candidates, setCandidates] = useState([]);
+
+
+    useEffect(() => {
+        const fetchCandidates = async () => {
             try {
-                const response=await axiosInstance.get('/admin-candidates')
-                setCandidates(response.data.candidates)
+                const response = await axiosInstance.get('/admin-candidates');
+                if (response.data.success) {
+                    setCandidates(response.data.candidates);
+                }
             } catch (error) {
                 console.error('Error fetching candidates:', error);
             }
+        };
+        fetchCandidates();
+    }, []);
+
+    useEffect(()=>{
+        if(!Authenticated && !loading){
+          navigate('/admin-login')
         }
-        fetchCandidates()
-    },[])
+      },[Authenticated,navigate,loading])
+
     const toggleBlockStatus = async (id) => {
         try {
-            const candidate = candidates.find(c => c.id === id);
-            const updatedStatus = !candidate.blocked;
-            await axios.put(`/admin-candidates/${id}/block`, { blocked: updatedStatus });
-
-            // Update the state with the new status
-            setCandidates(candidates.map(c => 
-                c.id === id ? { ...c, blocked: updatedStatus } : c
-            ));
+            const response = await axiosInstance.put(`/admin-candidates/${id}/block`);
+            if (response.data.success) {
+                setCandidates(candidates.map(c =>
+                    c._id === id ? { ...c, block: response.data.block } : c
+                ));
+            }
         } catch (error) {
             console.error('Error updating block status:', error);
         }
     };
 
-  return (
-    <div className="admin-panel">
-      <h1>User Management</h1>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Sl. No</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {candidates.map((candidate, index) => (
-            <tr key={user.id}>
-              <td>{index + 1}</td>
-              <td>{candidate.name}</td>
-              <td>{candidate.email}</td>
-              <td>
-                <Button
-                  variant={candidate.blocked ? 'success' : 'danger'}
-                  onClick={() => toggleBlockStatus(user.id)}
-                >
-                  {candidate.blocked ? 'Unblock' : 'Block'}
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </div>
-  )
+    return (
+        <>
+            <AdminSideNavigation />
+            <AdminNavigation />
+            <div className="admin-panel">
+                <div className="content-wrapper">
+                    <div className="user-management-header">
+                        <h1>Candidate Management</h1>
+                    </div>
+                    <div className="user-management-section">
+                        <Table striped bordered hover>
+                            <thead>
+                                <tr>
+                                    <th>Sl. No</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {candidates.map((candidate, index) => (
+                                    <tr key={candidate._id}>
+                                        <td>{index + 1}</td>
+                                        <td>{candidate.username}</td>
+                                        <td>{candidate.email}</td>
+                                        <td>
+                                            <Button
+                                                variant={candidate.block ? 'success' : 'danger'}
+                                                onClick={() => toggleBlockStatus(candidate._id)}
+                                            >
+                                                {candidate.block ? 'Unblock' : 'Block'}
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 }
 
-export default Candidates
+export default Candidates;

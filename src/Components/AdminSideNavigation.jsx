@@ -24,7 +24,7 @@ function AdminSideNavigation() {
         </Link>
       </Nav.Item>
       <Nav.Item className="side-nav-item">
-        <Link to="/recruiters">
+        <Link to="/admin-recruiters">
           <FaUserTie /> Recruiters
         </Link>
       </Nav.Item>

@@ -1,0 +1,54 @@
+.job-application-form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .job-application-form h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .job-application-form h2 {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+  }
+  
+  .job-application-form .icon {
+    margin-right: 10px;
+  }
+  
+  .job-application-form .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .job-application-form .form-label {
+    font-weight: bold;
+  }
+  
+  .job-application-form .form-control {
+    border-radius: 0;
+  }
+  
+  .job-application-form .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 0;
+  }
+  
+  .job-application-form .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+  
+  .job-application-form .text-muted {
+    font-size: 12px;
+  }
+  
+  .job-application-form .form-check-inline {
+    margin-right: 15px;
+  }
