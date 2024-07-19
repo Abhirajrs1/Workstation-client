@@ -6,6 +6,9 @@ import AdminSideNavigation from '../../../Components/AdminSideNavigation';
 import AdminNavigation from '../../../Components/AdminNavigation';
 import { AdminAuth } from '../../../Context/AdminContext';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
+
 function Recruiters() {
     const {Authenticated,loading}=useContext(AdminAuth)
     const navigate=useNavigate()
@@ -32,7 +35,7 @@ function Recruiters() {
         }
       },[Authenticated,navigate,loading])
 
-    const toggleBlockStatus = async (id) => {
+    const toggleBlockStatus = async (id,blockStatus) => {
         try {
             const response = await axiosInstance.put(`/admin-recruiters/${id}/block`);
             if (response.data.success) {
@@ -43,6 +46,26 @@ function Recruiters() {
         } catch (error) {
             console.error('Error updating block status:', error);
         }
+    };
+    const handleToggleBlockStatus = (id, blockStatus) => {
+        Swal.fire({
+            title: blockStatus ? 'Unblock Recruiter?' : 'Block Recruiter?',
+            text: `Are you sure you want to ${blockStatus ? 'unblock' : 'block'} this recruiter?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: `Yes, ${blockStatus ? 'unblock' : 'block'}!`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                toggleBlockStatus(id, blockStatus);
+                Swal.fire(
+                    'Success!',
+                    `Recruiter has been ${blockStatus ? 'unblocked' : 'blocked'}.`,
+                    'success'
+                );
+            }
+        });
     };
 
   return (
@@ -73,7 +96,7 @@ function Recruiters() {
                                         <td>
                                             <Button
                                                 variant={recruiter.block ? 'success' : 'danger'}
-                                                onClick={() => toggleBlockStatus(recruiter._id)}
+                                                onClick={() => handleToggleBlockStatus(recruiter._id,recruiter.block)}
                                             >
                                                 {recruiter.block ? 'Unblock' : 'Block'}
                                             </Button>
