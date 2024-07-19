@@ -6,28 +6,40 @@ import AdminSideNavigation from '../../../Components/AdminSideNavigation';
 import AdminNavigation from '../../../Components/AdminNavigation';
 import { AdminAuth } from '../../../Context/AdminContext';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
+import ReactPaginate from 'react-paginate';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+
 
 
 function Recruiters() {
     const {Authenticated,loading}=useContext(AdminAuth)
     const navigate=useNavigate()
     const [recruiters, setRecruiters] = useState([]);
+    const [page,setPage]=useState(1)
+    const [total,setTotal]=useState(0)
+    const limit=5
 
 
     useEffect(() => {
         const fetchRecruiters = async () => {
             try {
-                const response = await axiosInstance.get('/admin-recruiters');
+                const response = await axiosInstance.get(`/admin-recruiters?page=${page}&limit=${limit}`);
                 if (response.data.success) {
                     setRecruiters(response.data.recruiters);
+                    setTotal(response.data.total)
                 }
             } catch (error) {
                 console.error('Error fetching recruiters:', error);
             }
         };
         fetchRecruiters();
-    }, []);
+    }, [page]);
+
+    
+    const handlePageClick = (data) => {
+        setPage(data.selected + 1);
+    };
 
     useEffect(()=>{
         if(!Authenticated && !loading){
@@ -105,6 +117,21 @@ function Recruiters() {
                                 ))}
                             </tbody>
                         </Table>
+                        <div className="pagination-wrapper">
+                            <ReactPaginate
+                                previousLabel={<FaArrowLeft />}
+                                nextLabel={<FaArrowRight />}
+                                breakLabel={'...'}
+                                breakClassName={'break-me'}
+                                pageCount={Math.ceil(total / limit)}
+                                marginPagesDisplayed={2}
+                                pageRangeDisplayed={5}
+                                onPageChange={handlePageClick}
+                                containerClassName={'pagination'}
+                                subContainerClassName={'pages pagination'}
+                                activeClassName={'active'}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

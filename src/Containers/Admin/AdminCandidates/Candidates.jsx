@@ -7,26 +7,38 @@ import AdminNavigation from '../../../Components/AdminNavigation';
 import { AdminAuth } from '../../../Context/AdminContext';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import ReactPaginate from 'react-paginate';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 function Candidates() {
     const {Authenticated,loading}=useContext(AdminAuth)
     const navigate=useNavigate()
     const [candidates, setCandidates] = useState([]);
+    const [page,setPage]=useState(1)
+    const [total,setTotal]=useState(0)
+    const limit=5
 
 
     useEffect(() => {
         const fetchCandidates = async () => {
             try {
-                const response = await axiosInstance.get('/admin-candidates');
+                const response = await axiosInstance.get(`/admin-candidates?page=${page}&limit=${limit}`);
                 if (response.data.success) {
                     setCandidates(response.data.candidates);
+                    setTotal(response.data.total)
                 }
             } catch (error) {
                 console.error('Error fetching candidates:', error);
             }
         };
         fetchCandidates();
-    }, []);
+    }, [page]);
+
+
+    const handlePageClick = (data) => {
+        setPage(data.selected + 1);
+    };
+
 
     useEffect(()=>{
         if(!Authenticated && !loading){
@@ -104,6 +116,21 @@ function Candidates() {
                                 ))}
                             </tbody>
                         </Table>
+                        <div className="pagination-wrapper">
+                            <ReactPaginate
+                                previousLabel={<FaArrowLeft />}
+                                nextLabel={<FaArrowRight />}
+                                breakLabel={'...'}
+                                breakClassName={'break-me'}
+                                pageCount={Math.ceil(total / limit)}
+                                marginPagesDisplayed={2}
+                                pageRangeDisplayed={5}
+                                onPageChange={handlePageClick}
+                                containerClassName={'pagination'}
+                                subContainerClassName={'pages pagination'}
+                                activeClassName={'active'}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
