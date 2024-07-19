@@ -21,15 +21,13 @@ function Login() {
       navigate('/')
     }
   },[user,navigate])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const errors = validateLoginForm(email, password);
-    setErrors(errors)
-
-    if (Object.keys(errors).length > 0) {
-      return;
-    }
-        const success=await login(email,password)
+    try {
+      await validateLoginForm.validate({email,password},{abortEarly:false})
+      setErrors({})
+      const success=await login(email,password)
       if (success) {
         Swal.fire({
           title: 'Success!',
@@ -46,6 +44,13 @@ function Login() {
           setEmail("") 
           setPassword("")     
       }
+    } catch (validationErrors) {
+      const formattedErrors = {};
+      validationErrors.inner.forEach((error) => {
+        formattedErrors[error.path] = error.message;
+      });
+      setErrors(formattedErrors);
+    }
   };
   const handleGoogle=()=>{
     window.open(`http://localhost:3000/auth/google/callback`, "_self"); 

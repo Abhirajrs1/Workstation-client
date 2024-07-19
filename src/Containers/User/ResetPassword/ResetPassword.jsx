@@ -19,15 +19,12 @@ function ResetPassword() {
 
     const handleSubmit=async(e)=>{
        e.preventDefault()
-       const errors = validateResetPassword(password.trim());
-       setErrors(errors)
-
-    if (Object.keys(errors).length > 0) {
-      return;
-    }
+       const formData={password:password.trim()}
 
        try {
-         const response=await axiosInstance.post(`/employee-resetPassword/${token}`,{password:password.trim()})
+        await validateResetPassword.validate(formData, { abortEarly: false });
+       setErrors({});
+         const response=await axiosInstance.post(`/employee-resetPassword/${token}`,formData)
          if(response.data.success){
             console.log(response.data);
             Swal.fire({
@@ -51,26 +48,22 @@ function ResetPassword() {
     });
     setPassword('')
 }
-} catch (error) {
-if (error.response && error.response.data && error.response.data.message) {
+} catch (validationErrors) {
+  if (validationErrors.inner) {
+    const formErrors = validationErrors.inner.reduce((acc, error) => {
+      return { ...acc, [error.path]: error.message };
+    }, {});
+    setErrors(formErrors);
+  } else {
     Swal.fire({
-        title: 'Error!',
-        text: error.response.data.message,
-        icon: 'error',
-        timer: 5000,
-        position: 'top-center',
+      title: 'Error!',
+      text: 'An error occurred. Please try again later.',
+      icon: 'error',
+      timer: 5000,
+      position: 'top-center',
     });
-} else {
-    Swal.fire({
-        title: 'Error!',
-        text: 'An error occurred. Please try again later.',
-        icon: 'error',
-        timer: 5000,
-        position: 'top-center',
-    });
+  }
 }
-}
-setIsSubmitting(false);
 }
   return (
 <div className='reset-container d-flex justify-content-center align-items-center vh-100 bg-dark'>

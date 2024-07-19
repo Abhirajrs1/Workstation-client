@@ -24,10 +24,9 @@ axiosInstance.interceptors.response.use(
   },
   error => {
     if (error.response.status === 401) {
-      // Handle unauthorized access
       localStorage.removeItem('admintoken');
       localStorage.removeItem('admin');
-      window.location.href = '/admin-login'; // Redirect to login page
+      window.location.href = '/admin-login'; 
     }
     return Promise.reject(error);
   }

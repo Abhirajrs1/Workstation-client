@@ -13,17 +13,12 @@ function AdminLogin() {
     const [errors,setErrors]=useState({})
     const navigate = useNavigate();
   const {AdminLogin}=useContext(AdminAuth)
-  
-    axios.defaults.withCredentials = true;
-  
+    
     const handleSubmit = async (e) => {
       e.preventDefault();
-      const errors = validateLoginForm(email, password);
-      setErrors(errors)
-  
-      if (Object.keys(errors).length > 0) {
-        return;
-      }
+     try {
+      await validateLoginForm.validate({email,password},{abortEarly:false})
+      setErrors({})
       const success=await AdminLogin(email,password)
       if (success) {
         Swal.fire({
@@ -41,6 +36,14 @@ function AdminLogin() {
           setEmail("") 
           setPassword("")     
       }
+     } catch (validationErrors) {
+      const formattedErrors = {};
+      validationErrors.inner.forEach((error) => {
+        formattedErrors[error.path] = error.message;
+      });
+      setErrors(formattedErrors);
+    }
+      
     };
   return (
     <div className="recruiterlogin-container d-flex align-items-center justify-content-center ">

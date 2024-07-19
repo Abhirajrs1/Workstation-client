@@ -17,13 +17,10 @@ const {RecruiterLogin}=useContext(RecruiterAuth)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const errors = validateLoginForm(email, password);
-    setErrors(errors)
-
-    if (Object.keys(errors).length > 0) {
-      return;
-    }
-    const success=await RecruiterLogin(email,password)
+    try {
+      await validateLoginForm.validate({email,password},{abortEarly:false})
+      setErrors({})
+      const success=await RecruiterLogin(email,password)
     if (success) {
       Swal.fire({
         title: 'Success!',
@@ -40,6 +37,13 @@ const {RecruiterLogin}=useContext(RecruiterAuth)
         setEmail("") 
         setPassword("")     
     }
+    } catch (validationErrors) {
+      const formattedErrors = {};
+      validationErrors.inner.forEach((error) => {
+        formattedErrors[error.path] = error.message;
+      });
+      setErrors(formattedErrors);
+    } 
   };
 
   return (

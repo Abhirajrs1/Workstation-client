@@ -16,20 +16,21 @@ function SignUp() {
 
     const navigate=useNavigate()
 
-    
- 
     const handleSubmit=async(e)=>{
      e.preventDefault()
 
-    const errors = validateSignupForm(username.trim(), email.trim(), password.trim(),confirmPassword.trim());
-    setErrors(errors)
-
-    if (Object.keys(errors).length > 0) {
-      return;
-    }
+     const formData={
+      username:username.trim(),
+      email:email.trim(),
+      password:password.trim(),
+      confirmPassword:confirmPassword.trim()
+     }
 
      try {
-     const response=await axiosInstance.post('/employee-signup',{username:username.trim(),email:email.trim(),password:password.trim()})
+      await validateSignupForm.validate(formData, { abortEarly: false });
+      setErrors({});
+     const response=await axiosInstance.post('/employee-signup',formData)
+     setErrors({});
      if(response.data.success){
         localStorage.setItem("email",email)
         console.log(response.data);
@@ -53,18 +54,13 @@ function SignUp() {
             timer: 5000,
             position: 'top-center',
           });}
-     } catch (error) {
-        if (error.response && error.response.data && error.response.data.message) {
-            console.error(error.response.data);
-            Swal.fire({
-                title: 'Error!',
-                text: error.response.data.message,
-                icon: 'error',
-                timer: 5000,
-                position: 'top-center',
-              }); 
-            } else {
-            console.error("An error occurred:", error);
+     } catch (validationErrors) {
+      if (validationErrors.inner) {
+        const formErrors = validationErrors.inner.reduce((acc, error) => {
+          return { ...acc, [error.path]: error.message };
+        }, {});
+        setErrors(formErrors);
+      }else {
             Swal.fire({
                 title: 'Error!',
                 text: 'An error occurred. Please try again later.',
@@ -102,7 +98,7 @@ function SignUp() {
             <input
               type="text"
               className={`form-control ${errors.username ? 'is-invalid' : ''}`} 
-              placeholder="Uername"
+              placeholder="Username"
               autoComplete="off"
               value={username}
               onChange={(e) => setUsername(e.target.value.replace(/[^a-zA-Z]/g, ''))}

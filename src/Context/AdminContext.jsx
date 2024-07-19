@@ -8,7 +8,6 @@ function AdminContext({ children }) {
   const [admin, setAdmin] = useState(JSON.parse(localStorage.getItem('admin')) || null)
   const [loading, setLoading] = useState(true)
 
-  axios.defaults.withCredentials=true
 
 
   useEffect(() => {
@@ -23,7 +22,6 @@ function AdminContext({ children }) {
             setAdmin(null)
             localStorage.removeItem('admin');
           }
-
         } catch (error) {
           console.error('An error occurred during token verification:', error);
           setAdmin(null);
