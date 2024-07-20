@@ -29,7 +29,7 @@ function AdminSideNavigation() {
         </Link>
       </Nav.Item>
       <Nav.Item className="side-nav-item">
-        <Link to="/jobs">
+        <Link to="/admin-jobs">
           <FaBriefcase /> Jobs
         </Link>
       </Nav.Item>

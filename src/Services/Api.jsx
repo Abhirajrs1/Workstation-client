@@ -26,6 +26,8 @@ import AdminHome from "../Containers/Admin/AdminHome/AdminHome";
 import Candidates from "../Containers/Admin/AdminCandidates/Candidates";
 import Recruiters from "../Containers/Admin/AdminRecruiters/Recruiters";
 import JobApplication from "../Containers/User/JobApplication/JobApplication";
+import Jobs from "../Containers/Admin/AdminJobs/Jobs";
+import AdminJobListing from "../Containers/Admin/AdminJobs/AdminJobListing";
 
 function Api() {
   return (
@@ -64,6 +66,8 @@ function Api() {
             <Route path="/admin-home" element={<AdminHome/>}/>
             <Route path="/admin-candidates" element={<Candidates/>}/>
             <Route path="/admin-recruiters" element={<Recruiters/>}/>
+            <Route path="/admin-jobs" element={<Jobs/>}/>
+            <Route path="/admin-jobdetails/:id" element={<AdminJobListing/>}/>
 
 
 
