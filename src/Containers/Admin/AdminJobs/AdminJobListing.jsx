@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../Services/Interceptor/adminInterceptor.js';
+import AdminNavigation from '../../../Components/AdminNavigation.jsx';
+import AdminSideNavigation from '../../../Components/AdminSideNavigation.jsx';
 import './AdminJobListing.css';
 
 function AdminJobListing() {
@@ -45,6 +47,7 @@ function AdminJobListing() {
     }
 
     return (
+      <>
         <Container className="job-details-page">
             <Row>
                 <Col>
@@ -87,6 +90,7 @@ function AdminJobListing() {
                 </Col>
             </Row>
         </Container>
+        </>
     );
 }
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import logo from '../../../Assets/logo2.png'
 import Swal from 'sweetalert2';
@@ -12,8 +12,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [errors,setErrors]=useState({})
   const navigate = useNavigate();
-const {RecruiterLogin}=useContext(RecruiterAuth)
-
+const {RecruiterLogin,recruiter}=useContext(RecruiterAuth)
 
   const handleSubmit = async (e) => {
     e.preventDefault();

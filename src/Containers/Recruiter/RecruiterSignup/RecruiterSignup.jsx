@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import logo from '../../../Assets/logo2.png';
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateRecruiterSignupForm } from '../../../Utilis/helper.js';
 import './RecruiterSignup.css';
+import { RecruiterAuth } from '../../../Context/RecruiterContext.jsx';
 import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
 
 function SignUp() {
@@ -13,8 +14,12 @@ function SignUp() {
     const [password,setPassword]=useState('')
     const [confirmPassword,setConfirmPassword]=useState("")
     const [errors,setErrors]=useState({})
+    const {recruiter}=useContext(RecruiterAuth)
+
+  
 
     const navigate=useNavigate()
+    
 
     const handleSubmit=async(e)=>{
      e.preventDefault()

@@ -1,0 +1,122 @@
+import React, { useContext, useEffect, useState } from 'react';
+import { Table, Button } from 'react-bootstrap';
+import axiosInstance from '../../../Services/Interceptor/adminInterceptor';
+import './Categories.css';
+import AdminSideNavigation from '../../../Components/AdminSideNavigation';
+import AdminNavigation from '../../../Components/AdminNavigation';
+import { AdminAuth } from '../../../Context/AdminContext';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import ReactPaginate from 'react-paginate';
+import { FaArrowLeft, FaArrowRight, FaEdit } from 'react-icons/fa';
+
+function Categories() {
+    const { Authenticated, loading } = useContext(AdminAuth);
+    const navigate = useNavigate();
+    const [categories, setCategories] = useState([]);
+    const [page, setPage] = useState(1);
+    const [total, setTotal] = useState(0);
+    const limit = 5;
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await axiosInstance.get(`/admin-categories?page=${page}&limit=${limit}`);
+                if (response.data.success) {
+                    setCategories(response.data.categories);
+                    setTotal(response.data.total);
+                }
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+        fetchCategories();
+    }, [page]);
+
+    const handlePageClick = (data) => {
+        setPage(data.selected + 1);
+    };
+
+    useEffect(() => {
+        if (!Authenticated && !loading) {
+            navigate('/admin-login');
+        }
+    }, [Authenticated, navigate, loading]);
+
+    const editCategory = (id) => {
+        navigate(`/admin-categories/${id}/edit`);
+    };
+
+    const addCategory = () => {
+        navigate('/admin-categories/add');
+    };
+
+    return (
+        <>
+            <AdminSideNavigation />
+            <AdminNavigation />
+            <div className="admin-panel">
+                <div className="content-wrapper">
+                    <div className="user-management-header">
+                        <h1>Category Management</h1>
+                    </div>
+                    <div className='addcategory'>
+                    <Button 
+                            variant="primary" 
+                            onClick={addCategory} 
+                            className="add-category-button"
+                        >
+                            Add Category
+                        </Button>
+                        </div>
+                    <div className="user-management-section">
+                        <Table striped bordered hover>
+                            <thead>
+                                <tr>
+                                    <th>Sl. No</th>
+                                    <th>Category Name</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {categories.map((category, index) => (
+                                    <tr key={category._id}>
+                                        <td>{index + 1}</td>
+                                        <td>{category.name}</td>
+                                        <td>{category.description}</td>
+                                        <td>
+                                            <Button
+                                                variant="warning"
+                                                onClick={() => editCategory(category._id)}
+                                            >
+                                                <FaEdit /> Edit
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                        <div className="pagination-wrapper">
+                            <ReactPaginate
+                                previousLabel={<FaArrowLeft />}
+                                nextLabel={<FaArrowRight />}
+                                breakLabel={'...'}
+                                breakClassName={'break-me'}
+                                pageCount={Math.ceil(total / limit)}
+                                marginPagesDisplayed={2}
+                                pageRangeDisplayed={5}
+                                onPageChange={handlePageClick}
+                                containerClassName={'pagination'}
+                                subContainerClassName={'pages pagination'}
+                                activeClassName={'active'}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
+
+export default Categories;
