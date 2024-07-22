@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
-import './AddCategory.css';
 import { AdminAuth } from '../../../Context/AdminContext';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../Services/Interceptor/adminInterceptor.js';
@@ -16,7 +15,6 @@ function AddCategory() {
         categoryName: '',
         description: ''
     });
-    const [message, setMessage] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -35,10 +33,7 @@ function AddCategory() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axiosInstance.post('admin-addCategory', { formData });
-    
-            console.log('Response from server:', response); // Debugging log
-    
+            const response = await axiosInstance.post('admin-addCategory', { formData });    
             if (response.data.success) {
                 Swal.fire({
                     title: 'Success!',
@@ -76,7 +71,6 @@ function AddCategory() {
                     description: ''
                 });
             }
-           
         }
     };
     return (
@@ -89,11 +83,6 @@ function AddCategory() {
                     <Row className="justify-content-center align-items-center h-100">
                         <Col md={6}>
                             <h2 className="text-center mb-4">Add New Category</h2>
-                            {message && (
-                                <Alert variant={message.type} onClose={() => setMessage(null)} dismissible>
-                                    {message.text}
-                                </Alert>
-                            )}
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group className="mb-3" controlId="categoryName">
                                     <Form.Label>Category Name</Form.Label>

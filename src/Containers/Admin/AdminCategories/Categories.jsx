@@ -22,7 +22,6 @@ function Categories() {
         const fetchCategories = async () => {
             try {
                 const response = await axiosInstance.get(`/admin-categories?page=${page}&limit=${limit}`);
-                console.log(response.data);
                 if (response.data.success) {
                     setCategories(response.data.categories);
                     setTotal(response.data.total);
@@ -45,7 +44,7 @@ function Categories() {
     }, [Authenticated, navigate, loading]);
 
     const editCategory = (id) => {
-        navigate(`/admin-categories/${id}/edit`);
+        navigate(`/admin-editcategory/${id}`);
     };
 
     const addCategory = () => {

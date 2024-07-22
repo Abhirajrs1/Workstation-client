@@ -30,6 +30,7 @@ import Jobs from "../Containers/Admin/AdminJobs/Jobs";
 import AdminJobListing from "../Containers/Admin/AdminJobs/AdminJobListing";
 import Categories from "../Containers/Admin/AdminCategories/Categories";
 import AddCategory from "../Containers/Admin/AdminCategories/AddCategory";
+import EditCategory from "../Containers/Admin/AdminCategories/EditCategory";
 
 function Api() {
   return (
@@ -71,7 +72,9 @@ function Api() {
             <Route path="/admin-jobs" element={<Jobs/>}/>
             <Route path="/admin-jobdetails/:id" element={<AdminJobListing/>}/>
             <Route path="/admin-categories" element={<Categories/>}/>
-            <Route path="admin-categories/add" element={<AddCategory/>} />
+            <Route path="/admin-categories/add" element={<AddCategory/>} />
+            <Route path="/admin-editcategory/:id" element={<EditCategory/>}/>
+
 
 
 
