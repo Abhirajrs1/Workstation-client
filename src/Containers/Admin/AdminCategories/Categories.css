@@ -1,4 +1,4 @@
-.admin-panel {
+.category-panel {
     font-family: 'Mulish', sans-serif;
     display: flex;
     background-color: #f4f4f9;
@@ -18,7 +18,7 @@
     overflow: hidden; /* Allows internal scrolling if necessary */
 }
 
-.user-management-header {
+.category-management-header {
     background-color: #343a40;
     padding: 20px;
     border-radius: 8px;
@@ -26,7 +26,7 @@
     margin-bottom: 20px;
 }
 
-.user-management-header h1 {
+.category-management-header h1 {
     font-weight: 700;
     color: white;
     text-align: center;
@@ -34,7 +34,7 @@
     border-bottom: 1px solid #ddd;
 }
 
-.user-management-section {
+.category-management-section {
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -142,4 +142,9 @@
     background-color: #007bff;
     color: white;
     border: 1px solid #007bff;
+}
+.add-category-button{
+    margin-bottom: 10px;
+    margin-left: 980px;
+    width: 100px;
 }

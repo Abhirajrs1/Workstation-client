@@ -12,7 +12,8 @@ function Login() {
   const [password, setPassword] = useState('');
   const [errors,setErrors]=useState({})
   const navigate = useNavigate();
-const {RecruiterLogin,recruiter}=useContext(RecruiterAuth)
+
+const {RecruiterLogin,recruiter,Authenticated}=useContext(RecruiterAuth)
 
   const handleSubmit = async (e) => {
     e.preventDefault();

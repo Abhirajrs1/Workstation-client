@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState,useEffect} from 'react';
 import axios from 'axios';
 import logo from '../../../Assets/logo2.png'
 import Swal from 'sweetalert2';
@@ -12,8 +12,17 @@ function AdminLogin() {
     const [password, setPassword] = useState('');
     const [errors,setErrors]=useState({})
     const navigate = useNavigate();
-  const {AdminLogin}=useContext(AdminAuth)
+  const {AdminLogin,admin}=useContext(AdminAuth)
+
+
+  useEffect(()=>{
+    if(admin){
+      navigate('/admin-home')
+    }
+  },[admin,navigate])
     
+
+
     const handleSubmit = async (e) => {
       e.preventDefault();
      try {

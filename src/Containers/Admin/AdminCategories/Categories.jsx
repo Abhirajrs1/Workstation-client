@@ -22,6 +22,7 @@ function Categories() {
         const fetchCategories = async () => {
             try {
                 const response = await axiosInstance.get(`/admin-categories?page=${page}&limit=${limit}`);
+                console.log(response.data);
                 if (response.data.success) {
                     setCategories(response.data.categories);
                     setTotal(response.data.total);
@@ -55,12 +56,11 @@ function Categories() {
         <>
             <AdminSideNavigation />
             <AdminNavigation />
-            <div className="admin-panel">
+            <div className="category-panel">
                 <div className="content-wrapper">
-                    <div className="user-management-header">
+                    <div className="category-management-header">
                         <h1>Category Management</h1>
                     </div>
-                    <div className='addcategory'>
                     <Button 
                             variant="primary" 
                             onClick={addCategory} 
@@ -68,8 +68,7 @@ function Categories() {
                         >
                             Add Category
                         </Button>
-                        </div>
-                    <div className="user-management-section">
+                    <div className="category-management-section">
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
@@ -83,8 +82,8 @@ function Categories() {
                                 {categories.map((category, index) => (
                                     <tr key={category._id}>
                                         <td>{index + 1}</td>
-                                        <td>{category.name}</td>
-                                        <td>{category.description}</td>
+                                        <td>{category.categoryName}</td>
+                                        <td>{category.categoryDescription}</td>
                                         <td>
                                             <Button
                                                 variant="warning"
