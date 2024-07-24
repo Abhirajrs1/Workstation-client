@@ -72,6 +72,10 @@ function AdminJobListing() {
                                     </ul>
                                 </div>
                                 <div className="detail-item">
+                                    <h3>Education</h3>
+                                    <p>{job.education}</p>
+                                </div>
+                                <div className="detail-item">
                                     <h3>Years of Experience</h3>
                                     <p>{job.yearsOfExperience} years</p>
                                 </div>

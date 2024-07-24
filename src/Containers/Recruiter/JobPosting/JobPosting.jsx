@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './JobPosting.css';
-import axios from 'axios'
 import ReNavigation from '../../../Components/ReNavigation';
 import Swal from 'sweetalert2';
 import SideNav from '../../../Components/SideNav';
 import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
+import { RecruiterAuth } from '../../../Context/RecruiterContext.jsx';
+import { useNavigate } from 'react-router-dom';
 function JobPosting() {
+
+  const navigate=useNavigate()
+  const {Authenticated,loading}=useContext(RecruiterAuth)
     const[formData,setFormData]=useState({
         jobTitle:'',
         companyName:'',
@@ -15,27 +19,47 @@ function JobPosting() {
         yearsOfExperience:'',
         employmentType:'',
         skills:[],
-        description:''
+        description:'',
+        education:'',
+        category:''
     })
 
-    const handleChange=(e)=>{
-        const {id,value}=e.target
-        if(id==='skills'){
-            const selectedSkills=Array.from(e.target.selectedOptions,option=>option.value)
-            setFormData({...formData,skills:selectedSkills})
-        }else{
-            setFormData({...formData,[id]:value})
+    useEffect(()=>{
+      if(!Authenticated && !loading){
+        navigate('/recruiter-login')
+      }
+    },[Authenticated,navigate,loading])
+
+    const [categories,setCategories]=useState([])
+
+    useEffect(()=>{
+      const fetchCategories=async()=>{
+        try {
+          const response=await axiosInstance.get('/recruiter-getAllCategories')
+          if(response.data.success){
+            setCategories(response.data.categories)
+          }
+        } catch (error) {
+          console.error('Error fetching categories:', error);
         }
-    }
-    const handleSkillChange = (e) => {
-        const { value, checked } = e.target;
-        if (checked) {
-            setFormData({ ...formData, skills: [...formData.skills, value] });
-        } else {
-            const updatedSkills = formData.skills.filter(skill => skill !== value);
-            setFormData({ ...formData, skills: updatedSkills });
-        }
-    };
+      }
+      fetchCategories()
+    },[])
+
+    const handleChange = (e) => {
+      const { id, value } = e.target;
+      setFormData({
+          ...formData,
+          [id]: value
+      });
+  };
+
+  const handleSkillChange = (e) => {
+      const { value } = e.target;
+      const skillArray = value.split(',').map(skill => skill.trim());
+      setFormData({ ...formData, skills: skillArray });
+  };
+
     const handleSubmit=async(e)=>{
         e.preventDefault()
         try {
@@ -57,14 +81,30 @@ function JobPosting() {
                   yearsOfExperience: '',
                   employmentType: '',
                   skills: [],
-                  description: ''
+                  description: '',
+                  education: '',
+                  category: ''
                 });
+                navigate('/recruiter-listJob')
               } else {
                 Swal.fire({
                   icon: 'error',
                   title: 'Oops...',
                   text: response.data.message,
                   position: 'top-center',
+                });
+                setFormData({
+                  jobTitle: '',
+                  companyName: '',
+                  minPrice: '',
+                  maxPrice: '',
+                  jobLocation: '',
+                  yearsOfExperience: '',
+                  employmentType: '',
+                  skills: [],
+                  description: '',
+                  education: '',
+                  category: ''
                 });
               }
         } catch (error) {
@@ -92,78 +132,68 @@ function JobPosting() {
       <ReNavigation />
       <SideNav/>
       <div className="container job-posting-form">
-        <form onSubmit={handleSubmit}>
-          <div className="row g-3">
-            <div className="col-md-6">
-              <label htmlFor="jobTitle" className="form-label">Job Title</label>
-              <input type="text" className="form-control" id="jobTitle" value={formData.jobTitle} onChange={handleChange} placeholder="Web developer" required />
-            </div>
-            <div className="col-md-6">
-              <label htmlFor="companyName" className="form-label">Company Name</label>
-              <input type="text" className="form-control" id="companyName" value={formData.companyName} onChange={handleChange} placeholder="Ex: Microsoft" required />
-            </div>
-            <div className="col-md-6">
-              <label htmlFor="minPrice" className="form-label">Minimum Salary</label>
-              <input type="number" className="form-control" value={formData.minPrice} onChange={handleChange} id="minPrice" placeholder="100000" required/>
-            </div>
-            <div className="col-md-6">
-              <label htmlFor="maxPrice" className="form-label">Maximum Salary</label>
-              <input type="number" className="form-control" value={formData.maxPrice} onChange={handleChange} id="maxPrice" placeholder="500000" required/>
-            </div>
-            <div className="col-md-6">
-              <label htmlFor="jobLocation" className="form-label">Job Location</label>
-              <input type="text" className="form-control" id="jobLocation" value={formData.jobLocation} onChange={handleChange} placeholder="Ex: New York" required/>
-            </div>
-            <div className="col-md-6">
+                <form onSubmit={handleSubmit}>
+                    <div className="row g-3">
+                        <div className="col-md-6">
+                            <label htmlFor="jobTitle" className="form-label">Job Title</label>
+                            <input type="text" className="form-control" id="jobTitle" value={formData.jobTitle} onChange={handleChange} placeholder="Web developer" required />
+                        </div>
+                        <div className="col-md-6">
+                            <label htmlFor="companyName" className="form-label">Company Name</label>
+                            <input type="text" className="form-control" id="companyName" value={formData.companyName} onChange={handleChange} placeholder="Ex: Microsoft" required />
+                        </div>
+                        <div className="col-md-6">
+                            <label htmlFor="minPrice" className="form-label">Minimum Salary</label>
+                            <input type="number" className="form-control" value={formData.minPrice} onChange={handleChange} id="minPrice" placeholder="100000" required />
+                        </div>
+                        <div className="col-md-6">
+                            <label htmlFor="maxPrice" className="form-label">Maximum Salary</label>
+                            <input type="number" className="form-control" value={formData.maxPrice} onChange={handleChange} id="maxPrice" placeholder="500000" required />
+                        </div>
+                        <div className="col-md-6">
+                            <label htmlFor="jobLocation" className="form-label">Job Location</label>
+                            <input type="text" className="form-control" id="jobLocation" value={formData.jobLocation} onChange={handleChange} placeholder="Ex: New York" required />
+                        </div>
+                        <div className="col-md-6">
                             <label htmlFor="yearsOfExperience" className="form-label">Years of Experience</label>
                             <input type="number" className="form-control" id="yearsOfExperience" value={formData.yearsOfExperience} onChange={handleChange} placeholder="5" required />
                         </div>
-            <div className="col-md-6">
-              <label htmlFor="employmentType" className="form-label">Employment Type</label>
-              <select className="form-select" value={formData.employmentType} onChange={handleChange} id="employmentType" required>
-                <option selected>Select job type</option>
-                <option value="fulltime">Full-time</option>
-                <option value="parttime">Part-time</option>
-                <option value="contract">Contract</option>
-              </select>
-            </div>
-            <div className="col-12">
-                            <label className="form-label">Required Skill Sets</label>
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value="HTML" id="HTML" onChange={handleSkillChange} checked={formData.skills.includes('HTML')} />
-                                <label className="form-check-label" htmlFor="HTML">
-                                    HTML
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value="CSS" id="CSS" onChange={handleSkillChange} checked={formData.skills.includes('CSS')} />
-                                <label className="form-check-label" htmlFor="CSS">
-                                    CSS
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value="JavaScript" id="JavaScript" onChange={handleSkillChange} checked={formData.skills.includes('JavaScript')} />
-                                <label className="form-check-label" htmlFor="JavaScript">
-                                    JavaScript
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value="React" id="React" onChange={handleSkillChange} checked={formData.skills.includes('React')} />
-                                <label className="form-check-label" htmlFor="React">
-                                    React
-                                </label>
-                            </div>
+                        <div className="col-md-6">
+                            <label htmlFor="employmentType" className="form-label">Employment Type</label>
+                            <select className="form-select" value={formData.employmentType} onChange={handleChange} id="employmentType" required>
+                                <option>Select job type</option>
+                                <option value="fulltime">Full-time</option>
+                                <option value="parttime">Part-time</option>
+                                <option value="contract">Contract</option>
+                            </select>
                         </div>
-            <div className="col-12">
-              <label htmlFor="description" className="form-label">Job Description</label>
-              <textarea className="form-control" id="description" value={formData.description} onChange={handleChange} rows="3" placeholder="Job description" required></textarea>
+                        <div className="col-md-6">
+                            <label htmlFor="education" className="form-label">Education</label>
+                            <input type="text" className="form-control" id="education" value={formData.education} onChange={handleChange} placeholder="Ex: Bachelor's degree" required />
+                        </div>
+                        <div className="col-md-6">
+                            <label htmlFor="category" className="form-label">Category</label>
+                            <select className="form-select" value={formData.category} onChange={handleChange} id="category" required>
+                                <option>Select category</option>
+                                {categories.map(category => (
+                                    <option key={category._id} value={category._id}>{category.categoryName}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="col-12">
+                            <label htmlFor="skills" className="form-label">Skills</label>
+                            <input type="text" className="form-control" id="skills" value={formData.skills.join(', ')} onChange={handleSkillChange} placeholder="e.g., HTML, CSS, JavaScript" required />
+                        </div>
+                        <div className="col-12">
+                            <label htmlFor="description" className="form-label">Job Description</label>
+                            <textarea className="form-control" id="description" value={formData.description} onChange={handleChange} rows="3" placeholder="Job description" required></textarea>
+                        </div>
+                        <div className="col-12">
+                            <button type="submit" className="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div className="col-12">
-              <button type="submit" className="btn btn-primary">Submit</button>
-            </div>
-          </div>
-        </form>
-      </div>
     </>
   );
 }

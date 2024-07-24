@@ -31,6 +31,7 @@ import AdminJobListing from "../Containers/Admin/AdminJobs/AdminJobListing";
 import Categories from "../Containers/Admin/AdminCategories/Categories";
 import AddCategory from "../Containers/Admin/AdminCategories/AddCategory";
 import EditCategory from "../Containers/Admin/AdminCategories/EditCategory";
+import IndividualJob from "../Containers/Recruiter/JobListing/IndividualJob";
 
 function Api() {
   return (
@@ -62,6 +63,7 @@ function Api() {
             <Route path="/recruiter-resetPassword/:token" element={<RecruiterResetPassword/>}/>
             <Route path='/recruiter-postJob' element={<JobPosting/>}/>
             <Route path="/recruiter-listJob" element={<JobListing/>}/>
+            <Route path="/recruiter-viewJob/:id" element={<IndividualJob/>}/>
 
 
 
