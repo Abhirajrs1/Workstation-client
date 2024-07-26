@@ -3,11 +3,13 @@ import axios from 'axios';
 import Footer from '../../Components/Footer';
 import Navigation from '../../Components/Navigation.jsx';
 import './Home.css';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   axios.defaults.withCredentials = true;
+  const navigate=useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +25,10 @@ function Home() {
 
     fetchData();
   }, []);
+
+  const applyJob=(id)=>{
+    navigate(`/employee-jobApplication/${id}`)
+  }
 
   return (
     <div>
@@ -40,9 +46,8 @@ function Home() {
                 >
                   <div className="job-card-header">
                     <h5 className="job-title">{job.jobTitle}</h5>
-                    <button className="btn-more">⋮</button>
+                    <span className="company-name">{job.companyName}</span>
                   </div>
-                  <p className="company-name">{job.companyName}</p>
                   <p className="job-location">{job.jobLocation}</p>
                   <div className="easy-apply">
                     <span className="easy-apply-tag">🚀 Easily apply</span>
@@ -56,54 +61,53 @@ function Home() {
             <div className="job-details-container">
               {selectedJob ? (
                 <div className="job-details">
-                  <h4 className="job-title">{selectedJob.jobTitle}</h4>
-                  <p className="company-name">{selectedJob.companyName} <span className="external-link">↗</span></p>
-                  <p className="job-location">{selectedJob.jobLocation}</p>
-                  {selectedJob.minPrice && selectedJob.maxPrice && (
-                    <p className="job-salary">₹{selectedJob.minPrice} - ₹{selectedJob.maxPrice} a month</p>
-                  )}
-                  <div className="action-buttons">
-                    <button className="btn btn-primary">Apply now</button>
-                    <button className="btn btn-outline-secondary icon-button"><i className="far fa-bookmark"></i></button>
-                    <button className="btn btn-outline-secondary icon-button"><i className="far fa-times-circle"></i></button>
-                  </div>
-                  <div className="job-details-section">
-                    <h5>Job details</h5>
-                    <p>Here's how the job details align with your profile <span className="external-link">↗</span></p>
-                    <div className="detail-item">
-                      <h6><i className="fas fa-money-bill-wave"></i> Pay</h6>
+                  <h2 className="job-title">{selectedJob.jobTitle}</h2>
+                  <span className="company-name">↗ {selectedJob.companyName}</span>
+                  <div className="job-info">
+                    <div className="job-field">
+                      <h4>Location</h4>
+                      <p>{selectedJob.jobLocation}</p>
+                    </div>
+                    <div className="job-field">
+                      <h4>Salary</h4>
                       <p>₹{selectedJob.minPrice} - ₹{selectedJob.maxPrice} a month</p>
                     </div>
-                    <div className="detail-item">
-                      <h6><i className="fas fa-briefcase"></i> Job type</h6>
-                      <div>
-                        <span className="tag tag-primary">{selectedJob.employmentType}</span>
-                      </div>
+                    <div className="job-field">
+                      <h4>Education (Preferred)</h4>
+                      <p>{selectedJob.education}</p>
                     </div>
-                   
-                  </div>
-                  <div className="qualifications-section">
-                    <h6>Qualifications:</h6>
-                    <p><strong>Education:</strong> Bachelor's (Preferred)</p>
-                    <p><strong>Experience:</strong> total work: {selectedJob.yearsOfExperience} years (Preferred)</p>
-                    <p><strong>Work Location:</strong> In person</p>
-                  </div>
-                  <div className="profile-insights">
-                    <h5>Profile insights</h5>
-                    <p>Here's how the job qualifications align with your profile <span className="external-link">↗</span></p>
-                    <h6>Skills</h6>
-                    <div className="skills-section">
-                      {selectedJob.skills.map((skill, index) => (
-                        <span key={index} className="skill-tag">{skill}</span>
-                      ))}
+                    <div className="job-field">
+                      <h4>Experience</h4>
+                      <p>{selectedJob.yearsOfExperience} years</p>
                     </div>
-                    <h6>Education</h6>
-                    <p className="education-level">Bachelor's degree</p>
+                    <div className="job-field">
+                      <h4>Employment Type</h4>
+                      <p>{selectedJob.employmentType}</p>
+                    </div>
+                    <div className="job-field">
+                      <h4>Posted On</h4>
+                      <p>{selectedJob.jobPostedOn}</p>
+                    </div>
+                    <div className="job-field">
+                      <h4>Description</h4>
+                      <p>{selectedJob.description}</p>
+                    </div>
+                    <div className="job-field">
+                      <h4>Skills</h4>
+                      <ul>
+                        {selectedJob.skills.map((skill, index) => (
+                          <li key={index}>{skill}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="action-buttons">
+                    <button className="btn btn-primary" onClick={()=>(applyJob(selectedJob._id))}>Apply now</button>
                   </div>
                 </div>
               ) : (
                 <div className="job-details">
-                  <p>Select a job to see the details</p>
+                  <p>Select a job to see details</p>
                 </div>
               )}
             </div>

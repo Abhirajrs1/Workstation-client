@@ -10,7 +10,7 @@ function SideNav() {
         <FaTimes className="close-icon" />
         <span>Collapse</span>
       </div>
-      <Link to="/create-new" className="side-nav-link create-new">
+      <Link to="/recruiter-postJob" className="side-nav-link create-new">
         <FaPlus /> <span>Create new</span>
       </Link>
       <Link to="/recruiter-listJob" className="side-nav-link">

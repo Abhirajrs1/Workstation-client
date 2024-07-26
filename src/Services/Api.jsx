@@ -25,7 +25,7 @@ import AdminContext from "../Context/AdminContext";
 import AdminHome from "../Containers/Admin/AdminHome/AdminHome";
 import Candidates from "../Containers/Admin/AdminCandidates/Candidates";
 import Recruiters from "../Containers/Admin/AdminRecruiters/Recruiters";
-import JobApplication from "../Containers/User/JobApplication/JobApplication";
+import JobApplication from '../Containers/User/JobApplication/JobApplication'
 import Jobs from "../Containers/Admin/AdminJobs/Jobs";
 import AdminJobListing from "../Containers/Admin/AdminJobs/AdminJobListing";
 import Categories from "../Containers/Admin/AdminCategories/Categories";
@@ -51,7 +51,7 @@ function Api() {
             <Route path="/employee-profile" element={<Profile/>}/>
             <Route path="/employee-profile/editcontact" element={<ContactForm/>}/>
             <Route path="/employee-profile/qualifications" element={<Qualifications/>}/>
-            <Route path="/employee-jobApplication" element={<JobApplication/>}/>
+            <Route path="/employee-jobApplication/:id" element={<JobApplication/>}/>
 
             
 

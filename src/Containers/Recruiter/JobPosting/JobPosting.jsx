@@ -6,6 +6,7 @@ import SideNav from '../../../Components/SideNav';
 import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
 import { RecruiterAuth } from '../../../Context/RecruiterContext.jsx';
 import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
 function JobPosting() {
 
   const navigate=useNavigate()
@@ -132,6 +133,10 @@ function JobPosting() {
       <ReNavigation />
       <SideNav/>
       <div className="container job-posting-form">
+      <div className="back-icon" onClick={()=>navigate('/recruiter-home')}>
+    <FaArrowLeft size={24} />
+    </div>
+
                 <form onSubmit={handleSubmit}>
                     <div className="row g-3">
                         <div className="col-md-6">

@@ -4,7 +4,6 @@ import Swal from 'sweetalert2';
 import axiosInstance from "../Services/Interceptor/candidateInterceptor.js";
 export const AuthContext=createContext()
 
-
 function UserContext({children}) {
      const [user,setUser]=useState(JSON.parse(localStorage.getItem('user')) || null);
      const [loading,setLoading]=useState(true)
@@ -102,9 +101,10 @@ function UserContext({children}) {
            }
            const handleGoogleCallback = async () => {
             try {
-              const response = await axios.get('http:localhost:3000/auth/google/callback');
+              const response = await axios.get('http://localhost:3000/auth/google/callback');
+              console.log(response.data);
               if (response.data.success) {
-                console.log(response.data);
+             
                 setUser(response.data.user);
                 localStorage.setItem('token', response.data.token);  // Store the token
                 localStorage.setItem('user', JSON.stringify(response.data.user));  // Store the user

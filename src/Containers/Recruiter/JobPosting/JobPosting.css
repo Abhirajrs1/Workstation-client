@@ -46,6 +46,14 @@
   border-color: #0056b3;
 }
 
+.back-icon {
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+
 /* Custom styles for select elements */
 .job-posting-form select.form-select {
   appearance: none;

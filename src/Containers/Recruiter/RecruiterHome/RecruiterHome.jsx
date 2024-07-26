@@ -29,7 +29,7 @@ function RecruiterHome() {
             <Col md={6}>
               <h1 className="display-4">Let’s hire your next great candidate. <span className="highlight">Fast.</span></h1>
               <p>No matter the skills, experience or qualifications you’re looking for, you’ll find the right people here.</p>
-              <Button variant="warning" className="mt-3">Post a job</Button>
+              <Button variant="warning" className="mt-3" onClick={()=>navigate('/recruiter-postJob')}>Post a job</Button>
             </Col>
             <Col md={6} className="text-center">
               <img src={employee} alt="Person working on laptop" className="img-fluid rounded-circle" />
