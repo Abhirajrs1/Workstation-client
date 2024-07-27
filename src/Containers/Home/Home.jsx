@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Footer from '../../Components/Footer';
 import Navigation from '../../Components/Navigation.jsx';
 import './Home.css';
@@ -8,8 +9,10 @@ import { useNavigate } from 'react-router-dom';
 function Home() {
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchLocation, setSearchLocation] = useState('');
   axios.defaults.withCredentials = true;
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,16 +29,48 @@ function Home() {
     fetchData();
   }, []);
 
-  const applyJob=(id)=>{
-    navigate(`/employee-jobApplication/${id}`)
-  }
+  const applyJob = (id) => {
+    navigate(`/employee-jobApplication/${id}`);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    // Implement search functionality here
+    console.log('Searching for:', searchTerm, 'in', searchLocation);
+  };
 
   return (
     <div>
       <Navigation />
-      <div className="container mt-4">
+      <Container className="home-container mt-4">
+        <Form onSubmit={handleSearch} className="search-form mb-4">
+          <Row>
+            <Col md={5}>
+              <Form.Control
+                type="text"
+                placeholder="Job title, keywords, or company"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </Col>
+            <Col md={5}>
+              <Form.Control
+                type="text"
+                placeholder="City, state, or zip code"
+                value={searchLocation}
+                onChange={(e) => setSearchLocation(e.target.value)}
+              />
+            </Col>
+            <Col md={2}>
+              <Button variant="primary" type="submit" className="w-100">
+                Find Jobs
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+
         <h2 className="mb-4">Jobs based on your activity</h2>
-        <div className="row">
+        <div className="home-row">
           <div className="col-md-6">
             <div className="job-list">
               {jobs.map((job) => (
@@ -102,7 +137,7 @@ function Home() {
                     </div>
                   </div>
                   <div className="action-buttons">
-                    <button className="btn btn-primary" onClick={()=>(applyJob(selectedJob._id))}>Apply now</button>
+                    <button className="btn btn-primary" onClick={() => applyJob(selectedJob._id)}>Apply now</button>
                   </div>
                 </div>
               ) : (
@@ -113,7 +148,7 @@ function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
       <Footer />
     </div>
   );

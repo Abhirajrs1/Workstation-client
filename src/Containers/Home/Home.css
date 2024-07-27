@@ -7,13 +7,49 @@ body {
   line-height: 1.6;
 }
 
-.container {
+.home-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-.row {
+.search-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  margin-bottom: 20px;
+}
+
+.search-form .form-control {
+  border: 1px solid #dce0e0;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.search-form .form-control:focus {
+  border-color: #0a66c2;
+  box-shadow: 0 0 0 0.2rem rgba(10, 102, 194, 0.25);
+}
+
+.search-form .btn-primary {
+  background-color: #0a66c2;
+  border-color: #0a66c2;
+  font-weight: 600;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.search-form .btn-primary:hover {
+  background-color: #004182;
+  border-color: #004182;
+}
+
+.home-row {
   display: flex;
   flex-wrap: wrap;
   margin: -10px;
@@ -24,7 +60,6 @@ body {
   padding: 10px;
 }
 
-/* Job Listing Styles */
 .job-list {
   background-color: #fff;
   border-radius: 8px;
@@ -69,15 +104,7 @@ body {
   font-size: 1rem;
   color: #666;
   margin-left: 0;
-  padding-left:15px;
-}
-
-.btn-more {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  color: #666;
-  cursor: pointer;
+  padding-left: 15px;
 }
 
 .job-location {
@@ -102,7 +129,6 @@ body {
   margin-top: 10px;
 }
 
-/* Job Details Styles */
 .job-details-container {
   background-color: #ffffff;
   border-radius: 8px;
@@ -116,12 +142,6 @@ body {
   font-size: 1.8rem;
   font-weight: 600;
   margin: 0 0 10px 0;
-}
-
-.company-link {
-  font-size: 0.9rem;
-  color: #0a66c2;
-  vertical-align: super;
 }
 
 .job-info {
@@ -144,12 +164,12 @@ body {
   color: #666;
 }
 
-.job-skills ul {
+.job-field ul {
   list-style-type: none;
   padding-left: 0;
 }
 
-.job-skills li {
+.job-field li {
   background-color: #f3f2f1;
   padding: 5px 10px;
   border-radius: 20px;
@@ -182,23 +202,16 @@ body {
   background-color: #004182;
 }
 
-.btn-icon {
-  background-color: transparent;
-  border: none;
-  color: #666;
-  font-size: 1.2rem;
-}
-
-.btn-icon:hover {
-  color: #333;
-}
-
 @media (max-width: 768px) {
   .col-md-6 {
     width: 100%;
   }
-  
+
   .job-details-container {
     margin-top: 20px;
+  }
+
+  .search-form .btn-primary {
+    margin-top: 10px;
   }
 }

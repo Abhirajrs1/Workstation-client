@@ -70,18 +70,22 @@ function JobApplication() {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-      const resumeUrl=await claudinary(formData.resume,'pdf_preset','raw')
+      const resumeUrl=await claudinary(formData.resume,'preset_pdf','pdf')
+      console.log(resumeUrl,"RESUMEURL");
       const applicationData={
         ...formData,
         resume:resumeUrl
       }
       const response=await axiosInstance.post(`/employee-applyJob?jobid=${id}&recruiterid=${job.jobPostedBy}`,applicationData)
+      console.log(response.data);
       if(response.data.success){
-        
-
+        navigate('/employee-jobApplicationSuccess')
+      }else{
+        navigate('/employee-jobApplicationFailure')
       }
     } catch (error) {
-      
+      navigate('/employee-jobApplicationFailure')
+      console.log(error);
     }
   };
 

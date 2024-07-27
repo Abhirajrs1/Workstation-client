@@ -32,6 +32,8 @@ import Categories from "../Containers/Admin/AdminCategories/Categories";
 import AddCategory from "../Containers/Admin/AdminCategories/AddCategory";
 import EditCategory from "../Containers/Admin/AdminCategories/EditCategory";
 import IndividualJob from "../Containers/Recruiter/JobListing/IndividualJob";
+import ApplicationSuccess from "../Containers/User/JobApplication/ApplicationSuccess";
+import ApplicationFailure from "../Containers/User/JobApplication/ApplicationFailure";
 
 function Api() {
   return (
@@ -52,6 +54,9 @@ function Api() {
             <Route path="/employee-profile/editcontact" element={<ContactForm/>}/>
             <Route path="/employee-profile/qualifications" element={<Qualifications/>}/>
             <Route path="/employee-jobApplication/:id" element={<JobApplication/>}/>
+            <Route path="/employee-jobApplicationSuccess" element={<ApplicationSuccess/>}/>
+            <Route path="/employee-jobApplicationFailure" element={<ApplicationFailure/>}/>
+
 
             
 
