@@ -8,9 +8,9 @@ import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [jobs, setJobs] = useState([]);
+  const [filteredJobs, setFilteredJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchLocation, setSearchLocation] = useState('');
   axios.defaults.withCredentials = true;
   const navigate = useNavigate();
 
@@ -20,6 +20,7 @@ function Home() {
         const response = await axios.get('http://localhost:3000/employee-listJobs');
         if (response.data.success) {
           setJobs(response.data.jobs);
+          setFilteredJobs(response.data.jobs);
         }
       } catch (error) {
         console.error('Error fetching jobs:', error);
@@ -35,8 +36,14 @@ function Home() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // Implement search functionality here
-    console.log('Searching for:', searchTerm, 'in', searchLocation);
+    const lowerSearchTerm = searchTerm.toLowerCase();
+
+    const filtered = jobs.filter((job) => 
+      (job.jobTitle.toLowerCase().includes(lowerSearchTerm) || job.companyName.toLowerCase().includes(lowerSearchTerm)) ||
+      job.jobLocation.toLowerCase().includes(lowerSearchTerm)
+    );
+
+    setFilteredJobs(filtered);
   };
 
   return (
@@ -45,7 +52,7 @@ function Home() {
       <Container className="home-container mt-4">
         <Form onSubmit={handleSearch} className="search-form mb-4">
           <Row>
-            <Col md={5}>
+            <Col md={9}>
               <Form.Control
                 type="text"
                 placeholder="Job title, keywords, or company"
@@ -53,16 +60,8 @@ function Home() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </Col>
-            <Col md={5}>
-              <Form.Control
-                type="text"
-                placeholder="City, state, or zip code"
-                value={searchLocation}
-                onChange={(e) => setSearchLocation(e.target.value)}
-              />
-            </Col>
-            <Col md={2}>
-              <Button variant="primary" type="submit" className="w-100">
+            <Col md={3}>
+              <Button variant="primary" type="submit" className="w-75">
                 Find Jobs
               </Button>
             </Col>
@@ -73,23 +72,27 @@ function Home() {
         <div className="home-row">
           <div className="col-md-6">
             <div className="job-list">
-              {jobs.map((job) => (
-                <div
-                  key={job._id}
-                  className={`job-card ${selectedJob?._id === job._id ? 'active' : ''}`}
-                  onClick={() => setSelectedJob(job)}
-                >
-                  <div className="job-card-header">
-                    <h5 className="job-title">{job.jobTitle}</h5>
-                    <span className="company-name">{job.companyName}</span>
+              {filteredJobs.length > 0 ? (
+                filteredJobs.map((job) => (
+                  <div
+                    key={job._id}
+                    className={`job-card ${selectedJob?._id === job._id ? 'active' : ''}`}
+                    onClick={() => setSelectedJob(job)}
+                  >
+                    <div className="job-card-header">
+                      <h5 className="job-title">{job.jobTitle}</h5>
+                      <span className="company-name">{job.companyName}</span>
+                    </div>
+                    <p className="job-location">{job.jobLocation}</p>
+                    <div className="easy-apply">
+                      <span className="easy-apply-tag">🚀 Easily apply</span>
+                    </div>
+                    <p className="job-posted">Posted on {job.jobPostedOn}</p>
                   </div>
-                  <p className="job-location">{job.jobLocation}</p>
-                  <div className="easy-apply">
-                    <span className="easy-apply-tag">🚀 Easily apply</span>
-                  </div>
-                  <p className="job-posted">Posted on {job.jobPostedOn}</p>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p>No jobs found. Please try a different search.</p>
+              )}
             </div>
           </div>
           <div className="col-md-6">

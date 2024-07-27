@@ -16,15 +16,19 @@ body {
 .search-form {
   background-color: #fff;
   padding: 20px;
+  width: 700px;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 3px rgba(10, 9, 9, 0.12);
+  margin-top: 20px;
   margin-bottom: 20px;
+  margin-left: 300px;
 }
 
 .search-form .form-control {
   border: 1px solid #dce0e0;
   border-radius: 4px;
-  padding: 10px 15px;
+  padding: 10px 20px;
+  margin-left: 30px;
   font-size: 16px;
   transition: border-color 0.3s ease;
 }
@@ -37,10 +41,11 @@ body {
 .search-form .btn-primary {
   background-color: #0a66c2;
   border-color: #0a66c2;
-  font-weight: 600;
-  padding: 10px 20px;
+  font-weight: 500;
+  padding:px 20px;
   font-size: 16px;
   border-radius: 4px;
+  margin-left: 40px;
   transition: background-color 0.3s ease;
 }
 

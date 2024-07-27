@@ -31,6 +31,11 @@ function Profile() {
             <Navigation />
             <Container className="profile-container mt-2 d-flex justify-content-center">
                 <Card className="p-4 shadow-sm" style={{ width: '100%', maxWidth: '600px' }}>
+                <i
+              className="fas fa-arrow-left fa-lg mb-3"
+              style={{ cursor: 'pointer' }}
+              onClick={() => navigate('/')}
+              ></i>
                     <Row className="align-items-center mb-4">
                         <Col xs={10}>
                             <h1 className="fw-bold">{user.username}</h1>
