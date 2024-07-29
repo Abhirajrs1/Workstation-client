@@ -1,124 +1,116 @@
 import React, { useContext, useEffect,useState } from 'react';
-import './ContactForm.css'
+import './EditResume.css'
 import Navigation from '../../../Components/Navigation';
 import { AuthContext } from '../../../Context/UserContext';
 import Swal from 'sweetalert2';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 import { useNavigate } from 'react-router-dom';
 
-const ContactForm = () => {
 
-  const {user,setUser,isAuthenticated,loading}=useContext(AuthContext)
-  const navigate=useNavigate()
-
-  const [formData,setFormData]=useState({
-      username:'',
-      contact:'',
-      useraddress:[{
-        Housename:'',
-        area:'',
-        street:'',
-        pincode:'',
-        city:'',
-        state:'',
-        country:'India'
-      }]
-  })
-  useEffect(()=>{
-    if(!isAuthenticated && !loading){
-      navigate('/employee-login')
-    }else if(user){
-      setFormData({
-        username:user.username||'',
-        contact:user.contact ||'',
-        useraddress:user.useraddress.length > 0 ? user.useraddress[0] :
-        {
-          Housename: '',
-          area: '',
+function EditResume() {
+    const {user,setUser,isAuthenticated,loading}=useContext(AuthContext)
+    const navigate=useNavigate()
+  
+    const [formData,setFormData]=useState({
+        username:'',
+        contact:'',
+        useraddress:[{
+          Housename:'',
+          area:'',
           street:'',
           pincode:'',
           city:'',
           state:'',
-          country:''||"India"   
-        }
-      })
-    }
-  },[user,isAuthenticated,navigate])
-
-  const handleChange=(e)=>{
-    const {id,value}=e.target
-    if(id==='username' || id==='contact'){
-      setFormData({
-        ...formData,[id]:value
-      })
-    }else{
-      setFormData({
-        ...formData,
-        useraddress:{
-          ...formData.useraddress,
-          [id]:value,
-        }
-      })
-    }
-  }
-
-  const handleSubmit=async(e)=>{
-    e.preventDefault()
-    try {
-      const updatedUserContact={
-        ...user,
-        username:formData.username,
-        contact:formData.contact,
-        useraddress:[formData.useraddress]
+          country:'India'
+        }]
+    })
+    useEffect(()=>{
+      if(!isAuthenticated && !loading){
+        navigate('/employee-login')
+      }else if(user){
+        setFormData({
+          username:user.username||'',
+          contact:user.contact ||'',
+          useraddress:user.useraddress.length > 0 ? user.useraddress[0] :
+          {
+            Housename: '',
+            area: '',
+            street:'',
+            pincode:'',
+            city:'',
+            state:'',
+            country:''||"India"   
+          }
+        })
       }
-      const response=await axiosInstance.put(`/employee-updateContact/${user.email}`,{updatedUserContact},{
-        headers:{
-          'Authorization':`Bearer ${localStorage.getItem('token')}`
-        }
-      })
-      if(response.data.success){
-        Swal.fire({
-          title: 'Success!',
-          text: response.data.message,
-          icon: 'success',
-          timer: 5000,
-          position: 'top-center'
-        });
-        navigate('/employee-profile')
-        setUser(response.data.user)
-        localStorage.setItem('user', JSON.stringify(response.data.user));
+    },[user,isAuthenticated,navigate])
+  
+    const handleChange=(e)=>{
+      const {id,value}=e.target
+      if(id==='username' || id==='contact'){
+        setFormData({
+          ...formData,[id]:value
+        })
       }else{
-          console.log(response.data);
-          Swal.fire({
-              title: 'Error!',
-              text: response.data.message,
-              icon: 'error',
-              timer: 5000,
-              position: 'top-center',
-            })
+        setFormData({
+          ...formData,
+          useraddress:{
+            ...formData.useraddress,
+            [id]:value,
+          }
+        })
       }
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
-        console.error(error.response.data);
-        Swal.fire({
-            title: 'Error!',
-            text: error.response.data.message,
-            icon: 'error',
-            timer: 5000,
-            position: 'top-center',
-          }); 
-        } else {
-        console.error("An error occurred:", error);
-        Swal.fire({
-            title: 'Error!',
-            text: 'An error occurred. Please try again later.',
-            icon: 'error',
-            timer: 5000,
-            position: 'top-center',
-          });
-        }
     }
-  }
+  
+    const handleSubmit=async(e)=>{
+      e.preventDefault()
+      try {
+        const updatedUserContact={
+          ...user,
+          username:formData.username,
+          contact:formData.contact,
+          useraddress:[formData.useraddress]
+        }
+        const response=await axiosInstance.put(`/employee-updateContact/${user.email}`,{updatedUserContact},{
+          headers:{
+            'Authorization':`Bearer ${localStorage.getItem('token')}`
+          }
+        })
+        if(response.data.success){
+            const resumeData={
+                name:formData.username,
+                email:user.email,
+                contact:formData.contact,
+                address:[formData.useraddress],
+                candidate:user._id
+            }
+
+        const resumeResponse=await axiosInstance.post('employee-postResume',{resumeData}, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        if(resumeResponse.data.success){
+            navigate('/employee-resume')
+          setUser(response.data.user)
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+
+
+        }else{
+            console.log(resumeResponse.data);
+        }
+        }else{
+            console.log(response.data);
+            
+        }
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.message) {
+          console.error(error.response.data);
+          } else {
+          console.error("An error occurred:", error);
+          }
+      }
+    }
   return (
     <>
     <Navigation/>
@@ -132,7 +124,7 @@ const ContactForm = () => {
               style={{ cursor: 'pointer' }}
               onClick={() => navigate('/employee-profile')}
             ></i>
-              <h5 className="card-title text-center">Contact Information</h5>
+              <h5 className="card-title text-center">Candidate Information</h5>
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="firstName" className="form-label">
@@ -248,7 +240,7 @@ const ContactForm = () => {
       </div>
     </div>
     </>
-  );
-};
+  )
+}
 
-export default ContactForm;
+export default EditResume

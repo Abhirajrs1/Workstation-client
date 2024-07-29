@@ -85,7 +85,7 @@ function Profile() {
                             </Card>
                         </Col>
                         <Col xs={2} className="text-end">
-                            <Link to="/edit-profile">
+                            <Link to="/employee-resume">
                                 <FaChevronRight style={{ cursor: 'pointer' }} />
                             </Link>
                         </Col>
