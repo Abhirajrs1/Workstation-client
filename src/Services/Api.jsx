@@ -36,6 +36,9 @@ import ApplicationSuccess from "../Containers/User/JobApplication/ApplicationSuc
 import ApplicationFailure from "../Containers/User/JobApplication/ApplicationFailure";
 import Resume from "../Containers/User/Resume/Resume";
 import EditResume from "../Containers/User/Resume/EditResume";
+import EditJob from "../Containers/Recruiter/JobListing/EditJob";
+import JobApplications from "../Containers/Recruiter/JobApplications/JobApplications";
+import JobApplicationDetails from "../Containers/Recruiter/JobApplications/JobApplicationDetails";
 
 function Api() {
   return (
@@ -73,6 +76,9 @@ function Api() {
             <Route path='/recruiter-postJob' element={<JobPosting/>}/>
             <Route path="/recruiter-listJob" element={<JobListing/>}/>
             <Route path="/recruiter-viewJob/:id" element={<IndividualJob/>}/>
+            <Route path="/recruiter-editJob/:id" element={<EditJob/>}/>
+            <Route path="/recruiter-showApplications" element={<JobApplications/>}/>
+            <Route path="/recruiter-viewApplicationDetails/:id" element={<JobApplicationDetails/>}/>
 
 
 

@@ -26,7 +26,7 @@
   font-family: 'Mulish', sans-serif;
 }
 
-.go-home-button {
+.go-home-buttons {
   background-color: #007bff;
   border-color: #007bff;
   font-family: 'Mulish', sans-serif;
@@ -34,7 +34,7 @@
   transition: all 0.3s ease;
 }
 
-.go-home-button:hover {
+.go-home-buttons:hover {
   background-color: #0056b3;
   border-color: #0056b3;
   transform: translateY(-2px);

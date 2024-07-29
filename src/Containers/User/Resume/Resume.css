@@ -74,3 +74,59 @@
 .resume-info .edit-icon {
   font-size: 16px;
 }
+
+.resume-education {
+  margin-top: 20px;
+}
+
+.education-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-education-button {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  padding: 0;
+  color: #007bff;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.education-item {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+.resume-skills {
+    margin-top: 20px;
+}
+
+.skills-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-skill-button {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    padding: 0;
+    color: #007bff;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.skill-item {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+

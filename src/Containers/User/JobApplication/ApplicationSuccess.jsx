@@ -20,8 +20,8 @@ function ApplicationSuccess() {
           <Card.Text>
             Thank you for applying. We'll review your application and get back to you soon.
           </Card.Text>
-          <Button variant="primary" onClick={handleGoHome} className="mt-4 go-home-button">
-            Home
+          <Button variant="success" onClick={handleGoHome} className="mt-4 go-home-buttons">
+            Go Home
           </Button>
         </Card.Body>
       </Card>

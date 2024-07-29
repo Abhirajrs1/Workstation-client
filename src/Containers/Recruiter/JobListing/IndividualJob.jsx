@@ -42,8 +42,8 @@ function IndividualJob() {
             <ReNavigation />
             <div className="job-details-page">
                 <Container>
-                    <Button className="back-button" onClick={() => navigate('/recruiter-listJob')}>
-                        <FaArrowLeft /> Back to Jobs
+                    <Button className="back-buttons" onClick={() => navigate('/recruiter-listJob')}>
+                        <FaArrowLeft /> 
                     </Button>
                     <Card className="job-card">
                         <Card.Body>

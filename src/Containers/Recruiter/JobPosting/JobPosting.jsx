@@ -181,7 +181,7 @@ function JobPosting() {
                             <select className="form-select" value={formData.category} onChange={handleChange} id="category" required>
                                 <option>Select category</option>
                                 {categories.map(category => (
-                                    <option key={category._id} value={category._id}>{category.categoryName}</option>
+                                    <option key={category._id} value={category.categoryName}>{category.categoryName}</option>
                                 ))}
                             </select>
                         </div>

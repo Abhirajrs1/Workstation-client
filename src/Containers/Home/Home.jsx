@@ -1,29 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../Services/Interceptor/candidateInterceptor.js';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Footer from '../../Components/Footer';
 import Navigation from '../../Components/Navigation.jsx';
+import { FaBars } from 'react-icons/fa';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  axios.defaults.withCredentials = true;
+  const [showCategories, setShowCategories] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/employee-listJobs');
+        const response = await axiosInstance.get('/employee-listJobs');
         if (response.data.success) {
           setJobs(response.data.jobs);
           setFilteredJobs(response.data.jobs);
         }
+
+        const categoryResponse = await axiosInstance.get('/employee-getCategories');
+        if (categoryResponse.data.success) {
+          setCategories(categoryResponse.data.categories.map(cat => cat.categoryName)); 
+        }
       } catch (error) {
-        console.error('Error fetching jobs:', error);
+        console.error('Error fetching jobs or categories:', error);
       }
     };
 
@@ -38,18 +46,47 @@ function Home() {
     e.preventDefault();
     const lowerSearchTerm = searchTerm.toLowerCase();
 
-    const filtered = jobs.filter((job) => 
-      (job.jobTitle.toLowerCase().includes(lowerSearchTerm) || job.companyName.toLowerCase().includes(lowerSearchTerm)) ||
-      job.jobLocation.toLowerCase().includes(lowerSearchTerm)
+    const filtered = jobs.filter((job) =>
+      (job.jobTitle.toLowerCase().includes(lowerSearchTerm) || job.companyName.toLowerCase().includes(lowerSearchTerm))
     );
 
     setFilteredJobs(filtered);
+  };
+
+  const handleCategoryChange = (category) => {
+    const updatedSelectedCategories = selectedCategories.includes(category)
+      ? selectedCategories.filter((cat) => cat !== category)
+      : [...selectedCategories, category];
+
+    setSelectedCategories(updatedSelectedCategories);
+
+    const filtered = jobs.filter((job) =>
+      updatedSelectedCategories.length === 0 || updatedSelectedCategories.includes(job.category)
+    );
+
+    setFilteredJobs(filtered.length ? filtered : jobs);
   };
 
   return (
     <div>
       <Navigation />
       <Container className="home-container mt-4">
+        <div className="top-bar">
+          <FaBars className="menu-icon" onClick={() => setShowCategories(!showCategories)} />
+        </div>
+        {showCategories && (
+          <div className="categories-filter">
+            {categories.map((category) => (
+              <Form.Check
+                key={category}
+                type="checkbox"
+                label={category}
+                checked={selectedCategories.includes(category)}
+                onChange={() => handleCategoryChange(category)}
+              />
+            ))}
+          </div>
+        )}
         <Form onSubmit={handleSearch} className="search-form mb-4">
           <Row>
             <Col md={9}>
@@ -158,3 +195,4 @@ function Home() {
 }
 
 export default Home;
+  

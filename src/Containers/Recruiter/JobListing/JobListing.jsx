@@ -39,7 +39,11 @@ function JobListing() {
         navigate(`/recruiter-viewJob/${id}`)
     }
 
-   
+
+    const editJob=async(id)=>{
+        navigate(`/recruiter-editJob/${id}`)
+    }
+
     const deleteJob = async (id) => {
         const result = await Swal.fire({
             title: 'Are you sure?',
@@ -83,7 +87,7 @@ function JobListing() {
                                     <h6 className="company-name">{job.companyName}</h6>
                                 </div>
                                 <div className="action-icons">
-                                    <FaEdit className="edit-icon"  />
+                                    <FaEdit className="edit-icon" onClick={()=>editJob(job._id)} />
                                     <FaTrashAlt className="delete-icon" onClick={()=>deleteJob(job._id)} />
                                 </div>
                             </div>

@@ -19,8 +19,8 @@ function SideNav() {
       <Link to="/phone-calls" className="side-nav-link">
         <FaPhone /> <span>Phone calls</span>
       </Link>
-      <Link to="/smart-sourcing" className="side-nav-link">
-        <FaUsers /> <span>Smart Sourcing</span>
+      <Link to="/recruiter-showApplications" className="side-nav-link">
+        <FaUsers /> <span>Applications</span>
       </Link>
       <Link to="/candidates" className="side-nav-link">
         <FaUserTie /> <span>Candidates</span>

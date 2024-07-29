@@ -220,3 +220,51 @@ body {
     margin-top: 10px;
   }
 }
+/* Existing styles remain unchanged */
+
+.top-bar {
+  position: relative;
+}
+
+.menu-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.categories-panel {
+  position: absolute;
+  left: 0;
+  top: 40px; /* Adjust as needed */
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-width: 250px;
+  width: 100%;
+}
+
+.categories-panel .form-check {
+  margin-bottom: 10px;
+}
+
+.categories-panel .form-check input {
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .categories-panel {
+    position: static;
+    top: auto;
+    width: 100%;
+    max-width: none;
+    box-shadow: none;
+  }
+
+  .search-form {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+

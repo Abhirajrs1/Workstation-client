@@ -97,6 +97,7 @@ function Jobs() {
                                 <tr>
                                     <th>Sl. No</th>
                                     <th>Job Title</th>
+                                    <th>Category</th>
                                     <th>Company</th>
                                     <th>Action</th>
                                 </tr>
@@ -106,6 +107,7 @@ function Jobs() {
                                     <tr key={job._id}>
                                         <td>{index + 1}</td>
                                         <td>{job.jobTitle}</td>
+                                        <td>{job.categoryName}</td>
                                         <td>{job.companyName}</td>
                                         <td>
                                             <Button

@@ -26,6 +26,7 @@ function JobApplication() {
     preferredLocation: '',
     city: '',
     resume: null,
+    resumeLink:""
   });
 
   const handleChange = (e) => {
@@ -34,11 +35,11 @@ function JobApplication() {
   };
 
   const handleFileChange = (e) => {
-    if (e.target.files[0].type !== 'application/pdf') {
-      alert('Only PDF files are allowed');
-      e.target.value = null;
-      return;
-    }
+    // if (e.target.files[0].type !== 'application/pdf') {
+    //   alert('Only PDF files are allowed');
+    //   e.target.value = null;
+    //   return;
+    // }
     setFormData({ ...formData, resume: e.target.files[0] });
   };
 
@@ -70,11 +71,10 @@ function JobApplication() {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-      const resumeUrl=await claudinary(formData.resume,'preset_pdf','pdf')
-      console.log(resumeUrl,"RESUMEURL");
+      // const resumeUrl=await claudinary(formData.resume)
       const applicationData={
         ...formData,
-        resume:resumeUrl
+       
       }
       const response=await axiosInstance.post(`/employee-applyJob?jobid=${id}&recruiterid=${job.jobPostedBy}`,applicationData)
       console.log(response.data);
@@ -88,6 +88,8 @@ function JobApplication() {
       console.log(error);
     }
   };
+
+
 
   return (
     <>
@@ -230,12 +232,23 @@ function JobApplication() {
         </Form.Group>
 
         <Form.Group controlId="resume">
+          <Form.Label>Resume link *</Form.Label>
+          <Form.Control
+            type="text"
+            name="resumeLink"
+            value={formData.resumeLink}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group controlId="resume">
           <Form.Label>Upload Resume *</Form.Label>
           <Form.Control
             type="file"
             name="resume"
             onChange={handleFileChange}
-            required
+            
           />
         </Form.Group>
 
