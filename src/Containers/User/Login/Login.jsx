@@ -57,14 +57,13 @@ function Login() {
    }
 
   return (
-    <div className="login-container d-flex align-items-center justify-content-center ">
-   
+    <div className="candidate-login-container d-flex align-items-center justify-content-center ">
       <div className="d-flex">
-        <div className="banner p-4 d-flex flex-column align-items-center justify-content-center">
+        <div className="candidate-banner p-4 d-flex flex-column align-items-center justify-content-center">
           <img src={logo} alt="Logo" width="300" className="mb-3" />
         </div>
-        <div className="form p-4 bg-white d-flex flex-column align-items-center justify-content-center">
-            <div className='link'>
+        <div className="candidate-form p-4 bg-white d-flex flex-column align-items-center justify-content-center">
+            <div className='candidate-link'>
             <Link to="/recruiter-login" id="forgot" className="text-muted ">
             Are you a recruiter?
             </Link>
@@ -103,8 +102,8 @@ function Login() {
             </button>
             <Link to="/admin-login" className="text-muted text-center mb-3 d-block">Is Admin?</Link> 
             </form>      
-          <button onClick={handleGoogle} type="button" className="google-btn w-75 mb-3">
-            <img src={google} alt="Google logo" className="google-logo" />
+          <button onClick={handleGoogle} type="button" className="candidate-google-btn w-75 mb-3">
+            <img src={google} alt="Google logo" className="candidate-google-logo" />
           </button>
           <Link to="/employee-forgotPassword" id="forgot" className="text-muted">
             Forgot Your Password?

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200..1000&display=swap');
 
-.login-container {
+.candidate-login-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,7 +12,7 @@
   backdrop-filter: blur(7px);
 }
 
-.banner {
+.candidate-banner {
   position: relative; 
   border-radius: 10px 0 0 10px;
   padding: 40px;
@@ -21,32 +21,31 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-
 }
 
-.banner::before {
+.candidate-banner::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); 
+  background: rgba(64, 64, 64, 0.9); 
   border-radius: 10px 0 0 10px; 
   z-index: 1;
 }
 
-.banner > * {
+.candidate-banner > * {
   position: relative; 
   z-index: 2;
 }
 
-.banner img {
+.candidate-banner img {
   margin-bottom: 20px;
   max-width: 100%; 
 }
 
-.form {
+.candidate-form {
   background: #fff;
   border-radius: 0 10px 10px 0;
   padding: 40px;
@@ -57,24 +56,24 @@
   flex: 1; 
 }
 
-.form h2 {
+.candidate-form h2 {
   margin-bottom: 20px;
 }
 
-.form img {
+.candidate-form img {
   height: 70px;
   width: 70px; 
 }
 
-.form form {
+.candidate-form form {
   width: 100%;
 }
 
-.form input {
+.candidate-form input {
   margin-bottom: 10px;
 }
 
-.form button {
+.candidate-form button {
   width: 100%;
 }
 
@@ -86,7 +85,7 @@
   opacity: 1;
 }
 
-.link {
+.candidate-link {
   margin-left: 100px;
 }
 
@@ -95,11 +94,7 @@
   color: red;
 }
 
-.alert {
-  width: 100%;
-  text-align: center;
-}
-.google-btn {
+.candidate-google-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,7 +105,7 @@
   border: 1px solid gray;
 }
 
-.google-logo {
+.candidate-google-logo {
   height: 10px;
   width: 10px;
   margin-right: 10px;

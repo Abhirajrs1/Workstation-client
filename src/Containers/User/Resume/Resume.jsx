@@ -21,14 +21,14 @@ function Resume() {
         if (!isAuthenticated && !loading) {
             navigate("/employee-login");
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, navigate, loading]);
 
     useEffect(() => {
         const fetchEducations = async () => {
             try {
                 const response = await axiosInstance.get('/employee-getresumeeducation');
                 if(response.data.success){
-                    setEducations(response.data.education);
+                    setEducations(response.data.education || []);
                 }
             } catch (error) {
                 console.error('Error fetching education details:', error);
@@ -37,40 +37,41 @@ function Resume() {
         fetchEducations();
     }, []);
 
-    useEffect(()=>{
-        const fetChSkill=async()=>{
+    useEffect(() => {
+        const fetchSkills = async () => {
             try {
-                const response=await axiosInstance.get('/employee-getresumeskill')
+                const response = await axiosInstance.get('/employee-getresumeskill');
                 if(response.data.success){
-                    setSkills(response.data.skill)
+                    setSkills(response.data.skill || []);
                 }
             } catch (error) {
-                console.error('Error fetching education details:', error);
+                console.error('Error fetching skills details:', error);
             }
-        }
-        fetChSkill()
-    },[])
+        };
+        fetchSkills();
+    }, []);
 
     const handleAddEducation = async (education) => {
         try {
-           const response= await axiosInstance.post('/employee-addresumeeducation', {education});
+           const response = await axiosInstance.post('/employee-addresumeeducation', { education });
            if(response.data.success){
-            setEducations([...educations, education]);
+                setEducations([...educations, education]);
            }
         } catch (error) {
             console.error('Error adding education:', error);
         }
     };
-    const handleAddSkill=async (skill)=>{
+
+    const handleAddSkill = async (skill) => {
         try {
-            const response=await axiosInstance.post('/employee-addresumeskill',{skill})
+            const response = await axiosInstance.post('/employee-addresumeskill', { skill });
             if(response.data.success){
-                setSkills([...skills,skill])
+                setSkills([...skills, skill]);
             }
         } catch (error) {
-            console.error('Error adding education:', error);
+            console.error('Error adding skill:', error);
         }
-    }
+    };
 
     const formatDate = (dateString) => {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -79,6 +80,7 @@ function Resume() {
     };
 
     const userAddress = user.useraddress && user.useraddress.length > 0 ? user.useraddress[0] : {};
+
     return (
         <>
         <Navigation/>
@@ -91,7 +93,7 @@ function Resume() {
                     <h2 className="fw-bold">{user.username}</h2>
                 </Col>
                 <Col xs="auto">
-                    <div className="avatar">AR</div>
+                    <div className="avatar">{user.username[0]}</div>
                 </Col>
             </Row>
             <Row className="resume-info">
@@ -103,7 +105,7 @@ function Resume() {
                         </div>
                         <div className="info-item">
                             <FaPhone className="icon" />
-                            <span>{user.contact}</span>
+                            <span>{user.contact || 'N/A'}</span>
                             <Link to="/employee-editResume" className="edit-link">
                                 <FaChevronRight className="edit-icon" />
                             </Link>
@@ -119,18 +121,22 @@ function Resume() {
                 <Col>
                     <div className="education-header">
                         <h4 className='fw-bold'>Education</h4>
-                        <Button variant="link" className="add-education-button" onClick={() => setShowModal(true)}>
+                        <Button variant="link" className="add-education-button" onClick={() => setShowEducationModal(true)}>
                             <FaPlus className="icon" />
                         </Button>
                     </div>
-                    {educations.map((edu, index) => (
-                        <div key={index} className="education-item">
-                            <h5>{edu.degree} in {edu.specialization}</h5>
-                            <p>{edu.collegeName}, {edu.city}, {edu.state}</p>
-                            <p><span>{edu.courseType}</span> | {formatDate(edu.startDate)} - {formatDate(edu.endDate)}</p>
-                            <p>Score: {edu.percentage}%</p>
-                        </div>
-                    ))}
+                    {educations.length > 0 ? (
+                        educations.map((edu, index) => (
+                            <div key={index} className="education-item">
+                                <h5>{edu.degree} in {edu.specialization}</h5>
+                                <p>{edu.collegeName}, {edu.city}, {edu.state}</p>
+                                <p><span>{edu.courseType}</span> | {formatDate(edu.startDate)} - {formatDate(edu.endDate)}</p>
+                                <p>Score: {edu.percentage}%</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No education details available.</p>
+                    )}
                 </Col>
             </Row>
             <Row className="resume-skills">
@@ -141,11 +147,15 @@ function Resume() {
                             <FaPlus className="icon" />
                         </Button>
                     </div>
-                    {skills.map((skill, index) => (
-                        <div key={index} className="skill-item">
-                            <p>{skill}</p>
-                        </div>
-                    ))}
+                    {skills.length > 0 ? (
+                        skills.map((skill, index) => (
+                            <div key={index} className="skill-item">
+                                <p>{skill}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No skills available.</p>
+                    )}
                 </Col>
             </Row>
         </Container>

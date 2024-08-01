@@ -1,21 +1,73 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../Context/UserContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaFileAlt, FaChevronRight } from 'react-icons/fa';
 import Navigation from '../../../Components/Navigation';
-
+import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 import './Profile.css';
 
 function Profile() {
     const { user, loading, isAuthenticated } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [description, setDescription] = useState('');
+    const [remainingWords, setRemainingWords] = useState(1000);
 
     useEffect(() => {
         if (!isAuthenticated && !loading) {
             navigate("/employee-login");
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, loading, navigate]);
+
+    useEffect(() => {
+        if (user.description) {
+            setDescription(user.description);
+        }
+    }, [user.description]);
+
+    useEffect(() => {
+        setRemainingWords(1000 - description.split(/\s+/).filter(Boolean).length);
+    }, [description]);
+
+    const handleDescriptionChange = (e) => {
+        const words = e.target.value.split(/\s+/).filter(Boolean);
+        if (words.length <= 1000) {
+            setDescription(e.target.value);
+        }
+    };
+
+    useEffect(() => {
+        if (user._id) {
+            const fetchDescription = async () => {
+                try {
+                    const response = await axiosInstance.get(`/employee-getDescription/${user._id}`);
+                    console.log(response.data);
+                    if (response.data.success) {
+                        setDescription(response.data.result);
+                    }
+                } catch (error) {
+                    console.error('Error fetching description:', error);
+                }
+            };
+
+            fetchDescription();
+        }
+    }, [user._id]);
+
+    const handleDescriptionSubmit = async () => {
+        try {
+            const response = await axiosInstance.put('/employee-addDescription', {
+                userId: user._id,
+                description
+            });
+            if (response.data.success) {
+                setDescription(response.data.description.description);
+            }
+        } catch (error) {
+            console.error('Error updating description:', error);
+            alert('Failed to update description');
+        }
+    };
 
     if (loading) {
         return <div>....Loading</div>;
@@ -33,23 +85,24 @@ function Profile() {
         const year = String(date.getFullYear()).slice(-2); 
         return `${day}/${month}/${year}`;
     };
+
     return (
         <div>
             <Navigation />
             <Container className="profile-container mt-2 d-flex justify-content-center">
                 <Card className="p-4 shadow-sm" style={{ width: '100%', maxWidth: '600px' }}>
-                <i
-              className="fas fa-arrow-left fa-lg mb-3"
-              style={{ cursor: 'pointer' }}
-              onClick={() => navigate('/')}
-              ></i>
+                    <i
+                        className="fas fa-arrow-left fa-lg mb-3"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => navigate('/')}
+                    ></i>
                     <Row className="align-items-center mb-4">
                         <Col xs={10}>
                             <h1 className="fw-bold">{user.username}</h1>
                         </Col>
                         <Col xs={2} className="text-end">
                             <div className="profile-initials-circle bg-dark text-white d-flex align-items-center justify-content-center">
-                                AR
+                                {user.username[0]}
                             </div>
                         </Col>
                     </Row>
@@ -108,6 +161,19 @@ function Profile() {
                             </Link>
                         </Col>
                     </Row>
+                    <Form.Group className="mt-3">
+                        <Form.Label className="profile-heading">Description</Form.Label>
+                        <Form.Control 
+                            as="textarea" 
+                            rows={5} 
+                            value={description}
+                            onChange={handleDescriptionChange}
+                            maxLength={1000}
+                            placeholder="Write your description here (1000 words max)"
+                        />
+                        <Form.Text>{remainingWords} words remaining</Form.Text>
+                        <Button variant="primary" className="mt-3" onClick={handleDescriptionSubmit}>Save</Button>
+                    </Form.Group>
                 </Card>
             </Container>
         </div>

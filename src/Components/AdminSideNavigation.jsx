@@ -9,7 +9,7 @@ function AdminSideNavigation() {
     <div className="side-nav">
     <Nav className="flex-column">
       <Nav.Item className="side-nav-item">
-        <Link to="/dashboard">
+        <Link to="/admin-home">
           <FaTachometerAlt /> Dashboard
         </Link>
       </Nav.Item>

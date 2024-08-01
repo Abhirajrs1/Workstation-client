@@ -30,7 +30,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Add a darker overlay */
+  /* background: rgba(0, 0, 0, 0.5); Add a darker overlay */
   border-radius: 10px 0 0 10px; /* Match the border-radius */
   z-index: 1; /* Place the overlay below the content */
 }
