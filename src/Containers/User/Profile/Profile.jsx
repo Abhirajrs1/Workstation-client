@@ -103,6 +103,8 @@ function Profile() {
                         <Col xs={2} className="text-end">
                             <div className="profile-initials-circle bg-dark text-white d-flex align-items-center justify-content-center">
                                 {user.username[0]}
+
+                                
                             </div>
                         </Col>
                     </Row>
