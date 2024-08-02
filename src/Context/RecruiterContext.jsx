@@ -18,7 +18,19 @@ function RecruiterContext({children}) {
                 try {
                     const response=await axiosInstance.get('/recruiter-verify')
                     if(response.data.success){
-                        setRecruiter(JSON.parse(localStorage.getItem('recruiter')))
+                        const recruiter=response.data.recruiter.recruiter
+                        if(recruiter.block){
+                            Swal.fire({
+                                title: 'Blocked!',
+                                text: 'Your account has been blocked. Please contact support.',
+                                icon: 'warning',
+                                timer: 5000,
+                                position: 'top-center',
+                              });
+                              RecruiterLogout()
+                              return;
+                        }
+                        setRecruiter(recruiter)
                     }else{
                         setUser(null)
                         localStorage.removeItem('recruiter');
@@ -38,7 +50,6 @@ function RecruiterContext({children}) {
         try {
             const response = await axiosInstance.post('/recruiter-login', { email, password});
         if(response.data.success){
-            console.log(response.data.recruiter);
             setRecruiter(response.data.recruiter)
             localStorage.setItem('recruitertoken',response.data.token)
             localStorage.setItem('recruiter', JSON.stringify(response.data.recruiter));
@@ -92,13 +103,6 @@ function RecruiterContext({children}) {
                 }
         } catch (error) {
             console.log("An error occured during logout",error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'An error occurred. Please try again later.',
-                    icon: 'error',
-                    timer: 5000,
-                    position: 'top-center',
-                  });
         }
     }
   return (

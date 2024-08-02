@@ -15,7 +15,19 @@ function UserContext({children}) {
                 try {
                     const response=await axiosInstance.get('/verify')
                     if(response.data.success){
-                        setUser(JSON.parse(localStorage.getItem('user')))
+                      const user=response.data.user.user
+                      if (user.block) {
+                        Swal.fire({
+                          title: 'Blocked!',
+                          text: 'Your account has been blocked. Please contact support.',
+                          icon: 'warning',
+                          timer: 5000,
+                          position: 'top-center',
+                        });
+                        logout(); 
+                        return;
+                      }
+                        setUser(user)
                     }else{
                         setUser(null)
                         localStorage.removeItem('user');
@@ -36,7 +48,6 @@ function UserContext({children}) {
                 const response = await axiosInstance.post('/employee-login', { email, password});
                 if(response.data.success){
                     setUser(response.data.user)
-                    console.log(response.data.user);
                     localStorage.setItem('token',response.data.token)
                     localStorage.setItem('user', JSON.stringify(response.data.user));
                     return true
@@ -87,16 +98,10 @@ function UserContext({children}) {
                         timer: 5000,
                         position: 'top-center',
                       })
+                      window.href('/employee-login')
                 }
             } catch (error) {
                 console.log("An error occured during logout",error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'An error occurred. Please try again later.',
-                    icon: 'error',
-                    timer: 5000,
-                    position: 'top-center',
-                  });
             }
            }
            const handleGoogleCallback = async () => {
@@ -106,8 +111,8 @@ function UserContext({children}) {
               if (response.data.success) {
              
                 setUser(response.data.user);
-                localStorage.setItem('token', response.data.token);  // Store the token
-                localStorage.setItem('user', JSON.stringify(response.data.user));  // Store the user
+                localStorage.setItem('token', response.data.token);  
+                localStorage.setItem('user', JSON.stringify(response.data.user)); 
                 Swal.fire({
                   title: 'Success!',
                   text: 'Google authentication successful',
