@@ -3,18 +3,17 @@ import axiosInstance from '../../Services/Interceptor/candidateInterceptor.js';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Footer from '../../Components/Footer';
 import Navigation from '../../Components/Navigation.jsx';
-import { FaBars } from 'react-icons/fa';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa'; // Importing React Icon for back arrow
 
 function Home() {
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedJob, setSelectedJob] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [showCategories, setShowCategories] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,7 +27,7 @@ function Home() {
 
         const categoryResponse = await axiosInstance.get('/employee-getCategories');
         if (categoryResponse.data.success) {
-          setCategories(categoryResponse.data.categories.map(cat => cat.categoryName)); 
+          setCategories(categoryResponse.data.categories.map(cat => cat.categoryName));
         }
       } catch (error) {
         console.error('Error fetching jobs or categories:', error);
@@ -45,86 +44,80 @@ function Home() {
   const handleSearch = (e) => {
     e.preventDefault();
     const lowerSearchTerm = searchTerm.toLowerCase();
-
     const filtered = jobs.filter((job) =>
       (job.jobTitle.toLowerCase().includes(lowerSearchTerm) || job.companyName.toLowerCase().includes(lowerSearchTerm))
+      && (selectedCategory ? job.categoryName === selectedCategory : true)
     );
-
     setFilteredJobs(filtered);
   };
 
-  const handleCategoryChange = (category) => {
-    const updatedSelectedCategories = selectedCategories.includes(category)
-      ? selectedCategories.filter((cat) => cat !== category)
-      : [...selectedCategories, category];
-
-    setSelectedCategories(updatedSelectedCategories);
-
-    const filtered = jobs.filter((job) =>
-      updatedSelectedCategories.length === 0 || updatedSelectedCategories.includes(job.category)
-    );
-
-    setFilteredJobs(filtered.length ? filtered : jobs);
+  const handleJobClick = (job) => {
+    setSelectedJob(job); 
   };
+
+  const handleBackClick = () => {
+    window.location.reload()
+    };
 
   return (
     <div>
       <Navigation />
       <Container className="home-container mt-4">
-        <div className="top-bar">
-          <FaBars className="menu-icon" onClick={() => setShowCategories(!showCategories)} />
-        </div>
-        {showCategories && (
-          <div className="categories-filter">
-            {categories.map((category) => (
-              <Form.Check
-                key={category}
-                type="checkbox"
-                label={category}
-                checked={selectedCategories.includes(category)}
-                onChange={() => handleCategoryChange(category)}
-              />
-            ))}
-          </div>
-        )}
-        <Form onSubmit={handleSearch} className="search-form mb-4">
-          <Row>
-            <Col md={9}>
+        <FaArrowLeft className="home-back-arrow" onClick={handleBackClick} /> 
+        <Form onSubmit={handleSearch} className="home-search-form mb-4">
+          <Row className="home-search-row">
+            <Col md={5} className="home-search-col">
               <Form.Control
                 type="text"
                 placeholder="Job title, keywords, or company"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                className="home-search-input"
               />
             </Col>
-            <Col md={3}>
-              <Button variant="primary" type="submit" className="w-75">
-                Find Jobs
+            <Col md={4} className="home-category-col">
+              <Form.Control
+                as="select"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="home-category-dropdown"
+              >
+                <option value="">Select Category</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </Form.Control>
+            </Col>
+            <Col md={3} className="home-find-jobs-col">
+              <Button variant="primary" type="submit" className="home-find-jobs-button">
+                Find
               </Button>
             </Col>
           </Row>
         </Form>
 
-        <h2 className="mb-4">Jobs based on your activity</h2>
+        <h2 className="home-jobs-heading mb-4">Jobs based on your activity</h2>
         <div className="home-row">
-          <div className="col-md-6">
-            <div className="job-list">
+          <div className="home-col-md-6">
+            <div className="home-job-list">
               {filteredJobs.length > 0 ? (
                 filteredJobs.map((job) => (
                   <div
                     key={job._id}
-                    className={`job-card ${selectedJob?._id === job._id ? 'active' : ''}`}
-                    onClick={() => setSelectedJob(job)}
+                    className={`home-job-card ${selectedJob && selectedJob._id === job._id ? 'home-job-card-active' : ''}`}
+                    onClick={() => handleJobClick(job)} 
                   >
-                    <div className="job-card-header">
-                      <h5 className="job-title">{job.jobTitle}</h5>
-                      <span className="company-name">{job.companyName}</span>
+                    <div className="home-job-card-header">
+                      <h5 className="home-job-title">{job.jobTitle}</h5>
+                      <span className="home-company-name">{job.companyName}</span>
                     </div>
-                    <p className="job-location">{job.jobLocation}</p>
-                    <div className="easy-apply">
-                      <span className="easy-apply-tag">🚀 Easily apply</span>
+                    <p className="home-job-location">{job.jobLocation}</p>
+                    <div className="home-easy-apply">
+                      <span className="home-easy-apply-tag">🚀 Easily apply</span>
                     </div>
-                    <p className="job-posted">Posted on {job.jobPostedOn}</p>
+                    <p className="home-job-posted">Posted on {job.jobPostedOn}</p>
                   </div>
                 ))
               ) : (
@@ -132,42 +125,45 @@ function Home() {
               )}
             </div>
           </div>
-          <div className="col-md-6">
-            <div className="job-details-container">
+          <div className="home-col-md-6">
+            <div className="home-job-details-container">
               {selectedJob ? (
-                <div className="job-details">
-                  <h2 className="job-title">{selectedJob.jobTitle}</h2>
-                  <span className="company-name">↗ {selectedJob.companyName}</span>
-                  <div className="job-info">
-                    <div className="job-field">
+                <div className="home-job-details">
+                  <h2 className="home-job-title-highlight">{selectedJob.jobTitle}</h2>
+                  <span className="home-company-name-highlight">{selectedJob.companyName}</span>
+                  <div className="home-action-buttons">
+                    <button className="btn btn-primary" onClick={() => applyJob(selectedJob._id)}>Apply now</button>
+                  </div>
+                  <div className="home-job-info">
+                    <div className="home-job-field">
                       <h4>Location</h4>
                       <p>{selectedJob.jobLocation}</p>
                     </div>
-                    <div className="job-field">
+                    <div className="home-job-field">
                       <h4>Salary</h4>
                       <p>₹{selectedJob.minPrice} - ₹{selectedJob.maxPrice} a month</p>
                     </div>
-                    <div className="job-field">
+                    <div className="home-job-field">
                       <h4>Education (Preferred)</h4>
                       <p>{selectedJob.education}</p>
                     </div>
-                    <div className="job-field">
+                    <div className="home-job-field">
                       <h4>Experience</h4>
                       <p>{selectedJob.yearsOfExperience} years</p>
                     </div>
-                    <div className="job-field">
+                    <div className="home-job-field">
                       <h4>Employment Type</h4>
                       <p>{selectedJob.employmentType}</p>
                     </div>
-                    <div className="job-field">
+                    <div className="home-job-field">
                       <h4>Posted On</h4>
                       <p>{selectedJob.jobPostedOn}</p>
                     </div>
-                    <div className="job-field">
+                    <div className="home-job-field">
                       <h4>Description</h4>
                       <p>{selectedJob.description}</p>
                     </div>
-                    <div className="job-field">
+                    <div className="home-job-field">
                       <h4>Skills</h4>
                       <ul>
                         {selectedJob.skills.map((skill, index) => (
@@ -176,12 +172,9 @@ function Home() {
                       </ul>
                     </div>
                   </div>
-                  <div className="action-buttons">
-                    <button className="btn btn-primary" onClick={() => applyJob(selectedJob._id)}>Apply now</button>
-                  </div>
                 </div>
               ) : (
-                <div className="job-details">
+                <div className="home-job-details">
                   <p>Select a job to see details</p>
                 </div>
               )}
@@ -195,4 +188,3 @@ function Home() {
 }
 
 export default Home;
-  
