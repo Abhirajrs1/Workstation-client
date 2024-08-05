@@ -39,6 +39,8 @@ import EditResume from "../Containers/User/Resume/EditResume";
 import EditJob from "../Containers/Recruiter/JobListing/EditJob";
 import JobApplications from "../Containers/Recruiter/JobApplications/JobApplications";
 import JobApplicationDetails from "../Containers/Recruiter/JobApplications/JobApplicationDetails";
+import CompanySignup from "../Containers/Company/CompanySignUp/CompanySignup";
+import CompanyContext from "../Context/CompanyContext";
 
 function Api() {
   return (
@@ -46,6 +48,7 @@ function Api() {
     <UserContext>
       <RecruiterContext>
         <AdminContext>
+          <CompanyContext>
       <Router>
         <Routes>
 
@@ -92,12 +95,15 @@ function Api() {
             <Route path="/admin-categories/add" element={<AddCategory/>} />
             <Route path="/admin-editcategory/:id" element={<EditCategory/>}/>
 
+            <Route path="/company-signup" element={<CompanySignup/>}/>
+
 
 
 
             <Route path="*" element={<PageNotFound/>}/>
         </Routes>
       </Router>
+      </CompanyContext>
       </AdminContext>
       </RecruiterContext>
       </UserContext>

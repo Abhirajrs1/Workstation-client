@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useState } from 'react'
-import axios from 'axios'
 import Swal from 'sweetalert2';
 import axiosInstance from '../Services/Interceptor/recruiterInterceptor.js';
 

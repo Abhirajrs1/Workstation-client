@@ -51,6 +51,22 @@ export const validateLoginForm = Yup.object().shape({
       .oneOf([Yup.ref('password'), null], 'Passwords must match.')
   });
 
+  export const validateCompanySignupForm = Yup.object().shape({
+    companyName: Yup.string()
+      .matches(/^[a-zA-Z.]+$/, 'Company name must only contain letters and periods without spaces.')
+      .min(3, 'Must be at least 3 characters long.')
+      .required('Company name is required.'),
+    email: Yup.string()
+      .email('Email must be a valid email address.')
+      .matches(/^[^\s@]+@gmail\.com$/, 'Email must be a valid gmail.com address.')
+      .required('Email is required.'),
+    password: Yup.string()
+      .min(6, 'Must be at least 6 characters long.')
+      .required('Password is required.'),
+    confirmPassword: Yup.string()
+      .required('Confirm password is required.')
+      .oneOf([Yup.ref('password'), null], 'Passwords must match.')
+});
 
   
 export const validateResetPassword = Yup.object().shape({
