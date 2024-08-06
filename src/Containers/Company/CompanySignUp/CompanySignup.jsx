@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import axios from 'axios';
 import axiosInstance from '../../../Services/Interceptor/companyInterceptor.js';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -36,9 +37,7 @@ function CompanySignup() {
             await validateCompanySignupForm.validate(formData, { abortEarly: false });
             setErrors({});
             const response = await axiosInstance.post('/company-signup', formData);
-
-            console.log(response);
-
+            console.log(response.data);
             if (response.data.success) {
                 Swal.fire({
                     title: 'Success!',

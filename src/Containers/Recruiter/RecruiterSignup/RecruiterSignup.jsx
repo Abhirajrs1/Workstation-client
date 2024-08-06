@@ -34,7 +34,7 @@ function SignUp() {
      try {
       await validateRecruiterSignupForm.validate(formData, { abortEarly: false });
       setErrors({});
-     const response=await axiosInstance.post('/recruiter-signup',{recruitername:recruitername.trim(),email:email.trim(),password:password.trim()})
+     const response=await axios.post('http://localhost:3000/recruiter-signup',{recruitername:recruitername.trim(),email:email.trim(),password:password.trim()})
      setErrors({});
      if(response.data.success){
         localStorage.setItem("recruiteremail",email)
