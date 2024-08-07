@@ -36,7 +36,6 @@ function CompanyContext({children}) {
       try {
         const response = await axiosInstance.post('/company-login', { email, password });
         if (response.data.success) {
-          console.log(response.data);
           setCompany(response.data.company)
           localStorage.setItem('companytoken', response.data.token)
           localStorage.setItem('company', JSON.stringify(response.data.company));

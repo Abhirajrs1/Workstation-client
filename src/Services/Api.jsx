@@ -41,6 +41,7 @@ import JobApplications from "../Containers/Recruiter/JobApplications/JobApplicat
 import JobApplicationDetails from "../Containers/Recruiter/JobApplications/JobApplicationDetails";
 import CompanySignup from "../Containers/Company/CompanySignUp/CompanySignup";
 import CompanyContext from "../Context/CompanyContext";
+import CompanyLogin from "../Containers/Company/CompanyLogin/CompanyLogin";
 
 function Api() {
   return (
@@ -96,6 +97,7 @@ function Api() {
             <Route path="/admin-editcategory/:id" element={<EditCategory/>}/>
 
             <Route path="/company-signup" element={<CompanySignup/>}/>
+            <Route path="/company-login" element={<CompanyLogin/>}/>
 
 
 
