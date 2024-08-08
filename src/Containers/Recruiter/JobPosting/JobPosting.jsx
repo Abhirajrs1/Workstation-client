@@ -11,6 +11,8 @@ function JobPosting() {
 
   const navigate=useNavigate()
   const {Authenticated,loading}=useContext(RecruiterAuth)
+  const [categories,setCategories]=useState([])
+
     const[formData,setFormData]=useState({
         jobTitle:'',
         companyName:'',
@@ -31,7 +33,6 @@ function JobPosting() {
       }
     },[Authenticated,navigate,loading])
 
-    const [categories,setCategories]=useState([])
 
     useEffect(()=>{
       const fetchCategories=async()=>{

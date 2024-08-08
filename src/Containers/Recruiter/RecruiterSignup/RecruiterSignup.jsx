@@ -13,12 +13,33 @@ function SignUp() {
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
     const [confirmPassword,setConfirmPassword]=useState("")
+    const [companyName,setCompanyName]=useState('')
+    const [companySuggestions,setCompanySuggestions]=useState([])
     const [errors,setErrors]=useState({})
     const {recruiter}=useContext(RecruiterAuth)
 
   
 
     const navigate=useNavigate()
+
+    useEffect(() => {
+      if (companyName) {
+          const fetchCompanySuggestions = async () => {
+              try {
+                  const response = await axiosInstance.get('/get-companies');
+                  const suggestions = response.data.companyNames.filter(name =>
+                    name.toLowerCase().includes(companyName.toLowerCase())
+                );
+                  setCompanySuggestions(suggestions);
+              } catch (error) {
+                  console.error('Error fetching company suggestions:', error);
+              }
+          };
+          fetchCompanySuggestions();
+      } else {
+          setCompanySuggestions([]);
+      }
+  }, [companyName]);
     
 
     const handleSubmit=async(e)=>{
@@ -27,6 +48,7 @@ function SignUp() {
      const formData={
       recruitername:recruitername.trim(),
       email:email.trim(),
+      companyName:companyName,
       password:password.trim(),
       confirmPassword:confirmPassword.trim()
      }
@@ -34,7 +56,7 @@ function SignUp() {
      try {
       await validateRecruiterSignupForm.validate(formData, { abortEarly: false });
       setErrors({});
-     const response=await axios.post('http://localhost:3000/recruiter-signup',{recruitername:recruitername.trim(),email:email.trim(),password:password.trim()})
+     const response=await axiosInstance.post('/recruiter-signup',{recruitername:recruitername.trim(),email:email.trim(),password:password.trim(),companyName})
      setErrors({});
      if(response.data.success){
         localStorage.setItem("recruiteremail",email)
@@ -119,6 +141,21 @@ function SignUp() {
               onChange={(e) => setEmail(e.target.value)}
             />
             {errors.email && <div className="invalid-feedback mb-2">{errors.email}</div>}
+
+                        <input
+                            type="text"
+                            className={`form-control ${errors.companyName ? 'is-invalid' : ''}`}
+                            list="companyNames"
+                            value={companyName}
+                            onChange={(e) => setCompanyName(e.target.value)}
+                            placeholder="Select or type company name"
+                        />
+                        <datalist id="companyNames">
+                            {companySuggestions.map((name, index) => (
+                                <option key={index} value={name} />
+                            ))}
+                        </datalist>
+                        {errors.companyName && <div className="invalid-feedback mb-2">{errors.companyName}</div>}
             <input
               type="password"
               className={`form-control ${errors.password ? 'is-invalid' : ''}`}              

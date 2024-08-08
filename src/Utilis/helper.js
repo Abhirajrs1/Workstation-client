@@ -43,6 +43,9 @@ export const validateLoginForm = Yup.object().shape({
       .email('Email must be a valid email address.')
       .matches(/^[^\s@]+@gmail\.com$/, 'Email must be a valid gmail.com address.')
       .required('Email is required.'),
+    companyName: Yup.string()
+      .matches(/^[\w\d\s-]+$/, 'Company name can only contain letters, numbers, spaces, and hyphens.')
+      .required('Company name is required.'),
     password: Yup.string()
       .min(6, 'Must be at least 6 characters long.')
       .required('Password is required.'),
@@ -50,6 +53,7 @@ export const validateLoginForm = Yup.object().shape({
       .required('Confirm password is required.')
       .oneOf([Yup.ref('password'), null], 'Passwords must match.')
   });
+  
 
   export const validateCompanySignupForm = Yup.object().shape({
     companyName: Yup.string()

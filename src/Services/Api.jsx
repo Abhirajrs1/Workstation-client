@@ -42,6 +42,7 @@ import JobApplicationDetails from "../Containers/Recruiter/JobApplications/JobAp
 import CompanySignup from "../Containers/Company/CompanySignUp/CompanySignup";
 import CompanyContext from "../Context/CompanyContext";
 import CompanyLogin from "../Containers/Company/CompanyLogin/CompanyLogin";
+import CompanyHome from "../Containers/Company/CompanyHome/CompanyHome";
 
 function Api() {
   return (
@@ -98,6 +99,7 @@ function Api() {
 
             <Route path="/company-signup" element={<CompanySignup/>}/>
             <Route path="/company-login" element={<CompanyLogin/>}/>
+            <Route path="/company-home" element={<CompanyHome/>}/>
 
 
 
