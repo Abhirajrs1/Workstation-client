@@ -154,6 +154,7 @@ function EditJob() {
                 type="text"
                 className="form-control"
                 id="companyName"
+                readOnly
                 value={formData.companyName}
                 onChange={handleChange}
                 placeholder="Ex: Microsoft"

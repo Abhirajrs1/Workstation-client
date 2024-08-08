@@ -44,6 +44,11 @@ function JobListing() {
         navigate(`/recruiter-editJob/${id}`)
     }
 
+    
+    if (!jobs) {
+        return <div className="individual-job-loading">Loading...</div>;
+    }
+
     const deleteJob = async (id) => {
         const result = await Swal.fire({
             title: 'Are you sure?',

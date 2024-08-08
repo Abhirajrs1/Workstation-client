@@ -10,12 +10,12 @@ import { FaArrowLeft } from 'react-icons/fa';
 function JobPosting() {
 
   const navigate=useNavigate()
-  const {Authenticated,loading}=useContext(RecruiterAuth)
+  const {Authenticated,loading,recruiter}=useContext(RecruiterAuth)
   const [categories,setCategories]=useState([])
+  const [companyName,setCompanyName]=useState('')
 
     const[formData,setFormData]=useState({
         jobTitle:'',
-        companyName:'',
         minPrice:'',
         maxPrice:'',
         jobLocation:'',
@@ -48,6 +48,20 @@ function JobPosting() {
       fetchCategories()
     },[])
 
+    useEffect(()=>{
+      const fetchRecruiterDetails=async()=>{
+        try {
+          const resposnse=await axiosInstance.get(`/recruiter-getRecruiterDetails/${recruiter.email}`)
+          if(resposnse.data.success){
+            setCompanyName(resposnse.data.companyName)
+          }
+        } catch (error) {
+          console.error('Error fetching recruiter details:', error);
+        }
+      }
+      fetchRecruiterDetails()
+    },[recruiter.email])
+
     const handleChange = (e) => {
       const { id, value } = e.target;
       setFormData({
@@ -65,7 +79,7 @@ function JobPosting() {
     const handleSubmit=async(e)=>{
         e.preventDefault()
         try {
-            const response=await axiosInstance.post('/recruiter-postJob',formData)
+            const response=await axiosInstance.post('/recruiter-postJob',{...formData,companyName:companyName})
             if (response.data.success) {
                 console.log(response.data);
                 Swal.fire({
@@ -76,7 +90,6 @@ function JobPosting() {
                 });
                 setFormData({
                   jobTitle: '',
-                  companyName: '',
                   minPrice: '',
                   maxPrice: '',
                   jobLocation: '',
@@ -97,7 +110,6 @@ function JobPosting() {
                 });
                 setFormData({
                   jobTitle: '',
-                  companyName: '',
                   minPrice: '',
                   maxPrice: '',
                   jobLocation: '',
@@ -146,7 +158,7 @@ function JobPosting() {
                         </div>
                         <div className="col-md-6">
                             <label htmlFor="companyName" className="form-label">Company Name</label>
-                            <input type="text" className="form-control" id="companyName" value={formData.companyName} onChange={handleChange} placeholder="Ex: Microsoft" required />
+                            <input type="text" className="form-control" id="companyName" value={companyName} onChange={handleChange} readOnly placeholder="Ex: Microsoft" required />
                         </div>
                         <div className="col-md-6">
                             <label htmlFor="minPrice" className="form-label">Minimum Salary</label>
