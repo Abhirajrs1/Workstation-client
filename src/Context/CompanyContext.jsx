@@ -35,6 +35,7 @@ function CompanyContext({children}) {
     const CompanyLogin = async (email, password) => {
       try {
         const response = await axiosInstance.post('/company-login', { email, password });
+        console.log(response);
         if (response.data.success) {
           setCompany(response.data.company)
           localStorage.setItem('companytoken', response.data.token)
@@ -75,6 +76,7 @@ function CompanyContext({children}) {
     const CompanyLogout = async () => {
       try {
         const response = await axiosInstance.get('/company-logout')
+        console.log(response);
         if (response.data.success) {
           setCompany(null)
           localStorage.removeItem('companytoken')

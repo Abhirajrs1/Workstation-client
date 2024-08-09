@@ -89,7 +89,7 @@ const JobApplicationDetails = () => {
                             </tr>
                             <tr>
                                 <th>Resume Link</th>
-                                <td><a href={application.resumelink} target="_blank" rel="noopener noreferrer">View Resume</a></td>
+                                <td><a href={application.resume} target="_blank" rel="noopener noreferrer">View Resume</a></td>
                             </tr>
                             <tr>
                                 <th>Job Id</th>

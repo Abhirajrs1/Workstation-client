@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200..1000&display=swap');
-
 .recruiterlogin-container {
   display: flex;
   align-items: center;
@@ -12,7 +10,7 @@
   backdrop-filter: blur(7px);
 }
 
-.banner {
+.recruiterlogin-banner {
   position: relative; 
   border-radius: 10px 0 0 10px;
   padding: 40px;
@@ -23,29 +21,29 @@
   flex: 1;
 }
 
-.banner::before {
+.recruiterlogin-banner::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  /* background: rgba(0, 0, 0, 0.5);  */
+  background: rgba(64, 64, 64, 0.9); 
   border-radius: 10px 0 0 10px; /* Match the border-radius */
   z-index: 1; /* Place the overlay below the content */
 }
 
-.banner > * {
+.recruiterlogin-banner > * {
   position: relative; /* Ensure the content is above the overlay */
   z-index: 2;
 }
 
-.banner img {
+.recruiterlogin-banner img {
   margin-bottom: 20px;
   max-width: 100%; 
 }
 
-.form {
+.recruiterlogin-form {
   background: #fff;
   border-radius: 0 10px 10px 0;
   padding: 40px;
@@ -56,24 +54,24 @@
   flex: 1; 
 }
 
-.form h2 {
+.recruiterlogin-form h2 {
   margin-bottom: 20px;
 }
 
-.form img {
+.recruiterlogin-form img {
   height: 70px;
   width: 70px; 
 }
 
-.form form {
+.recruiterlogin-form form {
   width: 100%;
 }
 
-.form input {
+.recruiterlogin-form input {
   margin-bottom: 10px;
 }
 
-.form button {
+.recruiterlogin-form button {
   width: 100%;
 }
 
@@ -85,7 +83,7 @@
   opacity: 1;
 }
 
-.link {
+.recruiterlogin-link {
   margin-left: 100px;
 }
 

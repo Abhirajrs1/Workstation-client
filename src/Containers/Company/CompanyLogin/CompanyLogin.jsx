@@ -58,6 +58,11 @@ function CompanyLogin() {
           <img src={logo} alt="Logo" width="300" className="mb-3" />
         </div>
         <div className="company-form p-4 bg-white d-flex flex-column align-items-center justify-content-center">
+        <div className='company-link'>
+                        <Link to="/employee-login" id="forgot" className="text-muted">
+                            Are you a candidate?
+                        </Link>
+                    </div>
           <h2 className="mb-3">Company Login</h2>
           <img
             src="https://i.pinimg.com/236x/4d/a8/bb/4da8bb993057c69a85b9b6f2775c9df2.jpg"

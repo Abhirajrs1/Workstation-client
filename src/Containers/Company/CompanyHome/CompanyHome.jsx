@@ -1,10 +1,10 @@
 import React from 'react'
-
+import CompanyNavigation from '../../../Components/CompanyNavigation'
 function CompanyHome() {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <>
+    <CompanyNavigation/>
+    </>
   )
 }
 

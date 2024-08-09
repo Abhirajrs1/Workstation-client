@@ -5,7 +5,9 @@ import Navigation from '../../../Components/Navigation';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 import { AuthContext } from '../../../Context/UserContext';
 import { useNavigate, useParams } from 'react-router-dom';
-import claudinary from '../../../Utilis/claudinary.js';
+import uploadFileToS3 from '../../../Utilis/s3.js';
+
+
 
 function JobApplication() {
 
@@ -26,7 +28,6 @@ function JobApplication() {
     preferredLocation: '',
     city: '',
     resume: null,
-    resumeLink:""
   });
 
   const handleChange = (e) => {
@@ -34,13 +35,17 @@ function JobApplication() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFileChange = (e) => {
-    // if (e.target.files[0].type !== 'application/pdf') {
-    //   alert('Only PDF files are allowed');
-    //   e.target.value = null;
-    //   return;
-    // }
-    setFormData({ ...formData, resume: e.target.files[0] });
+  const handleFileChange = async(e) => {
+    const file=e.target.files[0]
+    if(file && file.type==='application/pdf'){
+      try {
+        // const resume=await uploadFileToS3(file)
+        setFormData({ ...formData, resume: file});
+      } catch (error) {
+        alert('Only PDF files are allowed.');
+        e.target.value = null;
+      }
+    }
   };
 
   useEffect(()=>{
@@ -55,7 +60,7 @@ function JobApplication() {
             setJob(response.data.job)
           }
         } catch (error) {
-          
+          console.error('Error fetching job details:', error);
         }
 
       }
@@ -70,13 +75,18 @@ function JobApplication() {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    const formDataToSubmit = new FormData();
+    for (const key in formData) {
+      formDataToSubmit.append(key, formData[key]);
+    }   
+    
     try {
-      // const resumeUrl=await claudinary(formData.resume)
-      const applicationData={
-        ...formData,
-       
-      }
-      const response=await axiosInstance.post(`/employee-applyJob?jobid=${id}&recruiterid=${job.jobPostedBy}`,applicationData)
+      // const applicationData={
+      //   ...formData
+      // }
+      const response=await axiosInstance.post(`/employee-applyJob?jobid=${id}&recruiterid=${job.jobPostedBy}`,formDataToSubmit,{
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
       console.log(response.data);
       if(response.data.success){
         navigate('/employee-jobApplicationSuccess')
@@ -231,27 +241,15 @@ function JobApplication() {
           />
         </Form.Group>
 
-        <Form.Group controlId="resume">
-          <Form.Label>Resume link *</Form.Label>
-          <Form.Control
-            type="text"
-            name="resumeLink"
-            value={formData.resumeLink}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group controlId="resume">
-          <Form.Label>Upload Resume *</Form.Label>
-          <Form.Control
-            type="file"
-            name="resume"
-            onChange={handleFileChange}
-            
-          />
-        </Form.Group>
-
+          <Form.Group controlId="resume">
+            <Form.Label>Upload Resume (PDF only) *</Form.Label>
+            <Form.Control
+              type="file"
+              name="resume"
+              onChange={handleFileChange}
+              required
+            />
+          </Form.Group>
         <Button variant="primary" type="submit">
           Submit
         </Button>
