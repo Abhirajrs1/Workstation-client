@@ -151,12 +151,22 @@ function Profile() {
                         </Col>
                     </Row>
                     <h5 className="profile-heading fw-bold">Improve your job matches</h5>
-                    <Row className="align-items-center mb-3">
+                    <Row className="align-items-center mt-3 mb-3">
                         <Col xs={10}>
                             <p className="mb-0">Qualifications</p>
                         </Col>
                         <Col xs={2} className="text-end">
                             <Link to="/employee-profile/qualifications">
+                                <FaChevronRight />
+                            </Link>
+                        </Col>
+                    </Row>
+                    <Row className="align-items-center  mt-3 mb-3">
+                        <Col xs={10}>
+                            <p className="mb-0">Work Experience</p>
+                        </Col>
+                        <Col xs={2} className="text-end">
+                            <Link to="/employee-profile/workexperience">
                                 <FaChevronRight />
                             </Link>
                         </Col>

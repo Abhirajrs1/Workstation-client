@@ -53,8 +53,6 @@
   align-items: center;
 }
 
-
-/* Custom styles for select elements */
 .job-posting-form select.form-select {
   appearance: none;
   -webkit-appearance: none;
@@ -75,6 +73,18 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
+/* Additional styles for radio buttons */
+.job-posting-form .form-check {
+  margin-bottom: 0.5rem;
+}
+
+.job-posting-form .form-check-input {
+  margin-right: 0.5rem;
+}
+
+.job-posting-form .form-check-label {
+  font-weight: 400;
+}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

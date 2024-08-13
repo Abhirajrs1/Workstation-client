@@ -20,42 +20,24 @@ function Resume() {
     useEffect(() => {
         if (!isAuthenticated && !loading) {
             navigate("/employee-login");
+        } else {
+            if (user?.Qualification?.education) {
+                setEducations(user.Qualification.education);
+            }
+            if (user?.Qualification?.skills) {
+                setSkills(user.Qualification.skills);
+            }
         }
-    }, [isAuthenticated, navigate, loading]);
+    }, [isAuthenticated, navigate, loading, user]);
 
-    useEffect(() => {
-        const fetchEducations = async () => {
-            try {
-                const response = await axiosInstance.get('/employee-getresumeeducation');
-                if(response.data.success){
-                    setEducations(response.data.education || []);
-                }
-            } catch (error) {
-                console.error('Error fetching education details:', error);
-            }
-        };
-        fetchEducations();
-    }, []);
 
-    useEffect(() => {
-        const fetchSkills = async () => {
-            try {
-                const response = await axiosInstance.get('/employee-getresumeskill');
-                if(response.data.success){
-                    setSkills(response.data.skill || []);
-                }
-            } catch (error) {
-                console.error('Error fetching skills details:', error);
-            }
-        };
-        fetchSkills();
-    }, []);
 
     const handleAddEducation = async (education) => {
         try {
            const response = await axiosInstance.post('/employee-addresumeeducation', { education });
            if(response.data.success){
                 setEducations([...educations, education]);
+                await axiosInstance.post( `/employee-addQualification/education/${user.email}`, { education });
            }
         } catch (error) {
             console.error('Error adding education:', error);
@@ -67,7 +49,9 @@ function Resume() {
             const response = await axiosInstance.post('/employee-addresumeskill', { skill });
             if(response.data.success){
                 setSkills([...skills, skill]);
+                await axiosInstance.post(`/employee-addQualification/skill/${user.email}`, { skill });
             }
+
         } catch (error) {
             console.error('Error adding skill:', error);
         }

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axiosInstance from '../../Services/Interceptor/candidateInterceptor.js';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { AuthContext } from '../../Context/UserContext.jsx';
 import Footer from '../../Components/Footer';
 import Navigation from '../../Components/Navigation.jsx';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa'; // Importing React Icon for back arrow
+import { FaArrowLeft } from 'react-icons/fa';
 
 function Home() {
   const [jobs, setJobs] = useState([]);
@@ -15,6 +16,8 @@ function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedJob, setSelectedJob] = useState(null); 
   const navigate = useNavigate();
+
+  const {isAuthenticated}=useContext(AuthContext)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,8 +40,18 @@ function Home() {
     fetchData();
   }, []);
 
-  const applyJob = (id) => {
-    navigate(`/employee-jobApplication/${id}`);
+  const applyJob = (id,easyApply,application) => {
+    if(!isAuthenticated){
+      navigate('employee-login')
+      return
+    }
+    if(easyApply){
+      navigate(`/employee-jobApplication/${id}`);
+    }else if(!easyApply && application){
+      window.location.href = application;
+    }else{
+      console.error("Application URL is not provided for this job.");
+    }
   };
 
   const handleSearch = (e) => {
@@ -114,9 +127,11 @@ function Home() {
                       <span className="home-company-name">{job.companyName}</span>
                     </div>
                     <p className="home-job-location">{job.jobLocation}</p>
+                    {job.easyApply &&
                     <div className="home-easy-apply">
                       <span className="home-easy-apply-tag">🚀 Easily apply</span>
                     </div>
+                    }
                     <p className="home-job-posted">Posted on {job.jobPostedOn}</p>
                   </div>
                 ))
@@ -132,7 +147,9 @@ function Home() {
                   <h2 className="home-job-title-highlight">{selectedJob.jobTitle}</h2>
                   <span className="home-company-name-highlight">{selectedJob.companyName}</span>
                   <div className="home-action-buttons">
-                    <button className="btn btn-primary" onClick={() => applyJob(selectedJob._id)}>Apply now</button>
+                    <button className="btn btn-primary" onClick={() => applyJob(selectedJob._id,selectedJob.easyApply,selectedJob.applicationUrl)}>
+                      {selectedJob.easyApply?'Easy Apply':'Apply now'}
+                      </button>
                   </div>
                   <div className="home-job-info">
                     <div className="home-job-field">

@@ -85,7 +85,7 @@ function EditResume() {
                 candidate:user._id
             }
 
-        const resumeResponse=await axiosInstance.post('employee-postResume',{resumeData}, {
+        const resumeResponse=await axiosInstance.post('/employee-postResume',{resumeData}, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
@@ -94,8 +94,6 @@ function EditResume() {
             navigate('/employee-resume')
           setUser(response.data.user)
           localStorage.setItem('user', JSON.stringify(response.data.user));
-
-
         }else{
             console.log(resumeResponse.data);
         }

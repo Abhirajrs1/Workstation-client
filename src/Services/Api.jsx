@@ -43,6 +43,7 @@ import CompanySignup from "../Containers/Company/CompanySignUp/CompanySignup";
 import CompanyContext from "../Context/CompanyContext";
 import CompanyLogin from "../Containers/Company/CompanyLogin/CompanyLogin";
 import CompanyHome from "../Containers/Company/CompanyHome/CompanyHome";
+import WorkExperience from "../Containers/User/Profile/WorkExperience";
 
 function Api() {
   return (
@@ -68,6 +69,7 @@ function Api() {
             <Route path="/employee-jobApplicationFailure" element={<ApplicationFailure/>}/>
             <Route path="/employee-resume" element={<Resume/>}/>
             <Route path="/employee-editResume" element={<EditResume/>}/>
+            <Route path="/employee-profile/workexperience" element={<WorkExperience/>}/>
 
 
             
