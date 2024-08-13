@@ -14,8 +14,8 @@ function AdminSideNavigation() {
         </Link>
       </Nav.Item>
       <Nav.Item className="side-nav-item">
-        <Link to="/payments">
-          <FaDollarSign /> Payments
+        <Link to="/admin-plans">
+          <FaDollarSign /> Plans
         </Link>
       </Nav.Item>
       <Nav.Item className="side-nav-item">

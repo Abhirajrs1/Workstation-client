@@ -44,6 +44,9 @@ import CompanyContext from "../Context/CompanyContext";
 import CompanyLogin from "../Containers/Company/CompanyLogin/CompanyLogin";
 import CompanyHome from "../Containers/Company/CompanyHome/CompanyHome";
 import WorkExperience from "../Containers/User/Profile/WorkExperience";
+import Plans from "../Containers/Admin/Plans/Plans";
+import AddPlans from "../Containers/Admin/Plans/AddPlans";
+import PlanListing from "../Containers/Recruiter/PlanListing/PlanListing";
 
 function Api() {
   return (
@@ -86,6 +89,7 @@ function Api() {
             <Route path="/recruiter-editJob/:id" element={<EditJob/>}/>
             <Route path="/recruiter-showApplications" element={<JobApplications/>}/>
             <Route path="/recruiter-viewApplicationDetails/:id" element={<JobApplicationDetails/>}/>
+            <Route path="/recruiter-planListing" element={<PlanListing/>}/>
 
 
 
@@ -98,6 +102,8 @@ function Api() {
             <Route path="/admin-categories" element={<Categories/>}/>
             <Route path="/admin-categories/add" element={<AddCategory/>} />
             <Route path="/admin-editcategory/:id" element={<EditCategory/>}/>
+            <Route path="/admin-plans" element={<Plans/>}/>
+            <Route path="/admin-addPlans" element={<AddPlans/>}/>
 
             <Route path="/company-signup" element={<CompanySignup/>}/>
             <Route path="/company-login" element={<CompanyLogin/>}/>
