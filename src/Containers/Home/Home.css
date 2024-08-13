@@ -7,7 +7,7 @@ body {
 }
 
 .home-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
   position: relative;
@@ -21,23 +21,32 @@ body {
   margin-bottom: 20px;
 }
 
+/* Search Form */
 .home-search-form {
   background-color: #fff;
   padding: 20px;
-  width: 650px;
+  width: 850px;
   border-radius: 8px;
   box-shadow: 0 8px 3px rgba(10, 9, 9, 0.12);
   margin: 20px auto;
 }
 
-.home-search-col{
-   padding-left: 100px;
-   padding-top: 10px;
+.home-search-row {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.home-category-col{
-  padding-top: 10px;
+.home-search-col,
+.home-category-col
+ {
+  margin-bottom: 1rem;
 }
+
+
+.home-search-col {
+  padding-left: 100px;
+}
+
 
 .home-search-input {
   border: 1px solid #dce0e0;
@@ -64,19 +73,53 @@ body {
   appearance: none;
 }
 
-
-.home-find-jobs-col .home-find-jobs-button {
+.home-find-jobs-button {
   background-color: #0a66c2;
   border: none;
-  color:#fff;
+  color: #fff;
   font-size: 16px;
   border-radius: 4px;
   cursor: pointer;
+  margin-left: 40px;
   transition: background-color 0.3s ease;
-  width: auto;
-  
+  width: 100%;
 }
 
+/* New Location and Price Range Inputs */
+.home-location-price-row {
+  margin-top: 1rem;
+}
+
+.home-location-col,
+.home-price-range-col {
+  margin-bottom: 1rem;
+}
+
+.home-location-dropdown,
+.home-price-range-dropdown {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #dce0e0;
+  border-radius: 4px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path d="M1.5 5a.5.5 0 0 1 .707-.707L8 10.293l5.793-5.793A.5.5 0 0 1 15.5 5h-14z"/></svg>') no-repeat right 10px center;
+  background-size: 16px 16px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.home-location-col {
+  display: flex;
+  align-items: center;
+}
+
+.home-price-range-col {
+  display: flex;
+  align-items: center;
+}
+
+/* Job List and Details */
 .home-jobs-heading {
   font-size: 24px;
   font-weight: bold;
@@ -85,6 +128,7 @@ body {
 
 .home-row {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .home-col-md-6 {
@@ -115,10 +159,13 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
-
 .home-job-card:hover {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   transform: translateY(-5px);
+}
+
+.home-job-card-header {
+  margin-bottom: 5px;
 }
 
 .home-job-title {
@@ -205,6 +252,7 @@ body {
   margin-bottom: 5px;
 }
 
+/* Responsive Styles */
 @media (max-width: 768px) {
   .home-row {
     flex-direction: column;

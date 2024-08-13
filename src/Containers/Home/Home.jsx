@@ -12,9 +12,16 @@ function Home() {
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [locations, setLocations] = useState([]);
+  const [priceRanges, setPriceRanges] = useState([
+    '1000-10000',
+    '10001-20000',
+    '20001-30000'
+  ]);  const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedJob, setSelectedJob] = useState(null); 
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(''); 
+  const [selectedPriceRange, setSelectedPriceRange] = useState('');
   const navigate = useNavigate();
 
   const {isAuthenticated}=useContext(AuthContext)
@@ -26,6 +33,10 @@ function Home() {
         if (response.data.success) {
           setJobs(response.data.jobs);
           setFilteredJobs(response.data.jobs);
+
+          const locations = [...new Set(response.data.jobs.map(job => job.jobLocation))];
+          setLocations(locations);
+          
         }
 
         const categoryResponse = await axiosInstance.get('/employee-getCategories');
@@ -57,12 +68,18 @@ function Home() {
   const handleSearch = (e) => {
     e.preventDefault();
     const lowerSearchTerm = searchTerm.toLowerCase();
+    const [minPrice, maxPrice] = selectedPriceRange.split('-').map(Number);
+  
     const filtered = jobs.filter((job) =>
       (job.jobTitle.toLowerCase().includes(lowerSearchTerm) || job.companyName.toLowerCase().includes(lowerSearchTerm))
       && (selectedCategory ? job.categoryName === selectedCategory : true)
+      && (selectedLocation ? job.jobLocation === selectedLocation : true)
+      && (selectedPriceRange ? job.minPrice >= minPrice && job.maxPrice <= maxPrice : true)
     );
+  
     setFilteredJobs(filtered);
   };
+  
 
   const handleJobClick = (job) => {
     setSelectedJob(job); 
@@ -108,6 +125,39 @@ function Home() {
                 Find
               </Button>
             </Col>
+          </Row>
+          <Row className="home-location-price-row">
+            <Col md={5} className="home-location-col">
+              <Form.Control
+                as="select"
+                value={selectedLocation}
+                onChange={(e) => setSelectedLocation(e.target.value)}
+                className="home-location-dropdown"
+              >
+                <option value="">Select Location</option>
+                {locations.map((location) => (
+                  <option key={location} value={location}>
+                    {location}
+                  </option>
+                ))}
+              </Form.Control>
+            </Col>
+            <Col md={4} className="home-price-range-col">
+          <Form.Control
+    as="select"
+    value={selectedPriceRange}
+    onChange={(e) => setSelectedPriceRange(e.target.value)}
+    className="home-price-range-dropdown"
+  >
+    <option value="">Select Price Range</option>
+    {priceRanges.map((range) => (
+      <option key={range} value={range}>
+        {range}
+      </option>
+    ))}
+  </Form.Control>
+</Col>
+
           </Row>
         </Form>
 
