@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
 import './PlanListing.css';
+import { RecruiterAuth } from '../../../Context/RecruiterContext.jsx';
 
 const PlanListing = () => {
   const [plans, setPlans] = useState([]);
+  const {recruiter}=useContext(RecruiterAuth)
 
   useEffect(() => {
     const fetchPlans = async () => {
@@ -19,6 +21,72 @@ const PlanListing = () => {
     fetchPlans();
   }, []);
 
+
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = `https://checkout.razorpay.com/v1/checkout.js`;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  const handlePayment = async (plan) => {
+    try {
+      const res = await loadRazorpayScript();
+      if (!res) {
+        alert('Razorpay SDK failed to load. Are you online?');
+        return;
+      }
+
+      // Request an order from the server
+      const { data } = await axiosInstance.post('/recruiter-createOrder', { amount: plan.amount });
+
+      const options = {
+        key: import.meta.env. VITE_RAZORPAY_KEY_ID , 
+        amount: data.amount,
+        currency: 'INR',
+        name: plan.planName,
+        description: 'Plan Purchase',
+        order_id: data.orderId,
+        handler: async function (response) {
+          try {
+            const paymentVerification = await axiosInstance.post('/recruiter-verifyPayment', {
+              paymentId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id,
+              signature: response.razorpay_signature,
+              email: recruiter.email
+            });
+
+            if (paymentVerification.data.success) {
+              alert('Payment successful!');
+              window.location.href = '/recruiter-home';
+            } else {
+              alert('Payment verification failed.');
+            }
+          } catch (error) {
+            console.error('Payment verification error:', error);
+            alert('Payment verification error.');
+          }
+        },
+        prefill: {
+          email: recruiter.email, 
+        },
+        theme: {
+          color: '#3399cc'
+        }
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert('Something went wrong while processing the payment.');
+    }
+  };
+
+
   return (
     <div className="planslisting-container">
       <h2 className="planslisting-title">Pick the Best Plan</h2>
@@ -32,9 +100,9 @@ const PlanListing = () => {
             <p className="planslisting-amount">${plan.amount} <span className="planslisting-per-month"></span></p>
             <p className="planslisting-description">{plan.description}</p>
             <p className="planslisting-planType">
-              Duration: {plan.planType === 'duration' ? `${plan.planDuration} Months` : 'Lifetime'}
+              Duration: {plan.planType === 'duration' ? `${plan.planDuration} Days` : 'Lifetime'}
             </p>
-            <button className="planslisting-button">Select Plan</button>
+            <button className="planslisting-button" onClick={() => handlePayment(plan)}>Select Plan</button>
           </div>
         ))}
       </div>

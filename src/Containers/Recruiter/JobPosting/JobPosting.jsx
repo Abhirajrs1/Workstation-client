@@ -62,6 +62,18 @@ function JobPosting() {
     fetchRecruiterDetails();
   }, [recruiter.email]);
 
+  useEffect(() => {
+    if (!loading && !recruiter.isSubscribed) {
+      Swal.fire({
+        title: 'Subscription Required',
+        text: 'You need to subscribe to access this page.',
+        icon: 'info',
+        timer: 3000, 
+        didClose: () => navigate('/recruiter-planListing') 
+      });
+    }
+  }, [recruiter.isSubscribed, navigate, loading]);
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({
@@ -85,6 +97,7 @@ function JobPosting() {
     });
   };
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
