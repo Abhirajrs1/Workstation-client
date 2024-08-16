@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../Context/UserContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaFileAlt, FaChevronRight } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaFileAlt, FaChevronRight, FaUpload } from 'react-icons/fa';
 import Navigation from '../../../Components/Navigation';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 import './Profile.css';
@@ -12,6 +12,9 @@ function Profile() {
     const navigate = useNavigate();
     const [description, setDescription] = useState('');
     const [remainingWords, setRemainingWords] = useState(1000);
+    const [resumeFile, setResumeFile] = useState(null);
+    const [resumeUrl, setResumeUrl] = useState(user.resumeUrl || '');
+    const [isUploading, setIsUploading] = useState(false);
 
     useEffect(() => {
         if (!isAuthenticated && !loading) {
@@ -41,7 +44,6 @@ function Profile() {
             const fetchDescription = async () => {
                 try {
                     const response = await axiosInstance.get(`/employee-getDescription/${user._id}`);
-                    console.log(response.data);
                     if (response.data.success) {
                         setDescription(response.data.result);
                     }
@@ -52,6 +54,23 @@ function Profile() {
 
             fetchDescription();
         }
+    }, [user._id]);
+
+    useEffect(() => {
+        const fetchResumeUrl = async () => {
+            if (user._id) {
+                try {
+                    const response = await axiosInstance.get('/employee-getResumeUrl');
+                    if (response.data.success) {
+                        setResumeUrl(response.data.resumeUrl);  
+                    }
+                } catch (error) {
+                    console.error('Error fetching resume URL:', error);
+                }
+            }
+        };
+
+        fetchResumeUrl();
     }, [user._id]);
 
     const handleDescriptionSubmit = async () => {
@@ -66,6 +85,36 @@ function Profile() {
         } catch (error) {
             console.error('Error updating description:', error);
             alert('Failed to update description');
+        }
+    };
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file && file.type === 'application/pdf') {
+            setResumeFile(file);
+        } else {
+            alert('Please select a PDF file.');
+        }
+    };
+
+    const handleUpload = async () => {
+        if (resumeFile) {
+            setIsUploading(true);
+            const formData = new FormData();
+            formData.append('resume', resumeFile);
+
+            try {
+                const response = await axiosInstance.post('/employee-addResume', formData);
+                if (response.data.success) {
+                    setResumeUrl(response.data.resumeUrl);  // Update resume URL from response
+                    setResumeFile(null);
+                }
+            } catch (error) {
+                console.error('Error uploading resume:', error);
+                alert('Failed to upload resume');
+            } finally {
+                setIsUploading(false);
+            }
         }
     };
 
@@ -142,6 +191,30 @@ function Profile() {
                                         <small>Updated on {formatDate(user.updatedAt)}</small>
                                     </Col>
                                 </Row>
+                                <Row className="mt-2">
+                                    <Col xs={12}>
+                                        {resumeUrl ? (
+                                            <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
+                                                <Button variant="link">View Resume</Button>
+                                            </a>
+                                        ) : (
+                                            <div>
+                                                <input 
+                                                    type="file" 
+                                                    accept=".pdf" 
+                                                    onChange={handleFileChange} 
+                                                />
+                                                <Button 
+                                                    variant="primary" 
+                                                    onClick={handleUpload} 
+                                                    disabled={isUploading}
+                                                >
+                                                    {isUploading ? 'Uploading...' : 'Attach Resume'}
+                                                </Button>
+                                            </div>
+                                        )}
+                                    </Col>
+                                </Row>
                             </Card>
                         </Col>
                         <Col xs={2} className="text-end">
@@ -178,11 +251,18 @@ function Profile() {
                             rows={5} 
                             value={description}
                             onChange={handleDescriptionChange}
-                            maxLength={1000}
-                            placeholder="Write your description here (1000 words max)"
+                            placeholder="Add your description here..."
                         />
-                        <Form.Text>{remainingWords} words remaining</Form.Text>
-                        <Button variant="primary" className="mt-3" onClick={handleDescriptionSubmit}>Save</Button>
+                        <Form.Text className="text-muted">
+                            {remainingWords} words remaining
+                        </Form.Text>
+                        <Button 
+                            variant="primary" 
+                            className="mt-2" 
+                            onClick={handleDescriptionSubmit}
+                        >
+                            Update Description
+                        </Button>
                     </Form.Group>
                 </Card>
             </Container>

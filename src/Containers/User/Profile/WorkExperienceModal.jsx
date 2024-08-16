@@ -3,7 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 import './WorkExperienceModal.css';
 
-const WorkExperienceModal = ({ show, handleClose }) => {
+const WorkExperienceModal = ({ show, handleClose, onSuccess }) => {
   const [formData, setFormData] = useState({
     jobTitle: '',
     companyName: '',
@@ -27,7 +27,8 @@ const WorkExperienceModal = ({ show, handleClose }) => {
     try {
       const response = await axiosInstance.post('/employee-addworkexperience', formData);
       if (response.data.success) {
-        handleClose();
+        onSuccess(); // Call the onSuccess callback to refresh the work experiences
+        handleClose(); // Close the modal
       }
     } catch (error) {
       console.error('Error adding work experience:', error);

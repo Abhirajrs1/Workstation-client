@@ -1,16 +1,35 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaBriefcase, FaPlus } from 'react-icons/fa';
 import { AuthContext } from '../../../Context/UserContext';
 import Navigation from '../../../Components/Navigation';
 import WorkExperienceModal from './WorkExperienceModal';
 import './WorkExperience.css';
+import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 
 const WorkExperience = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState('');
+  const [workExperiences, setWorkExperiences] = useState([]);
   const { user, loading } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchWorkExperience = async () => {
+      try {
+        const response = await axiosInstance.get('/employee-getWorkExperience');
+        if (response.data.success) {
+          setWorkExperiences(response.data.experiences);
+        }
+      } catch (error) {
+        console.error('Error fetching work experiences:', error);
+      }
+    };
+
+    if (user) {
+      fetchWorkExperience();
+    }
+  }, [user]);
 
   const handleOpenModal = () => {
     setModalType('workExperience');
@@ -19,6 +38,17 @@ const WorkExperience = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const refreshWorkExperiences = async () => {
+    try {
+      const response = await axiosInstance.get('/employee-getWorkExperience');
+      if (response.data.success) {
+        setWorkExperiences(response.data.experiences);
+      }
+    } catch (error) {
+      console.error('Error refreshing work experiences:', error);
+    }
   };
 
   if (!user && !loading) {
@@ -37,9 +67,9 @@ const WorkExperience = () => {
             </p>
 
             <div className="workexperience-section">
-              {user?.WorkExperience && user.WorkExperience.length > 0 ? (
+              {workExperiences && workExperiences.length > 0 ? (
                 <>
-                  <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-center mb-3">
                     <FaBriefcase className="me-3" size={20} color="#6c757d" />
                     <h3 className="flex-grow-1">Work Experience</h3>
                     <FaPlus
@@ -49,13 +79,14 @@ const WorkExperience = () => {
                       style={{ cursor: 'pointer', marginLeft: 'auto' }}
                     />
                   </div>
-                  {user.WorkExperience.map((experience, index) => (
+                  {workExperiences.map((experience, index) => (
                     <div key={index} className="workexperience-card">
                       <div className="workexperience-details">
-                        <h5>{experience.jobTitle} at {experience.companyName}</h5>
+                        <h5 className="job-title">{experience.jobTitle}</h5>
+                        <p className="company-name">{experience.companyName}</p>
                         <p>{experience.city}, {experience.state}, {experience.country}</p>
                         <p>{experience.startDate} - {experience.endDate}</p>
-                        <p>Salary: {experience.salary ? `$${experience.salary}` : 'N/A'}</p>
+                        <p>Salary: {experience.currentSalary ? `$${experience.currentSalary}` : 'N/A'}</p>
                       </div>
                     </div>
                   ))}
@@ -72,7 +103,11 @@ const WorkExperience = () => {
         </div>
       </div>
       {modalType === 'workExperience' && (
-        <WorkExperienceModal show={showModal} handleClose={handleCloseModal} />
+        <WorkExperienceModal
+          show={showModal}
+          handleClose={handleCloseModal}
+          onSuccess={refreshWorkExperiences} 
+        />
       )}
     </div>
   );

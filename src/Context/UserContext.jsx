@@ -24,7 +24,7 @@ function UserContext({children}) {
                           timer: 5000,
                           position: 'top-center',
                         });
-                        logout(); 
+                        logout();   
                         return;
                       }
                         setUser(user)

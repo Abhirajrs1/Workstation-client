@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
+import Swal from 'sweetalert2';
 import './PlanListing.css';
 import { RecruiterAuth } from '../../../Context/RecruiterContext.jsx';
 
@@ -40,7 +41,6 @@ const PlanListing = () => {
         return;
       }
 
-      // Request an order from the server
       const { data } = await axiosInstance.post('/recruiter-createOrder', { amount: plan.amount });
 
       const options = {
@@ -60,7 +60,14 @@ const PlanListing = () => {
             });
 
             if (paymentVerification.data.success) {
-              alert('Payment successful!');
+                await Swal.fire({
+                    title: 'Payment Successful!',
+                    text: 'Your payment has been processed successfully.',
+                    icon: 'success',
+                    confirmButtonText: 'Go to home',
+                    allowOutsideClick: false
+                  });
+            
               window.location.href = '/recruiter-home';
             } else {
               alert('Payment verification failed.');
