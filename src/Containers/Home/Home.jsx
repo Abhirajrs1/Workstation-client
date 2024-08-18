@@ -17,7 +17,8 @@ function Home() {
     '1000-10000',
     '10001-20000',
     '20001-30000'
-  ]);  const [selectedCategory, setSelectedCategory] = useState('');
+  ]); 
+   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedJob, setSelectedJob] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(''); 
@@ -93,7 +94,6 @@ function Home() {
     <div>
       <Navigation />
       <Container className="home-container mt-4">
-        <FaArrowLeft className="home-back-arrow" onClick={handleBackClick} /> 
         <Form onSubmit={handleSearch} className="home-search-form mb-4">
           <Row className="home-search-row">
             <Col md={5} className="home-search-col">
@@ -124,7 +124,16 @@ function Home() {
               <Button variant="primary" type="submit" className="home-find-jobs-button">
                 Find
               </Button>
-            </Col>
+              <Button
+        variant="secondary"
+        className="home-clear-filters-button"
+        onClick={handleBackClick}
+      >
+        Clear Filters
+      </Button>
+        </Col>
+       
+
           </Row>
           <Row className="home-location-price-row">
             <Col md={5} className="home-location-col">
@@ -157,10 +166,8 @@ function Home() {
     ))}
   </Form.Control>
 </Col>
-
           </Row>
         </Form>
-
         <h2 className="home-jobs-heading mb-4">Jobs based on your activity</h2>
         <div className="home-row">
           <div className="home-col-md-6">

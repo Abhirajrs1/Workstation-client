@@ -88,22 +88,20 @@ function JobPosting() {
     setFormData({ ...formData, skills: skillArray });
   };
 
-  const handleRadioChange = (e) => {
-    const { value } = e.target;
+  const handleToggleChange = (e) => {
+    const { checked } = e.target;
     setFormData({
       ...formData,
-      easyApply: value === 'easyApply',
-      applicationUrl: value === 'normalApply' ? formData.applicationUrl : ''
+      easyApply: checked,
+      applicationUrl: checked ? '' : formData.applicationUrl
     });
   };
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axiosInstance.post('/recruiter-postJob', { ...formData, companyName: companyName });
       if (response.data.success) {
-        console.log(response.data);
         Swal.fire({
           icon: 'success',
           title: 'Success!',
@@ -149,7 +147,6 @@ function JobPosting() {
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
-        console.error(error.response.data);
         Swal.fire({
           title: 'Error!',
           text: error.response.data.message,
@@ -157,7 +154,6 @@ function JobPosting() {
           position: 'top-center',
         });
       } else {
-        console.error('An error occurred:', error);
         Swal.fire({
           title: 'Error!',
           text: "An error occurred. Please try again later",
@@ -231,57 +227,31 @@ function JobPosting() {
             </div>
             <div className="col-12">
               <label htmlFor="description" className="form-label">Job Description</label>
-              <textarea className="form-control" id="description" value={formData.description} onChange={handleChange} rows="3" placeholder="Job description" required></textarea>
+              <textarea className="form-control" id="description" rows="3" value={formData.description} onChange={handleChange} placeholder="Job description" required />
             </div>
             <div className="col-12">
-              <label className="form-label">Apply Method</label>
-              <div className="form-check">
-                                <input 
-                                type="radio" 
-                                id="easyApply" 
-                                name="applyMethod" 
-                                value="easyApply" 
-                                checked={formData.easyApply} 
-                                onChange={handleRadioChange} 
-                                className="form-check-input" 
-                              />
-                              <label htmlFor="easyApply" className="form-check-label">Easy Apply</label>
-                            </div>
-                            <div className="form-check">
-                              <input 
-                                type="radio" 
-                                id="normalApply" 
-                                name="applyMethod" 
-                                value="normalApply" 
-                                checked={!formData.easyApply} 
-                                onChange={handleRadioChange} 
-                                className="form-check-input" 
-                              />
-                              <label htmlFor="normalApply" className="form-check-label">Normal Apply</label>
-                            </div>
-                          </div>
-                          {!formData.easyApply && (
-                            <div className="col-12">
-                              <label htmlFor="applicationUrl" className="form-label">Application URL</label>
-                              <input 
-                                type="url" 
-                                className="form-control" 
-                                id="applicationUrl" 
-                                value={formData.applicationUrl} 
-                                onChange={handleChange} 
-                                placeholder="Paste the application URL here" 
-                              />
-                            </div>
-                          )}
-                          <div className="col-12">
-                            <button type="submit" className="btn btn-primary">Submit</button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </>
-                );
-              }
-              
-              export default JobPosting;
-              
+              <label htmlFor="applicationType" className="form-label">Application Type</label>
+              <div className="form-check form-switch">
+                <input className="form-check-input" type="checkbox" id="applicationType" checked={formData.easyApply} onChange={handleToggleChange} />
+                <label className="form-check-label" htmlFor="applicationType">
+                  {formData.easyApply ? 'Easy Apply' : 'Job Apply'}
+                </label>
+              </div>
+            </div>
+            {!formData.easyApply && (
+              <div className="col-12">
+                <label htmlFor="applicationUrl" className="form-label">Application URL</label>
+                <input type="url" className="form-control" id="applicationUrl" value={formData.applicationUrl} onChange={handleChange} placeholder="https://example.com/apply" required={!formData.easyApply} />
+              </div>
+            )}
+            <div className="col-12">
+              <button type="submit" className="btn btn-primary">Post Job</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </>
+  );
+}
+
+export default JobPosting;
