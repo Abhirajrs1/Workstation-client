@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { validateLoginForm } from '../../../Utilis/helper.js';
 import { AuthContext } from '../../../Context/UserContext.jsx';
 import google from '../../../Assets/google.jpg'
+import { FaGoogle } from 'react-icons/fa';
 import './Login.css';
 
 function Login() {
@@ -102,8 +103,8 @@ function Login() {
             </button>
             <Link to="/admin-login" className="text-muted text-center mb-3 d-block">Is Admin?</Link> 
             </form>      
-          <button onClick={handleGoogle} type="button" className="candidate-google-btn w-75 mb-3">
-            <img src={google} alt="Google logo" className="candidate-google-logo" />
+            <button onClick={handleGoogle} type="button" className="candidate-google-btn mb-3">
+            <FaGoogle className="candidate-google-icon" /> 
           </button>
           <Link to="/employee-forgotPassword" id="forgot" className="text-muted">
             Forgot Your Password?
