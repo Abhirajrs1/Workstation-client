@@ -25,7 +25,6 @@ import AdminContext from "../Context/AdminContext";
 import AdminHome from "../Containers/Admin/AdminHome/AdminHome";
 import Candidates from "../Containers/Admin/AdminCandidates/Candidates";
 import Recruiters from "../Containers/Admin/AdminRecruiters/Recruiters";
-import JobApplication from '../Containers/User/JobApplication/JobApplication'
 import Jobs from "../Containers/Admin/AdminJobs/Jobs";
 import AdminJobListing from "../Containers/Admin/AdminJobs/AdminJobListing";
 import Categories from "../Containers/Admin/AdminCategories/Categories";
@@ -47,6 +46,7 @@ import WorkExperience from "../Containers/User/Profile/WorkExperience";
 import Plans from "../Containers/Admin/Plans/Plans";
 import AddPlans from "../Containers/Admin/Plans/AddPlans";
 import PlanListing from "../Containers/Recruiter/PlanListing/PlanListing";
+import ReviewApplication from "../Containers/User/JobApplication/ReviewApplication";
 
 function Api() {
   return (
@@ -67,12 +67,12 @@ function Api() {
             <Route path="/employee-profile" element={<Profile/>}/>
             <Route path="/employee-profile/editcontact" element={<ContactForm/>}/>
             <Route path="/employee-profile/qualifications" element={<Qualifications/>}/>
-            <Route path="/employee-jobApplication/:id" element={<JobApplication/>}/>
             <Route path="/employee-jobApplicationSuccess" element={<ApplicationSuccess/>}/>
             <Route path="/employee-jobApplicationFailure" element={<ApplicationFailure/>}/>
             <Route path="/employee-resume" element={<Resume/>}/>
             <Route path="/employee-editResume" element={<EditResume/>}/>
             <Route path="/employee-profile/workexperience" element={<WorkExperience/>}/>
+            <Route path="/employee-reviewApplication/:id" element={<ReviewApplication/>}/>
 
 
             

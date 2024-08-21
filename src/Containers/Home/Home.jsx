@@ -58,7 +58,7 @@ function Home() {
       return
     }
     if(easyApply){
-      navigate(`/employee-jobApplication/${id}`);
+      navigate(`/employee-reviewApplication/${id}`);
     }else if(!easyApply && application){
       window.location.href = application;
     }else{
@@ -132,8 +132,6 @@ function Home() {
         Clear Filters
       </Button>
         </Col>
-       
-
           </Row>
           <Row className="home-location-price-row">
             <Col md={5} className="home-location-col">

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../Context/UserContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaFileAlt, FaChevronRight, FaUpload } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaFileAlt, FaChevronRight, FaUpload, FaBirthdayCake } from 'react-icons/fa';
 import Navigation from '../../../Components/Navigation';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 import './Profile.css';
@@ -106,7 +106,7 @@ function Profile() {
             try {
                 const response = await axiosInstance.post('/employee-addResume', formData);
                 if (response.data.success) {
-                    setResumeUrl(response.data.resumeUrl);  // Update resume URL from response
+                    setResumeUrl(response.data.resumeUrl);  
                     setResumeFile(null);
                 }
             } catch (error) {
@@ -170,6 +170,12 @@ function Profile() {
                             <Link to="/employee-profile/editcontact">
                                 <FaChevronRight />
                             </Link>
+                        </div>
+                        <div className="profile-detail-row">
+                            <div className="profile-detail-icon-text">
+                                < FaBirthdayCake />
+                                <p>{user.dob || "N/A"}</p>
+                            </div>
                         </div>
                         <div className="profile-detail-row">
                             <div className="profile-detail-icon-text">

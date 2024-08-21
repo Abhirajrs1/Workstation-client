@@ -14,6 +14,7 @@ const ContactForm = () => {
   const [formData,setFormData]=useState({
       username:'',
       contact:'',
+      dob:'',
       useraddress:[{
         Housename:'',
         area:'',
@@ -31,6 +32,7 @@ const ContactForm = () => {
       setFormData({
         username:user.username||'',
         contact:user.contact ||'',
+        dob:user.dob || '',
         useraddress:user.useraddress.length > 0 ? user.useraddress[0] :
         {
           Housename: '',
@@ -47,7 +49,7 @@ const ContactForm = () => {
 
   const handleChange=(e)=>{
     const {id,value}=e.target
-    if(id==='username' || id==='contact'){
+    if(id==='username' || id==='contact' || id === 'dob'){
       setFormData({
         ...formData,[id]:value
       })
@@ -69,6 +71,7 @@ const ContactForm = () => {
         ...user,
         username:formData.username,
         contact:formData.contact,
+        dob: formData.dob, 
         useraddress:[formData.useraddress]
       }
       const response=await axiosInstance.put(`/employee-updateContact/${user.email}`,{updatedUserContact},{
@@ -161,6 +164,18 @@ const ContactForm = () => {
                     />
                   </div>
                 </div>
+                <div className="mb-3">
+                    <label htmlFor="dob" className="form-label">
+                      Date of Birth
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      id="dob"
+                      value={formData.dob}
+                      onChange={handleChange}
+                    />
+                  </div>
                 <div className="mb-3">
                   <label className="form-label">Location</label>
                   <p className="form-text">This helps match you with nearby jobs.</p>

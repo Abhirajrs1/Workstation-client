@@ -43,6 +43,26 @@ function UserContext({children}) {
          checkAuthenticated()
      },[])
 
+     useEffect(() => {
+      const queryParams = new URLSearchParams(window.location.search);
+      const token = queryParams.get('token');
+      const user = queryParams.get('user');
+  
+      if (token && user) {
+        setUser(JSON.parse(decodeURIComponent(user)));
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(JSON.parse(decodeURIComponent(user))));
+        Swal.fire({
+          title: 'Success!',
+          text: 'Google authentication successful',
+          icon: 'success',
+          timer: 5000,
+          position: 'top-center',
+        });
+        window.location.href = '/'; 
+      }
+    }, []);
+
      const login=async(email,password)=>{
              try {     
                 const response = await axiosInstance.post('/employee-login', { email, password});
@@ -107,12 +127,10 @@ function UserContext({children}) {
            const handleGoogleCallback = async () => {
             try {
               const response = await axios.get('http://localhost:3000/auth/google/callback');
-              console.log(response.data);
               if (response.data.success) {
-             
                 setUser(response.data.user);
-                localStorage.setItem('token', response.data.token);  
-                localStorage.setItem('user', JSON.stringify(response.data.user)); 
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('user', JSON.stringify(response.data.user));
                 Swal.fire({
                   title: 'Success!',
                   text: 'Google authentication successful',
@@ -120,7 +138,7 @@ function UserContext({children}) {
                   timer: 5000,
                   position: 'top-center',
                 });
-                window.location.href = '/'
+                window.location.href = '/';
                 return true;
               } else {
                 Swal.fire({
@@ -144,7 +162,6 @@ function UserContext({children}) {
               return false;
             }
           };
-          
         
   return (
     <div>
