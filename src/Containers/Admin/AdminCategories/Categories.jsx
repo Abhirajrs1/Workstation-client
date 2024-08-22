@@ -55,18 +55,18 @@ function Categories() {
         <>
             <AdminSideNavigation />
             <AdminNavigation />
-            <div className="category-panel">
-                <div className="content-wrapper">
+            <div className="category-management-panel">
+                <div className="category-management-content-wrapper">
                     <div className="category-management-header">
                         <h1>Category Management</h1>
                     </div>
                     <Button 
-                            variant="primary" 
-                            onClick={addCategory} 
-                            className="add-category-button"
-                        >
-                            Add Category
-                        </Button>
+                        variant="primary" 
+                        onClick={addCategory} 
+                        className="category-management-add-category-button"
+                    >
+                        Add Category
+                    </Button>
                     <div className="category-management-section">
                         <Table striped bordered hover>
                             <thead>
@@ -95,7 +95,7 @@ function Categories() {
                                 ))}
                             </tbody>
                         </Table>
-                        <div className="pagination-wrapper">
+                        <div className="category-management-pagination-wrapper">
                             <ReactPaginate
                                 previousLabel={<FaArrowLeft />}
                                 nextLabel={<FaArrowRight />}
@@ -105,8 +105,8 @@ function Categories() {
                                 marginPagesDisplayed={2}
                                 pageRangeDisplayed={5}
                                 onPageChange={handlePageClick}
-                                containerClassName={'pagination'}
-                                subContainerClassName={'pages pagination'}
+                                containerClassName={'category-management-pagination'}
+                                subContainerClassName={'pages category-management-pagination'}
                                 activeClassName={'active'}
                             />
                         </div>

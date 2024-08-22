@@ -50,7 +50,7 @@ function Navigation() {
                   <Dropdown.Menu>
                     <Dropdown.Header style={{fontWeight:"bold",color:"black"}}>{user.email}</Dropdown.Header>
                     <Dropdown.Item as={Link} to={'/employee-profile'}>Profile</Dropdown.Item>
-                    <Dropdown.Item href="#/jobs">My Jobs</Dropdown.Item>
+                    <Dropdown.Item as={Link} to={'/employee-applicationListing'}>My Applications</Dropdown.Item>
                     <Dropdown.Item href="#/reviews">My Reviews</Dropdown.Item>
                     <Dropdown.Item href="#/settings">Settings</Dropdown.Item>
                     <Dropdown.Item href="#/help">Help Centre</Dropdown.Item>

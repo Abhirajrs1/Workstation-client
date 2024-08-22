@@ -47,6 +47,7 @@ import Plans from "../Containers/Admin/Plans/Plans";
 import AddPlans from "../Containers/Admin/Plans/AddPlans";
 import PlanListing from "../Containers/Recruiter/PlanListing/PlanListing";
 import ReviewApplication from "../Containers/User/JobApplication/ReviewApplication";
+import ApplicationListing from "../Containers/User/JobApplication/ApplicationListing";
 
 function Api() {
   return (
@@ -73,6 +74,7 @@ function Api() {
             <Route path="/employee-editResume" element={<EditResume/>}/>
             <Route path="/employee-profile/workexperience" element={<WorkExperience/>}/>
             <Route path="/employee-reviewApplication/:id" element={<ReviewApplication/>}/>
+            <Route path="/employee-applicationListing" element={<ApplicationListing/>}/>
 
 
             
