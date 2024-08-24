@@ -21,7 +21,6 @@ function RecruiterLogin() {
       await validateLoginForm.validate({ email, password }, { abortEarly: false });
       setErrors({});
       const success = await RecruiterLogin(email, password);
-      console.log(recruiter,"RECRUITER");
       if (success) {
         Swal.fire({
           title: 'Success!',

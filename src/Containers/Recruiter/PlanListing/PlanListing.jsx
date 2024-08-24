@@ -107,7 +107,7 @@ const PlanListing = () => {
             <p className="planslisting-amount">${plan.amount} <span className="planslisting-per-month"></span></p>
             <p className="planslisting-description">{plan.description}</p>
             <p className="planslisting-planType">
-              Duration: {plan.planType === 'duration' ? `${plan.planDuration} Days` : 'Lifetime'}
+              Duration: {plan.planType === 'duration' ? `${plan.planDuration} Months` : 'Lifetime'}
             </p>
             <button className="planslisting-button" onClick={() => handlePayment(plan)}>Select Plan</button>
           </div>

@@ -118,7 +118,7 @@ function UserContext({children}) {
                         timer: 5000,
                         position: 'top-center',
                       })
-                      window.href('/employee-login')
+                      window.location.href('/employee-login')
                 }
             } catch (error) {
                 console.log("An error occured during logout",error);

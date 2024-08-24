@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
-import { FaTachometerAlt, FaDollarSign, FaBriefcase, FaPhone, FaLightbulb, FaUsers, FaComments, FaChartBar, FaTools, FaUserTie , FaThList } from 'react-icons/fa';
+import { FaTachometerAlt, FaDollarSign, FaBriefcase, FaPhone, FaLightbulb, FaUsers, FaComments, FaChartBar, FaTools, FaUserTie , FaThList,FaBuilding } from 'react-icons/fa';
 import './AdminSideNavigation.css';
 
 function AdminSideNavigation() {
@@ -39,8 +39,8 @@ function AdminSideNavigation() {
           </Link>
         </Nav.Item>
       <Nav.Item className="side-nav-item">
-        <Link to="/smart-sourcing">
-          <FaLightbulb /> Smart Sourcing
+        <Link to="/admin-companies">
+          <FaBuilding /> Companies
         </Link>
       </Nav.Item>
       <Nav.Item className="side-nav-item">

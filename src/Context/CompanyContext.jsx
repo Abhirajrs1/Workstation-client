@@ -16,7 +16,19 @@ function CompanyContext({children}) {
           try {
             const response = await axiosInstance.get('/company-verify')
             if (response.data.success) {
-              setCompany(JSON.parse(localStorage.getItem('company')))
+              const companyData=response.data.company
+              if (companyData.block) {
+                Swal.fire({
+                  title: 'Blocked!',
+                  text: 'Your account has been blocked. Please contact support.',
+                  icon: 'warning',
+                  timer: 5000,
+                  position: 'top-center',
+                });
+                CompanyLogout()   
+                return;
+              }
+              setCompany(companyData)
             } else {
               setCompany(null)
               localStorage.removeItem('company');
@@ -37,7 +49,18 @@ function CompanyContext({children}) {
         const response = await axiosInstance.post('/company-login', { email, password });
         console.log(response);
         if (response.data.success) {
-          setCompany(response.data.company)
+          const companyData = response.data.company;
+          if (companyData.block) {
+            Swal.fire({
+              title: 'Blocked!',
+              text: 'Your account has been blocked. Please contact support.',
+              icon: 'warning',
+              timer: 5000,
+              position: 'top-center',
+            });
+            return false; 
+          }
+          setCompany(companyData);        
           localStorage.setItem('companytoken', response.data.token)
           localStorage.setItem('company', JSON.stringify(response.data.company));
           return true

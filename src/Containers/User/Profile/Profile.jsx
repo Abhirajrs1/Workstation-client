@@ -13,20 +13,20 @@ function Profile() {
     const [description, setDescription] = useState('');
     const [remainingWords, setRemainingWords] = useState(1000);
     const [resumeFile, setResumeFile] = useState(null);
-    const [resumeUrl, setResumeUrl] = useState(user.resumeUrl || '');
+    const [resumeUrl, setResumeUrl] = useState(user?.resumeUrl || '');
     const [isUploading, setIsUploading] = useState(false);
 
     useEffect(() => {
-        if (!isAuthenticated && !loading) {
+        if (!isAuthenticated && !loading || user?.block) {
             navigate("/employee-login");
         }
-    }, [isAuthenticated, loading, navigate]);
+    }, [isAuthenticated, loading, navigate,user?.block]);
 
     useEffect(() => {
         if (user.description) {
-            setDescription(user.description);
+            setDescription(user?.description);
         }
-    }, [user.description]);
+    }, [user?.description]);    
 
     useEffect(() => {
         setRemainingWords(1000 - description.split(/\s+/).filter(Boolean).length);

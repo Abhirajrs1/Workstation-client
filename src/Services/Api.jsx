@@ -48,6 +48,7 @@ import AddPlans from "../Containers/Admin/Plans/AddPlans";
 import PlanListing from "../Containers/Recruiter/PlanListing/PlanListing";
 import ReviewApplication from "../Containers/User/JobApplication/ReviewApplication";
 import ApplicationListing from "../Containers/User/JobApplication/ApplicationListing";
+import Companies from "../Containers/Admin/AdminCompanies/Companies";
 
 function Api() {
   return (
@@ -106,6 +107,8 @@ function Api() {
             <Route path="/admin-editcategory/:id" element={<EditCategory/>}/>
             <Route path="/admin-plans" element={<Plans/>}/>
             <Route path="/admin-addPlans" element={<AddPlans/>}/>
+            <Route path="/admin-companies" element={<Companies/>}/>
+            
 
             <Route path="/company-signup" element={<CompanySignup/>}/>
             <Route path="/company-login" element={<CompanyLogin/>}/>

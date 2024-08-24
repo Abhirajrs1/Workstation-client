@@ -36,7 +36,7 @@ function AddPlans() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axiosInstance.post('/admin-addPlans', {formData});
+            const response = await axiosInstance.post('/admin-addPlans', formData);
             console.log(response);
             if (response.data.success) {
                 Swal.fire({
@@ -147,7 +147,7 @@ function AddPlans() {
                                 </Form.Group>
                                 {formData.planType === 'duration' && (
                                     <Form.Group className="mb-3" controlId="planDuration">
-                                        <Form.Label>Plan Duration (in days)</Form.Label>
+                                        <Form.Label>Plan Duration (in Months)</Form.Label>
                                         <Form.Control
                                             type="number"
                                             placeholder="Enter plan duration"

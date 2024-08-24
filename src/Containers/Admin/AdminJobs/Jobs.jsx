@@ -46,7 +46,6 @@ function Jobs() {
     const toggleListStatus = async (id, listStatus) => {
         try {
             const response = await axiosInstance.put(`/admin-jobs/${id}/list`);
-            console.log(response);
             if (response.data.success) {
                 setJobs(jobs.map(job =>
                     job._id === id ? { ...job, delete: !listStatus } : job

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { FaQuestionCircle, FaBell, FaEnvelope, FaCaretDown, FaLaptopCode, FaHome } from 'react-icons/fa';
@@ -11,16 +11,19 @@ function CompanyNavigation() {
     const { company, Authenticated, CompanyLogout } = useContext(CompanyAuth);
     const navigate = useNavigate();
 
+
+    useEffect(() => {
+        if (!Authenticated) {
+            navigate('/company-login');
+        }
+    }, [Authenticated, navigate]);
+
     const handleLogout = () => {
         CompanyLogout();
         navigate('/company-login');
     };
 
-    if (!Authenticated) {
-        navigate('/company-login');
-        return null;
-    }
-
+   
     return (
         <Navbar className="companynav-navbar navbar-expand-lg navbar-light bg-white border-bottom">
             <Container fluid>
