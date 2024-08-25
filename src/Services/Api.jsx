@@ -49,6 +49,8 @@ import PlanListing from "../Containers/Recruiter/PlanListing/PlanListing";
 import ReviewApplication from "../Containers/User/JobApplication/ReviewApplication";
 import ApplicationListing from "../Containers/User/JobApplication/ApplicationListing";
 import Companies from "../Containers/Admin/AdminCompanies/Companies";
+import CompanyProfile from "../Containers/Company/CompanyProfile/CompanyProfile";
+import CompanyProfileForm from "../Containers/Company/CompanyProfile/CompanyProfileForm";
 
 function Api() {
   return (
@@ -108,11 +110,14 @@ function Api() {
             <Route path="/admin-plans" element={<Plans/>}/>
             <Route path="/admin-addPlans" element={<AddPlans/>}/>
             <Route path="/admin-companies" element={<Companies/>}/>
-            
+
 
             <Route path="/company-signup" element={<CompanySignup/>}/>
             <Route path="/company-login" element={<CompanyLogin/>}/>
             <Route path="/company-home" element={<CompanyHome/>}/>
+            <Route path="/company-profile" element={<CompanyProfile/>}/>
+            <Route path="/company-profile/editForm" element={<CompanyProfileForm/>}/>
+
 
 
 

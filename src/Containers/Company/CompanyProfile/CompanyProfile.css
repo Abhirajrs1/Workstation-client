@@ -1,0 +1,55 @@
+.company-profile-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.company-profile-initials-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 24px;
+    background-color: #333;
+    color: #fff;
+}
+
+.company-profile-details {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.company-profile-heading {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.company-profile-detail-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.company-profile-detail-icon-text {
+    display: flex;
+    align-items: center;
+}
+
+.company-profile-detail-icon-text p {
+    margin-left: 0.5rem;
+    font-size: 14px;
+}
+
+.company-profile-detail-icon-text svg {
+    font-size: 1.5rem;
+}
+
+.company-profile-detail-row a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.company-profile-detail-row a:hover {
+    text-decoration: underline;
+}
