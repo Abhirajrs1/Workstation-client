@@ -10,7 +10,7 @@ import { CompanyAuth } from '../../../Context/CompanyContext';
 
 function CompanyProfileForm() {
     
-    const { company, loading, Authenticated}=useContext(CompanyAuth)
+    const { company,setCompany, loading, Authenticated}=useContext(CompanyAuth)
     const navigate=useNavigate()
     const [formData, setFormData] = useState({
         companyName: '',
@@ -64,6 +64,53 @@ function CompanyProfileForm() {
           });
         }
       };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const updatedCompanyContact = {
+        ...company,
+        companyName: formData.companyName,
+        contactNumber: formData.contactNumber,
+        establishedYear: formData.establishedYear,
+        companyaddress: [formData.companyaddress]
+      };
+      const response = await axiosInstance.put(`/company-updateContact/${company.email}`, { updatedCompanyContact }, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('companytoken')}`
+        }
+      });
+      if (response.data.success) {
+        Swal.fire({
+          title: 'Success!',
+          text: response.data.message,
+          icon: 'success',
+          timer: 5000,
+          position: 'top-center'
+        });
+        navigate('/company-profile');
+        setCompany(response.data.company);
+        localStorage.setItem('company', JSON.stringify(response.data.company));
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: response.data.message,
+          icon: 'error',
+          timer: 5000,
+          position: 'top-center'
+        });
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'An error occurred. Please try again later.';
+      Swal.fire({
+        title: 'Error!',
+        text: errorMessage,
+        icon: 'error',
+        timer: 5000,
+        position: 'top-center'
+      });
+    }
+  };
 
   return (
     <>

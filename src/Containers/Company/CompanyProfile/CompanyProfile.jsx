@@ -127,7 +127,7 @@ function CompanyProfile() {
         return null;
     }
 
-    const companyAddress = company.address && company.address.length > 0 ? company.address[0] : {};
+    const companyAddress = company.companyaddress && company.companyaddress.length > 0 ? company.companyaddress[0] : {};
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const day = String(date.getDate()).padStart(2, '0');
@@ -166,7 +166,7 @@ function CompanyProfile() {
                         <div className="company-profile-detail-row">
                             <div className="company-profile-detail-icon-text">
                                 <FaPhone />
-                                <p>{company.contact || "N/A"}</p>
+                                <p>{company.contactNumber || "N/A"}</p>
                             </div>
                             <Link to="/company-profile/editForm">
                                 <FaChevronRight />
@@ -185,51 +185,6 @@ function CompanyProfile() {
                             </div>
                         </div>
                     </div>
-                    {/* <h5 className="company-profile-heading fw-bold">Company Resume</h5>
-                    <Row className="align-items-center mb-3">
-                        <Col xs={10}>
-                            <Card className="p-2">
-                                <Row>
-                                    <Col xs={2} className="d-flex align-items-center justify-content-center">
-                                        <FaFileAlt style={{ fontSize: '2rem' }} />
-                                    </Col>
-                                    <Col xs={10}>
-                                        <p className="mb-0 fw-bold">Resume</p>
-                                        <small>Updated on {formatDate(company.updatedAt)}</small>
-                                    </Col>
-                                </Row>
-                                <Row className="mt-2">
-                                    <Col xs={12}>
-                                        {resumeUrl ? (
-                                            <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
-                                                <Button variant="link">View Resume</Button>
-                                            </a>
-                                        ) : (
-                                            <div>
-                                                <input 
-                                                    type="file" 
-                                                    accept=".pdf" 
-                                                    onChange={handleFileChange} 
-                                                />
-                                                <Button 
-                                                    variant="primary" 
-                                                    onClick={handleUpload} 
-                                                    disabled={isUploading}
-                                                >
-                                                    {isUploading ? 'Uploading...' : 'Attach Resume'}
-                                                </Button>
-                                            </div>
-                                        )}
-                                    </Col>
-                                </Row>
-                            </Card>
-                        </Col>
-                        <Col xs={2} className="text-end">
-                            <Link to="/company-resume">
-                                <FaChevronRight style={{ cursor: 'pointer' }} />
-                            </Link>
-                        </Col>
-                    </Row> */}
                     <h5 className="company-profile-heading fw-bold">Improve your business</h5>
                     <Row className="align-items-center mt-3 mb-3">
                         <Col xs={10}>
