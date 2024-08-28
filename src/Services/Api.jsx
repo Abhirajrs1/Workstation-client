@@ -51,6 +51,8 @@ import ApplicationListing from "../Containers/User/JobApplication/ApplicationLis
 import Companies from "../Containers/Admin/AdminCompanies/Companies";
 import CompanyProfile from "../Containers/Company/CompanyProfile/CompanyProfile";
 import CompanyProfileForm from "../Containers/Company/CompanyProfile/CompanyProfileForm";
+import AboutCompany from "../Containers/Company/CompanyProfile/AboutCompany";
+import EditAboutDetails from "../Containers/Company/CompanyProfile/EditAboutDetails";
 
 function Api() {
   return (
@@ -117,6 +119,8 @@ function Api() {
             <Route path="/company-home" element={<CompanyHome/>}/>
             <Route path="/company-profile" element={<CompanyProfile/>}/>
             <Route path="/company-profile/editForm" element={<CompanyProfileForm/>}/>
+            <Route path="/company-about" element={<AboutCompany/>}/>
+            <Route path="/company-editAboutDetails" element={<EditAboutDetails/>}/>
 
 
 

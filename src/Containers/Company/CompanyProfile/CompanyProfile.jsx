@@ -175,7 +175,7 @@ function CompanyProfile() {
                         <div className="company-profile-detail-row">
                             <div className="company-profile-detail-icon-text">
                                 <FaBuilding />
-                                <p>{company.industry || "N/A"}</p>
+                                <p>{company.typeOfCompany || "N/A"}</p>
                             </div>
                         </div>
                         <div className="company-profile-detail-row">
@@ -185,13 +185,12 @@ function CompanyProfile() {
                             </div>
                         </div>
                     </div>
-                    <h5 className="company-profile-heading fw-bold">Improve your business</h5>
                     <Row className="align-items-center mt-3 mb-3">
                         <Col xs={10}>
                             <p className="mb-0">About Us</p>
                         </Col>
                         <Col xs={2} className="text-end">
-                            <Link to="/company-profile/about">
+                            <Link to="/company-about">
                                 <FaChevronRight />
                             </Link>
                         </Col>
