@@ -54,6 +54,7 @@ import CompanyProfileForm from "../Containers/Company/CompanyProfile/CompanyProf
 import AboutCompany from "../Containers/Company/CompanyProfile/AboutCompany";
 import EditAboutDetails from "../Containers/Company/CompanyProfile/EditAboutDetails";
 import CompanyDocuments from "../Containers/Company/CompanyProfile/CompanyDocuments";
+import CompanyDetailedView from "../Containers/Admin/AdminCompanies/CompanyDetailedView";
 
 function Api() {
   return (
@@ -113,6 +114,7 @@ function Api() {
             <Route path="/admin-plans" element={<Plans/>}/>
             <Route path="/admin-addPlans" element={<AddPlans/>}/>
             <Route path="/admin-companies" element={<Companies/>}/>
+            <Route path="/admin-companydetails/:id" element={<CompanyDetailedView/>}/>
 
 
             <Route path="/company-signup" element={<CompanySignup/>}/>
