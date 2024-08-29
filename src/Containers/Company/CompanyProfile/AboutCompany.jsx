@@ -45,7 +45,6 @@ function AboutCompany() {
                         </blockquote>
                     </Col>
                 </Row>
-
                 <Row className="social-section">
     <Col>
         <h2>Connect With Us</h2>

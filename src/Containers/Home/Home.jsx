@@ -6,7 +6,8 @@ import Footer from '../../Components/Footer';
 import Navigation from '../../Components/Navigation.jsx';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft,FaFlag } from 'react-icons/fa';
+import ReportJobModal from '../User/ReportJob/ReportJobModal.jsx';
 
 function Home() {
   const [jobs, setJobs] = useState([]);
@@ -23,6 +24,7 @@ function Home() {
   const [selectedJob, setSelectedJob] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(''); 
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
+  const [showReportModal, setShowReportModal] = useState(false);
   const navigate = useNavigate();
 
   const {isAuthenticated}=useContext(AuthContext)
@@ -54,7 +56,7 @@ function Home() {
 
   const applyJob = (id,easyApply,application) => {
     if(!isAuthenticated){
-      navigate('employee-login')
+      navigate('/employee-login')
       return
     }
     if(easyApply){
@@ -88,6 +90,18 @@ function Home() {
 
   const handleBackClick = () => {
     window.location.reload()
+    };
+
+    const handleReportJob = () => {
+      if (!isAuthenticated) {
+        navigate('/employee-login');
+        return;
+      }
+      setShowReportModal(true);
+    };
+  
+    const handleCloseReportModal = () => {
+      setShowReportModal(false);
     };
 
   return (
@@ -244,6 +258,20 @@ function Home() {
                       </ul>
                     </div>
                   </div>
+                  <div className="home-action-buttons">
+        <button className="home-button" onClick={handleReportJob}>
+          <FaFlag className="home-button-icon" /> Report Job
+        </button>
+            </div>
+            {selectedJob && (
+        <ReportJobModal
+          show={showReportModal}
+          handleClose={handleCloseReportModal}
+          jobTitle={selectedJob.jobTitle}
+          jobId={selectedJob._id}
+          companyName={selectedJob.companyName}
+        />
+      )}
                 </div>
               ) : (
                 <div className="home-job-details">

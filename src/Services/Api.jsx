@@ -53,6 +53,7 @@ import CompanyProfile from "../Containers/Company/CompanyProfile/CompanyProfile"
 import CompanyProfileForm from "../Containers/Company/CompanyProfile/CompanyProfileForm";
 import AboutCompany from "../Containers/Company/CompanyProfile/AboutCompany";
 import EditAboutDetails from "../Containers/Company/CompanyProfile/EditAboutDetails";
+import CompanyDocuments from "../Containers/Company/CompanyProfile/CompanyDocuments";
 
 function Api() {
   return (
@@ -73,7 +74,7 @@ function Api() {
             <Route path="/employee-profile" element={<Profile/>}/>
             <Route path="/employee-profile/editcontact" element={<ContactForm/>}/>
             <Route path="/employee-profile/qualifications" element={<Qualifications/>}/>
-            <Route path="/employee-jobApplicationSuccess" element={<ApplicationSuccess/>}/>
+            <Route path="/employee-jobApplicationSuccess/:id" element={<ApplicationSuccess/>}/>
             <Route path="/employee-jobApplicationFailure" element={<ApplicationFailure/>}/>
             <Route path="/employee-resume" element={<Resume/>}/>
             <Route path="/employee-editResume" element={<EditResume/>}/>
@@ -121,6 +122,7 @@ function Api() {
             <Route path="/company-profile/editForm" element={<CompanyProfileForm/>}/>
             <Route path="/company-about" element={<AboutCompany/>}/>
             <Route path="/company-editAboutDetails" element={<EditAboutDetails/>}/>
+            <Route path="/company-documents" element={<CompanyDocuments/>}/>
 
 
 

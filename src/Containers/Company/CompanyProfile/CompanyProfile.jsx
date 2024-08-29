@@ -57,23 +57,6 @@ function CompanyProfile() {
         }
     }, [company._id]);
 
-    useEffect(() => {
-        const fetchResumeUrl = async () => {
-            if (company._id) {
-                try {
-                    const response = await axiosInstance.get('/company-getResumeUrl');
-                    if (response.data.success) {
-                        setResumeUrl(response.data.resumeUrl);  
-                    }
-                } catch (error) {
-                    console.error('Error fetching resume URL:', error);
-                }
-            }
-        };
-
-        fetchResumeUrl();
-    }, [company._id]);
-
     const handleDescriptionSubmit = async () => {
         try {
             const response = await axiosInstance.put('/company-addDescription', {
@@ -86,36 +69,6 @@ function CompanyProfile() {
         } catch (error) {
             console.error('Error updating description:', error);
             alert('Failed to update description');
-        }
-    };
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file && file.type === 'application/pdf') {
-            setResumeFile(file);
-        } else {
-            alert('Please select a PDF file.');
-        }
-    };
-
-    const handleUpload = async () => {
-        if (resumeFile) {
-            setIsUploading(true);
-            const formData = new FormData();
-            formData.append('resume', resumeFile);
-
-            try {
-                const response = await axiosInstance.post('/company-addResume', formData);
-                if (response.data.success) {
-                    setResumeUrl(response.data.resumeUrl);  
-                    setResumeFile(null);
-                }
-            } catch (error) {
-                console.error('Error uploading resume:', error);
-                alert('Failed to upload resume');
-            } finally {
-                setIsUploading(false);
-            }
         }
     };
 
@@ -191,6 +144,16 @@ function CompanyProfile() {
                         </Col>
                         <Col xs={2} className="text-end">
                             <Link to="/company-about">
+                                <FaChevronRight />
+                            </Link>
+                        </Col>
+                    </Row>
+                    <Row className="align-items-center mt-3 mb-3">
+                        <Col xs={10}>
+                            <p className="mb-0">Documents</p>
+                        </Col>
+                        <Col xs={2} className="text-end">
+                            <Link to="/company-documents">
                                 <FaChevronRight />
                             </Link>
                         </Col>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navigation from '../../../Components/Navigation';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
+import { useParams } from 'react-router-dom';
 
 function ApplicationListing() {
   const [applications, setApplications] = useState([]);

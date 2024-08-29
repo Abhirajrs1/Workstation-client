@@ -25,6 +25,7 @@ function ReviewApplication() {
       const fetchJobDetails = async () => {
         try {
           const response = await axiosInstance.get(`/employee-getIndividualJobDetails/${id}`);
+          
           if (response.data.success) {
             setJobDetails(response.data.job);
           }
@@ -68,7 +69,7 @@ function ReviewApplication() {
         }
         const response=await axiosInstance.post(`/employee-applyJob?jobid=${id}&recruiterid=${jobDetails.jobPostedBy}`,applicationData)
         if(response.data.success){
-                    navigate('/employee-jobApplicationSuccess')
+                    navigate(`/employee-jobApplicationSuccess/${jobDetails.company}`)
                   }else{
                     navigate('/employee-jobApplicationFailure')
                   }

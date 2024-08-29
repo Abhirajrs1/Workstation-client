@@ -131,6 +131,7 @@ function CompanyProfileForm() {
                     <Form.Control
                       type="text"
                       id="companyName"
+                      readOnly
                       value={formData.companyName}
                       onChange={handleChange}
                     />
