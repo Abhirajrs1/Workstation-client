@@ -2,7 +2,6 @@ import React, { useContext,useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { FaQuestionCircle, FaBell, FaEnvelope, FaCaretDown, FaLaptopCode, FaHome } from 'react-icons/fa';
-import logo from '../Assets/logo2.png';
 import { CompanyAuth } from '../Context/CompanyContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CompanyNavigation.css';
@@ -28,7 +27,6 @@ function CompanyNavigation() {
         <Navbar className="companynav-navbar navbar-expand-lg navbar-light bg-white border-bottom">
             <Container fluid>
                 <Navbar.Brand as={Link} to="/company-home">
-                    <img src={logo} alt="Workstation" style={{ height: '70px', width: '150px' }} />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbar-nav" />
                 <Navbar.Collapse id="navbar-nav">
@@ -37,18 +35,7 @@ function CompanyNavigation() {
                             <FaHome className="me-1" />
                             Home
                         </Nav.Link>
-                        <Nav.Link as={Link} to="/company-help" className="companynav-text-dark me-3">
-                            <FaQuestionCircle className="me-1" />
-                            Help
-                        </Nav.Link>
-                        <Nav.Link as={Link} to="/company-notifications" className="companynav-text-dark me-3">
-                            <FaBell />
-                            <span className="ms-1">Notifications</span>
-                        </Nav.Link>
-                        <Nav.Link as={Link} to="/company-messages" className="companynav-text-dark me-3">
-                            <FaEnvelope />
-                            <span className="ms-1">Messages</span>
-                        </Nav.Link>
+                        
                         <NavDropdown
                             title={<span className="companynav-text-dark">{company?.email}<FaCaretDown className="ms-1" /></span>}
                             id="companyUserDropdown"

@@ -158,7 +158,7 @@ function CompanyProfile() {
                             </Link>
                         </Col>
                     </Row>
-                    <Form.Group className="mt-3">
+                    {/* <Form.Group className="mt-3">
                         <Form.Label className="company-profile-heading">Company Description</Form.Label>
                         <Form.Control 
                             as="textarea" 
@@ -177,7 +177,7 @@ function CompanyProfile() {
                         >
                             Save Description
                         </Button>
-                    </Form.Group>
+                    </Form.Group> */}
                 </Card>
             </Container>
         </div>

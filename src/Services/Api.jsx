@@ -56,6 +56,7 @@ import EditAboutDetails from "../Containers/Company/CompanyProfile/EditAboutDeta
 import CompanyDocuments from "../Containers/Company/CompanyProfile/CompanyDocuments";
 import CompanyDetailedView from "../Containers/Admin/AdminCompanies/CompanyDetailedView";
 import CompanyView from "../Containers/User/CompanyView/CompanyView";
+import CompanyReviews from "../Containers/Company/CompanyReviews/CompanyReviews";
 
 function Api() {
   return (
@@ -127,6 +128,7 @@ function Api() {
             <Route path="/company-about" element={<AboutCompany/>}/>
             <Route path="/company-editAboutDetails" element={<EditAboutDetails/>}/>
             <Route path="/company-documents" element={<CompanyDocuments/>}/>
+            <Route path="/company-reviews" element={<CompanyReviews/>}/>
 
 
 

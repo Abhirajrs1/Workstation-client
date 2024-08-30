@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor';
+import Navigation from '../../../Components/Navigation';
 import './CompanyView.css';
 
 function CompanyView() {
@@ -35,6 +36,8 @@ function CompanyView() {
   }
 
   return (
+    <>
+    <Navigation/>
     <Container className="company-view-container mt-5">
       <Row className="text-center mb-4">
         <Col>
@@ -162,6 +165,7 @@ function CompanyView() {
         </Row>
       )}
     </Container>
+    </>
   );
 }
 

@@ -9,7 +9,7 @@ function CompanySideNavigation() {
     <div className="company-side-nav">
       <Nav className="flex-column">
         <Nav.Item className="company-side-nav-item">
-          <Link to="/company-dashboard">
+          <Link to="/company-home">
             <FaTachometerAlt /> Dashboard
           </Link>
         </Nav.Item>
@@ -23,26 +23,11 @@ function CompanySideNavigation() {
             <FaStar /> Reviews
           </Link>
         </Nav.Item>
-        <Nav.Item className="company-side-nav-item">
+        {/* <Nav.Item className="company-side-nav-item">
           <Link to="/company-recruiters">
             <FaUserTie /> Recruiters
           </Link>
-        </Nav.Item>
-        <Nav.Item className="company-side-nav-item">
-          <Link to="/company-jobs">
-            <FaBriefcase /> Jobs
-          </Link>
-        </Nav.Item>
-        <Nav.Item className="company-side-nav-item">
-          <Link to="/company-categories">
-            <FaThList /> Categories
-          </Link>
-        </Nav.Item>
-        <Nav.Item className="company-side-nav-item">
-          <Link to="/company-companies">
-            <FaBuilding /> Companies
-          </Link>
-        </Nav.Item>
+        </Nav.Item> */}
       </Nav>
     </div>
   );
