@@ -104,6 +104,11 @@ function Home() {
       setShowReportModal(false);
     };
 
+    const handleCompanyClick=(id)=>{
+      navigate(`/employee-companyView/${id}`)
+
+    }
+
   return (
     <div>
       <Navigation />
@@ -193,8 +198,10 @@ function Home() {
                   >
                     <div className="home-job-card-header">
                       <h5 className="home-job-title">{job.jobTitle}</h5>
-                      <span className="home-company-name">{job.companyName}</span>
-                    </div>
+                      <span className="home-company-name" onClick={(e) => { e.stopPropagation(); handleCompanyClick(job.company); }}>
+                        {job.companyName}
+                      </span>                   
+                       </div>
                     <p className="home-job-location">{job.jobLocation}</p>
                     {job.easyApply &&
                     <div className="home-easy-apply">
@@ -214,8 +221,12 @@ function Home() {
               {selectedJob ? (
                 <div className="home-job-details">
                   <h2 className="home-job-title-highlight">{selectedJob.jobTitle}</h2>
-                  <span className="home-company-name-highlight">{selectedJob.companyName}</span>
-                  <div className="home-action-buttons">
+                  <span 
+                    className="home-company-name-highlight" 
+                    onClick={() => handleCompanyClick(selectedJob.company)}>
+                    {selectedJob.companyName}
+                  </span>              
+                      <div className="home-action-buttons">
                     <button className="btn btn-primary" onClick={() => applyJob(selectedJob._id,selectedJob.easyApply,selectedJob.applicationUrl)}>
                       {selectedJob.easyApply?'Easy Apply':'Apply now'}
                       </button>

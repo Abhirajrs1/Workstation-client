@@ -55,6 +55,7 @@ import AboutCompany from "../Containers/Company/CompanyProfile/AboutCompany";
 import EditAboutDetails from "../Containers/Company/CompanyProfile/EditAboutDetails";
 import CompanyDocuments from "../Containers/Company/CompanyProfile/CompanyDocuments";
 import CompanyDetailedView from "../Containers/Admin/AdminCompanies/CompanyDetailedView";
+import CompanyView from "../Containers/User/CompanyView/CompanyView";
 
 function Api() {
   return (
@@ -82,6 +83,7 @@ function Api() {
             <Route path="/employee-profile/workexperience" element={<WorkExperience/>}/>
             <Route path="/employee-reviewApplication/:id" element={<ReviewApplication/>}/>
             <Route path="/employee-applicationListing" element={<ApplicationListing/>}/>
+            <Route path="/employee-companyView/:id" element={<CompanyView/>}/>
 
 
             
