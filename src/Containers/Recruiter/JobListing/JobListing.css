@@ -1,9 +1,9 @@
-.job-listing {
+.recruiter-job-listing {
     max-width: 800px;
     margin: 20px auto;
 }
 
-.job-card {
+.recruiter-job-card {
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -11,31 +11,31 @@
     margin-bottom: 20px;
 }
 
-.card-body {
+.recruiter-card-body {
     padding: 20px;
 }
 
-.header {
+.recruiter-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 15px;
 }
 
-.company-name {
+.recruiter-company-name {
     color: #4285f4;
     margin: 0;
     font-size: 1.1rem;
 }
 
-.job-title {
+.recruiter-job-title {
     margin: 0;
     font-size: 1.5rem;
     font-weight: bold;
     color: #333;
 }
 
-.job-details {
+.recruiter-job-details {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 15px;
@@ -43,17 +43,17 @@
     color: #6c757d;
 }
 
-.detail-item {
+.recruiter-detail-item {
     margin-right: 15px;
 }
 
-.job-description {
+.recruiter-job-description {
     font-size: 0.95rem;
     margin-bottom: 15px;
     color: #333;
 }
 
-.view-job-button {
+.recruiter-view-job-button {
     background-color: #4285f4;
     color: white;
     border: none;
@@ -64,23 +64,23 @@
     font-weight: bold;
 }
 
-.view-job-button:hover {
+.recruiter-view-job-button:hover {
     background-color: #3367d6;
 }
 
-.action-icons {
+.recruiter-action-icons {
     display: flex;
     gap: 10px;
 }
 
-.edit-icon,
-.delete-icon {
+.recruiter-edit-icon,
+.recruiter-delete-icon {
     cursor: pointer;
     font-size: 1.2rem;
     color: #007bff; 
 }
 
-.edit-icon:hover,
-.delete-icon:hover {
+.recruiter-edit-icon:hover,
+.recruiter-delete-icon:hover {
     color: #0056b3; 
 }

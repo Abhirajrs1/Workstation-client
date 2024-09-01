@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Navigation from '../../../Components/Navigation';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function ApplicationListing() {
   const [applications, setApplications] = useState([]);
+  const navigate=useNavigate()
 
   useEffect(() => {
     const fetchApplication = async () => {
@@ -21,10 +22,18 @@ function ApplicationListing() {
     fetchApplication();
   }, []);
 
-  const handleMessageClick = (employerId) => {
-    window.location.href = `/message-employer/${employerId}`;
+  const handleMessageClick = async (jobId, employerId) => {
+    try {
+      const response = await axiosInstance.post('/employee-createRoom', { jobId, employerId });
+      if (response.data.success) {
+        navigate(`/employee-startChat?jobId=${jobId}&employerId=${employerId}`, {
+          state: { room: response.data.room }
+        });
+      }
+    } catch (error) {
+      console.error('Error creating room:', error);
+    }
   };
-
   return (
     <>
       <Navigation />
@@ -45,7 +54,7 @@ function ApplicationListing() {
                   <Col md={4} className="employee-application-actions">
                     <Button
                       className="employee-message-employer"
-                      onClick={() => handleMessageClick(application.employerId)}
+                      onClick={() => handleMessageClick(application.jobId._id,application.employerId)}
                     >
                       Message employer <span className="employee-arrow-symbol">&rarr;</span>
                     </Button>

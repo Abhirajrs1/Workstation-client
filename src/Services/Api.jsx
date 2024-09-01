@@ -57,6 +57,7 @@ import CompanyDocuments from "../Containers/Company/CompanyProfile/CompanyDocume
 import CompanyDetailedView from "../Containers/Admin/AdminCompanies/CompanyDetailedView";
 import CompanyView from "../Containers/User/CompanyView/CompanyView";
 import CompanyReviews from "../Containers/Company/CompanyReviews/CompanyReviews";
+import StartChat from "../Containers/User/Chat/StartChat";
 
 function Api() {
   return (
@@ -85,6 +86,7 @@ function Api() {
             <Route path="/employee-reviewApplication/:id" element={<ReviewApplication/>}/>
             <Route path="/employee-applicationListing" element={<ApplicationListing/>}/>
             <Route path="/employee-companyView/:id" element={<CompanyView/>}/>
+            <Route path="/employee-startChat" element={<StartChat/>}/>
 
 
             

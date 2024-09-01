@@ -10,14 +10,13 @@ import Swal from 'sweetalert2';
 
 function JobListing() {
     const [jobs, setJobs] = useState([]);
-    const {recruiter,Authenticated,loading}=useContext(RecruiterAuth)
-    const navigate=useNavigate()
-
+    const { recruiter, Authenticated, loading } = useContext(RecruiterAuth);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if(!loading && !Authenticated ||!recruiter){
-            navigate('/recruiter-login')
-        }else{
+        if (!loading && (!Authenticated || !recruiter)) {
+            navigate('/recruiter-login');
+        } else {
             const fetchJobs = async () => {
                 try {
                     const response = await axiosInstance.get(`/recruiter-showJobs/${recruiter._id}`);
@@ -33,20 +32,18 @@ function JobListing() {
             };
             fetchJobs();
         }
-    }, [loading,Authenticated,navigate,recruiter,recruiter._id]);
+    }, [loading, Authenticated, navigate, recruiter, recruiter._id]);
 
-    const viewJob=(id)=>{
-        navigate(`/recruiter-viewJob/${id}`)
-    }
+    const viewJob = (id) => {
+        navigate(`/recruiter-viewJob/${id}`);
+    };
 
+    const editJob = async (id) => {
+        navigate(`/recruiter-editJob/${id}`);
+    };
 
-    const editJob=async(id)=>{
-        navigate(`/recruiter-editJob/${id}`)
-    }
-
-    
     if (!jobs) {
-        return <div className="individual-job-loading">Loading...</div>;
+        return <div className="recruiter-job-loading">Loading...</div>;
     }
 
     const deleteJob = async (id) => {
@@ -82,31 +79,31 @@ function JobListing() {
         <>
             <ReNavigation />
             <SideNav />
-            <div className="job-listing">
+            <div className="recruiter-job-listing">
                 {jobs.map(job => (
-                    <div key={job._id} className="job-card">
-                        <div className="card-body">
-                            <div className="header">
+                    <div key={job._id} className="recruiter-job-card">
+                        <div className="recruiter-card-body">
+                            <div className="recruiter-header">
                                 <div>
-                                    <h3 className="job-title">{job.jobTitle}</h3>
-                                    <h6 className="company-name">{job.companyName}</h6>
+                                    <h3 className="recruiter-job-title">{job.jobTitle}</h3>
+                                    <h6 className="recruiter-company-name">{job.companyName}</h6>
                                 </div>
-                                <div className="action-icons">
-                                    <FaEdit className="edit-icon" onClick={()=>editJob(job._id)} />
-                                    <FaTrashAlt className="delete-icon" onClick={()=>deleteJob(job._id)} />
+                                <div className="recruiter-action-icons">
+                                    <FaEdit className="recruiter-edit-icon" onClick={() => editJob(job._id)} />
+                                    <FaTrashAlt className="recruiter-delete-icon" onClick={() => deleteJob(job._id)} />
                                 </div>
                             </div>
-                            <div className="job-details">
-                                <span className="detail-item">📍 {job.jobLocation}</span>
-                                <span className="detail-item">🕒 {job.employmentType}</span>
-                                <span className="detail-item">💰 ${job.minPrice}-${job.maxPrice}</span>
-                                <span className="detail-item">📅 {job.jobPostedOn}</span>
+                            <div className="recruiter-job-details">
+                                <span className="recruiter-detail-item">📍 {job.jobLocation}</span>
+                                <span className="recruiter-detail-item">🕒 {job.employmentType}</span>
+                                <span className="recruiter-detail-item">💰 ${job.minPrice}-${job.maxPrice}</span>
+                                <span className="recruiter-detail-item">📅 {job.jobPostedOn}</span>
                             </div>
 
-                            <p className="job-description">
+                            <p className="recruiter-job-description">
                                 {job.description}
                             </p>
-                            <button className="view-job-button" onClick={()=>viewJob(job._id)}>VIEW JOB</button>
+                            <button className="recruiter-view-job-button" onClick={() => viewJob(job._id)}>VIEW JOB</button>
                         </div>
                     </div>
                 ))}

@@ -10,7 +10,7 @@ import { FaArrowLeft } from 'react-icons/fa';
 
 function EditJob() {
   const navigate = useNavigate();
-  const { id } = useParams(); // Get job ID from URL
+  const { id } = useParams(); 
   const { Authenticated, loading } = useContext(RecruiterAuth);
   const [formData, setFormData] = useState({
     jobTitle: '',
@@ -23,7 +23,7 @@ function EditJob() {
     skills: [],
     description: '',
     education: '',
-    category: '',
+    categoryName: '',
   });
 
   const [categories, setCategories] = useState([]);
@@ -48,7 +48,7 @@ function EditJob() {
               skills: job.skills,
               description: job.description,
               education: job.education,
-              category: job.category,
+              categoryName: job.categoryName,
             });
           }
         } catch (error) {
@@ -240,9 +240,9 @@ function EditJob() {
               <label htmlFor="category" className="form-label">Category</label>
               <select
                 className="form-select"
-                value={formData.category}
+                value={formData.categoryName}
                 onChange={handleChange}
-                id="category"
+                id="categoryName"
                 required
               >
                 <option>Select category</option>
