@@ -1,19 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700&display=swap');
 
-.job-details-page {
+.admin-job-listing-job-details-page {
     font-family: 'Mulish', sans-serif;
     padding: 2rem 0;
     background-color: #f8f9fa;
     min-height: 100vh;
 }
 
-.job-card {
+.admin-job-listing-job-card {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: none;
     border-radius: 8px;
 }
 
-.job-card .card-header {
+.admin-job-listing-job-card .card-header {
     background-color: #007bff;
     color: white;
     font-weight: 600;
@@ -22,57 +22,60 @@
     border-top-right-radius: 8px;
 }
 
-.job-card .card-body {
+.admin-job-listing-job-card .card-body {
     padding: 2rem;
 }
 
-.job-header {
+.admin-job-listing-job-header {
     margin-bottom: 1.5rem;
 }
 
-.job-header .card-title {
+.admin-job-listing-job-header .card-title {
     font-size: 1.5rem;
     font-weight: 600;
     color: #333;
 }
 
-.job-header .card-subtitle {
+.admin-job-listing-job-header .card-subtitle {
     font-size: 1.1rem;
     color: #6c757d;
 }
 
-.job-description, .job-details {
+.admin-job-listing-job-description,
+.admin-job-listing-job-details {
     margin-bottom: 2rem;
 }
 
-.job-description h3, .detail-item h3 {
+.admin-job-listing-job-description h3,
+.admin-job-listing-detail-item h3 {
     font-size: 1.2rem;
     font-weight: 600;
     color: #495057;
     margin-bottom: 0.75rem;
 }
 
-.job-description p, .detail-item p {
+.admin-job-listing-job-description p,
+.admin-job-listing-detail-item p {
     color: #6c757d;
     line-height: 1.6;
 }
 
-.job-details {
+.admin-job-listing-job-details {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
 }
 
-.detail-item ul {
+.admin-job-listing-detail-item ul {
     padding-left: 1.2rem;
     margin-bottom: 0;
 }
 
-.detail-item li {
+.admin-job-listing-detail-item li {
     margin-bottom: 0.3rem;
 }
 
-.btn-primary {
+.admin-job-listing-btn-primary {
     background-color: #007bff;
     border-color: #007bff;
     font-weight: 600;
@@ -80,19 +83,19 @@
     transition: all 0.3s ease;
 }
 
-.btn-primary:hover {
+.admin-job-listing-btn-primary:hover {
     background-color: #0056b3;
     border-color: #0056b3;
 }
 
-.loading-spinner {
+.admin-job-listing-loading-spinner {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-.error-message {
+.admin-job-listing-error-message {
     text-align: center;
     color: #dc3545;
     font-weight: 600;

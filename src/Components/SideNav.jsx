@@ -16,23 +16,14 @@ function SideNav() {
       <Link to="/recruiter-listJob" className="side-nav-link">
         <FaBriefcase /> <span>Jobs</span>
       </Link>
-      <Link to="/phone-calls" className="side-nav-link">
-        <FaPhone /> <span>Phone calls</span>
-      </Link>
       <Link to="/recruiter-showApplications" className="side-nav-link">
         <FaUsers /> <span>Applications</span>
-      </Link>
-      <Link to="/candidates" className="side-nav-link">
-        <FaUserTie /> <span>Candidates</span>
       </Link>
       <Link to="/interviews" className="side-nav-link">
         <FaUsers /> <span>Interviews</span>
       </Link>
       <Link to="/analytics" className="side-nav-link">
         <FaChartBar /> <span>Analytics</span>
-      </Link>
-      <Link to="/tools" className="side-nav-link">
-        <FaFolder /> <span>Tools</span>
       </Link>
     </div>
   );

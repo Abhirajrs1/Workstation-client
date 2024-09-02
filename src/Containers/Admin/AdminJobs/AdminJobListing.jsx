@@ -34,7 +34,7 @@ function AdminJobListing() {
 
     if (loading) {
         return (
-            <div className="loading-spinner">
+            <div className="admin-job-listing-loading-spinner">
                 <Spinner animation="border" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </Spinner>
@@ -43,57 +43,57 @@ function AdminJobListing() {
     }
 
     if (error) {
-        return <div className="error-message">{error}</div>;
+        return <div className="admin-job-listing-error-message">{error}</div>;
     }
 
     return (
-      <>
-        <Container className="job-details-page">
-            <Row>
-                <Col>
-                    <Card className="job-card">
-                        <Card.Header as="h1">{job.jobTitle}</Card.Header>
-                        <Card.Body>
-                            <div className="job-header">
-                                <Card.Title>{job.companyName}</Card.Title>
-                                <Card.Subtitle className="mb-2 text-muted">{job.jobLocation}</Card.Subtitle>
-                            </div>
-                            <div className="job-description">
-                                <h3>Job Description</h3>
-                                <Card.Text>{job.description}</Card.Text>
-                            </div>
-                            <div className="job-details">
-                                <div className="detail-item">
-                                    <h3>Skills</h3>
-                                    <ul>
-                                        {job.skills && job.skills.map((skill, index) => (
-                                            <li key={index}>{skill}</li>
-                                        ))}
-                                    </ul>
+        <>
+            <Container className="admin-job-listing-job-details-page">
+                <Row>
+                    <Col>
+                        <Card className="admin-job-listing-job-card">
+                            <Card.Header as="h1">{job.jobTitle}</Card.Header>
+                            <Card.Body>
+                                <div className="admin-job-listing-job-header">
+                                    <Card.Title>{job.companyName}</Card.Title>
+                                    <Card.Subtitle className="mb-2 text-muted">{job.jobLocation}</Card.Subtitle>
                                 </div>
-                                <div className="detail-item">
-                                    <h3>Education</h3>
-                                    <p>{job.education}</p>
+                                <div className="admin-job-listing-job-description">
+                                    <h3>Job Description</h3>
+                                    <Card.Text>{job.description}</Card.Text>
                                 </div>
-                                <div className="detail-item">
-                                    <h3>Years of Experience</h3>
-                                    <p>{job.yearsOfExperience} years</p>
+                                <div className="admin-job-listing-job-details">
+                                    <div className="admin-job-listing-detail-item">
+                                        <h3>Skills</h3>
+                                        <ul>
+                                            {job.skills && job.skills.map((skill, index) => (
+                                                <li key={index}>{skill}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <div className="admin-job-listing-detail-item">
+                                        <h3>Education</h3>
+                                        <p>{job.education}</p>
+                                    </div>
+                                    <div className="admin-job-listing-detail-item">
+                                        <h3>Years of Experience</h3>
+                                        <p>{job.yearsOfExperience} years</p>
+                                    </div>
+                                    <div className="admin-job-listing-detail-item">
+                                        <h3>Employment Type</h3>
+                                        <p>{job.employmentType}</p>
+                                    </div>
+                                    <div className="admin-job-listing-detail-item">
+                                        <h3>Salary Range</h3>
+                                        <p>${job.minPrice} - ${job.maxPrice}</p>
+                                    </div>
                                 </div>
-                                <div className="detail-item">
-                                    <h3>Employment Type</h3>
-                                    <p>{job.employmentType}</p>
-                                </div>
-                                <div className="detail-item">
-                                    <h3>Salary Range</h3>
-                                    <p>${job.minPrice} - ${job.maxPrice}</p>
-                                </div>
-                            </div>
-                            <Button variant="primary" onClick={() => navigate('/admin-jobs')}>Back to Jobs</Button>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
+                                <Button variant="primary" onClick={() => navigate('/admin-jobs')}>Back to Jobs</Button>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
         </>
     );
 }
