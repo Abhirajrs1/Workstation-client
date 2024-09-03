@@ -23,11 +23,11 @@ function CompanySideNavigation() {
             <FaStar /> Reviews
           </Link>
         </Nav.Item>
-        {/* <Nav.Item className="company-side-nav-item">
+        <Nav.Item className="company-side-nav-item">
           <Link to="/company-recruiters">
-            <FaUserTie /> Recruiters
+            <FaUserTie /> Employees
           </Link>
-        </Nav.Item> */}
+        </Nav.Item>
       </Nav>
     </div>
   );
