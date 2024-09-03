@@ -80,7 +80,8 @@ function JobListing() {
             <ReNavigation />
             <SideNav />
             <div className="recruiter-job-listing">
-                {jobs.map(job => (
+                {jobs.length>0?(
+                jobs.map(job => (
                     <div key={job._id} className="recruiter-job-card">
                         <div className="recruiter-card-body">
                             <div className="recruiter-header">
@@ -106,7 +107,16 @@ function JobListing() {
                             <button className="recruiter-view-job-button" onClick={() => viewJob(job._id)}>VIEW JOB</button>
                         </div>
                     </div>
-                ))}
+                ))
+            ):(
+                <div className="recruiter-no-jobs">
+                        <h2>No jobs posted yet!</h2>
+                        <p>You haven’t posted any jobs. Click the button below to start posting jobs and finding the right candidates.</p>
+                        <button className="recruiter-post-job-button" onClick={() => navigate('/recruiter-postJob')}>
+                            Post a Job
+                        </button>
+                    </div>
+            )}
             </div>
         </>
     );

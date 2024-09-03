@@ -84,3 +84,34 @@
 .recruiter-delete-icon:hover {
     color: #0056b3; 
 }
+.recruiter-no-jobs {
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.recruiter-no-jobs h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+.recruiter-no-jobs p {
+    font-size: 16px;
+    color: #666;
+}
+
+.recruiter-post-job-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.recruiter-post-job-button:hover {
+    background-color: #0056b3;
+}
+
