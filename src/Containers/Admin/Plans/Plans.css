@@ -58,6 +58,31 @@
     vertical-align: middle;
 }
 
+/* Specific styles for the edit and delete icons */
+.icon-action {
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+/* Style for the delete icon */
+.icon-delete {
+    color: #dc3545; /* Red color for delete */
+}
+
+.icon-delete:hover {
+    color: #c82333; /* Darker red on hover */
+}
+
+/* Style for the edit icon */
+.icon-edit {
+    color: #ffc107; /* Yellow color for edit */
+}
+
+.icon-edit:hover {
+    color: #e0a800; /* Darker yellow on hover */
+}
+
 .btn {
     font-weight: 400;
     padding: 5px 10px;

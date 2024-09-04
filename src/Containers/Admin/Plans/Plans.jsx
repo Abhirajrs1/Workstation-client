@@ -6,7 +6,8 @@ import AdminSideNavigation from '../../../Components/AdminSideNavigation';
 import AdminNavigation from '../../../Components/AdminNavigation';
 import { AdminAuth } from '../../../Context/AdminContext';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaArrowRight, FaEdit } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaEdit,FaTrash } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 import ReactPaginate from 'react-paginate';
 
 function Plans() {
@@ -48,6 +49,43 @@ function Plans() {
 
     const addPlan = () => {
         navigate('/admin-addPlans');
+    };
+
+    const deletePlan = async (id) => {
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        });
+        if (result.isConfirmed) {
+            try {
+                const response = await axiosInstance.delete(`/admin-deletePlan/${id}`);
+                if (response.data.success) {
+                    Swal.fire(
+                        'Deleted!',
+                        'The plan has been deleted.',
+                        'success'
+                    );
+                    setPlans(plans.filter(plan => plan._id !== id));
+                } else {
+                    Swal.fire(
+                        'Error!',
+                        'Failed to delete the plan.',
+                        'error'
+                    );
+                }
+            } catch (error) {
+                Swal.fire(
+                    'Error!',
+                    'An error occurred while deleting the plan.',
+                    'error'
+                );
+            }
+        }
     };
 
     return (
@@ -93,6 +131,10 @@ function Plans() {
                                             >
                                                 <FaEdit /> Edit
                                             </Button>
+                                            <FaTrash
+                                                className="icon-action icon-delete"
+                                                onClick={() => deletePlan(plan._id)}
+                                            />
                                         </td>
                                     </tr>
                                 ))}
