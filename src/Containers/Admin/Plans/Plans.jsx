@@ -43,7 +43,7 @@ function Plans() {
     }, [Authenticated, navigate, loading]);
 
     const editPlan = (id) => {
-        navigate(`/admin-editplan/${id}`);
+        navigate(`/admin-editPlans/${id}`);
     };
 
     const addPlan = () => {
