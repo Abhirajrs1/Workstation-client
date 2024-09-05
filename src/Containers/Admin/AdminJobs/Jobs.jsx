@@ -123,6 +123,11 @@ function Jobs() {
                                                 View
                                             </Button>
                                         </td>
+                                        <td>
+                                       {(job.reportCount > 5 && !job.delete)&& (
+                                       <div className="blinking-dot"></div>
+                                       )}
+                                     </td>
                                     </tr>
                                 ))}
                             </tbody>

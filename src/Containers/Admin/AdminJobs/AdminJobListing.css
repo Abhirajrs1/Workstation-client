@@ -101,3 +101,15 @@
     font-weight: 600;
     margin-top: 2rem;
 }
+
+.report-detail-item {
+    padding: 10px;
+    background-color: #f8f9fa;
+    margin-bottom: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+.admin-job-listing-report-item{
+    margin-top: 10px;
+    margin-right: 10px;
+}

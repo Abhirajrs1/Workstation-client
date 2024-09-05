@@ -24,6 +24,7 @@ function Home() {
   const [selectedJob, setSelectedJob] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(''); 
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
+  const [hasReported, setHasReported] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
   const navigate = useNavigate();
 
@@ -53,6 +54,22 @@ function Home() {
 
     fetchData();
   }, []);
+
+  useEffect(()=>{
+    const checkIfReported=async()=>{
+      if(selectedJob){
+        try {
+          const response=await axiosInstance.get(`/employee-checkReported/${selectedJob._id}`)
+          if(response.data.success){
+            setHasReported(response.data.hasReported)
+          }
+        } catch (error) {
+          console.error('Error checking report status:', error);
+        }
+      }
+    }
+    checkIfReported()
+  },[selectedJob])
 
   const applyJob = (id,easyApply,application) => {
     if(!isAuthenticated){
@@ -270,8 +287,8 @@ function Home() {
                     </div>
                   </div>
                   <div className="home-action-buttons">
-        <button className="home-button" onClick={handleReportJob}>
-          <FaFlag className="home-button-icon" /> Report Job
+        <button className="home-button" onClick={handleReportJob} disabled={hasReported}>
+          <FaFlag className="home-button-icon" /> {hasReported?'Reported':"Report Job"}
         </button>
             </div>
             {selectedJob && (

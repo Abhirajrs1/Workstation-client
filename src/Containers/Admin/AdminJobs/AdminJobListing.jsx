@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Spinner,Modal } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../Services/Interceptor/adminInterceptor.js';
 import AdminNavigation from '../../../Components/AdminNavigation.jsx';
@@ -32,6 +32,12 @@ function AdminJobListing() {
         fetchJobDetails();
     }, [id]);
 
+    const handleShowReports=()=>{
+        if(job.reportCount >0){
+            navigate(`/admin-showReports/${id}`)
+        }
+    }
+
     if (loading) {
         return (
             <div className="admin-job-listing-loading-spinner">
@@ -41,13 +47,13 @@ function AdminJobListing() {
             </div>
         );
     }
-
     if (error) {
         return <div className="admin-job-listing-error-message">{error}</div>;
     }
 
     return (
         <>
+        <AdminNavigation/>
             <Container className="admin-job-listing-job-details-page">
                 <Row>
                     <Col>
@@ -88,7 +94,10 @@ function AdminJobListing() {
                                         <p>${job.minPrice} - ${job.maxPrice}</p>
                                     </div>
                                 </div>
-                                <Button variant="primary" onClick={() => navigate('/admin-jobs')}>Back to Jobs</Button>
+                                <Button variant="warning" className='admin-job-listing-report-item' onClick={handleShowReports}>
+                                    View Reports ({job.reportCount})
+                                </Button>
+                                <Button variant="primary"  onClick={() => navigate('/admin-jobs')}>Back to Jobs</Button>
                             </Card.Body>
                         </Card>
                     </Col>

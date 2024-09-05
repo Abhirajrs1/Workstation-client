@@ -54,7 +54,15 @@ function IndividualJob() {
                         <Card.Body>
                             <Row>
                                 <Col md={8}>
-                                    <h1 className="individual-job-title">{job.jobTitle}</h1>
+                                    <h1 className="individual-job-title">{job.jobTitle}
+                                    <span className={`individual-job-status-indicator ${job.delete === true ? 'blocked' : 'active'}`}>
+                                    {job.delete === true ? 'Blocked' : 'Active'}
+                                    {job.delete && (
+                                    <p className="individual-job-reason">(Reason: Excessive job reports)</p>
+                                     )}
+                                    </span>
+                                    </h1>
+                                  
                                     <div className="individual-job-company-info">
                                         <FaBuilding /> {job.companyName}
                                     </div>

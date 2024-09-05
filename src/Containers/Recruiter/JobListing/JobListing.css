@@ -115,3 +115,45 @@
     background-color: #0056b3;
 }
 
+
+.recruiter-status-indicator {
+    margin-left:35px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+}
+
+.recruiter-status-indicator::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+    animation: blink 1s infinite;
+}
+
+/* Red blinking light for blocked status */
+.recruiter-status-indicator.blocked::before {
+    background-color: red;
+}
+
+/* Green blinking light for active status */
+.recruiter-status-indicator.active::before {
+    background-color: green;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+

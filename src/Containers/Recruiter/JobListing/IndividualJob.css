@@ -111,3 +111,52 @@ body {
     font-size: 1.5rem;
     color: #0056b3;
 }
+
+.individual-job-status-indicator {
+    margin-left: 28px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+}
+
+.individual-job-status-indicator::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+    animation: blink 1s infinite;
+}
+
+/* Red blinking light for blocked status */
+.individual-job-status-indicator.blocked::before {
+    background-color: red;
+}
+
+/* Green blinking light for active status */
+.individual-job-status-indicator.active::before {
+    background-color: green;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Style for reason text inside brackets */
+.individual-job-reason {
+    font-size: 0.85rem;
+    font-weight: normal;
+    color: #d9534f;
+    margin-top: 15px;
+    margin-left: 10px;
+}

@@ -59,6 +59,7 @@ import CompanyView from "../Containers/User/CompanyView/CompanyView";
 import CompanyReviews from "../Containers/Company/CompanyReviews/CompanyReviews";
 import StartChat from "../Containers/User/Chat/StartChat";
 import EditPlans from "../Containers/Admin/Plans/EditPlans";
+import ShowReports from "../Containers/Admin/AdminJobs/ShowReports";
 
 function Api() {
   return (
@@ -114,6 +115,7 @@ function Api() {
             <Route path="/admin-recruiters" element={<Recruiters/>}/>
             <Route path="/admin-jobs" element={<Jobs/>}/>
             <Route path="/admin-jobdetails/:id" element={<AdminJobListing/>}/>
+            <Route path="/admin-showReports/:id" element={<ShowReports/>}/>
             <Route path="/admin-categories" element={<Categories/>}/>
             <Route path="/admin-categories/add" element={<AddCategory/>} />
             <Route path="/admin-editcategory/:id" element={<EditCategory/>}/>
@@ -122,6 +124,7 @@ function Api() {
             <Route path="/admin-editPlans/:id" element={<EditPlans/>}/>
             <Route path="/admin-companies" element={<Companies/>}/>
             <Route path="/admin-companydetails/:id" element={<CompanyDetailedView/>}/>
+
 
 
             <Route path="/company-signup" element={<CompanySignup/>}/>

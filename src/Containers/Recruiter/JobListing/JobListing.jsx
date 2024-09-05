@@ -86,13 +86,18 @@ function JobListing() {
                         <div className="recruiter-card-body">
                             <div className="recruiter-header">
                                 <div>
-                                    <h3 className="recruiter-job-title">{job.jobTitle}</h3>
+                                    <h3 className="recruiter-job-title">{job.jobTitle}
+                                    <span className={`recruiter-status-indicator ${job.delete === true ? 'blocked' : 'active'}`}>
+                                    {job.delete === true ? 'Blocked' : 'Active'}
+                               </span>
+                                    </h3>
                                     <h6 className="recruiter-company-name">{job.companyName}</h6>
                                 </div>
                                 <div className="recruiter-action-icons">
                                     <FaEdit className="recruiter-edit-icon" onClick={() => editJob(job._id)} />
                                     <FaTrashAlt className="recruiter-delete-icon" onClick={() => deleteJob(job._id)} />
                                 </div>
+                                
                             </div>
                             <div className="recruiter-job-details">
                                 <span className="recruiter-detail-item">📍 {job.jobLocation}</span>
