@@ -25,6 +25,7 @@ function Home() {
   const [selectedLocation, setSelectedLocation] = useState(''); 
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
   const [hasReported, setHasReported] = useState(false);
+  const [hasApplied,setHasApplied]=useState(false)
   const [showReportModal, setShowReportModal] = useState(false);
   const navigate = useNavigate();
 
@@ -59,7 +60,7 @@ function Home() {
     const checkIfReported=async()=>{
       if(selectedJob){
         try {
-          const response=await axiosInstance.get(`/employee-checkReported/${selectedJob._id}`)
+          const response=await axiosInstance.get(`/employee-checkReported/${selectedJob._id}`)          
           if(response.data.success){
             setHasReported(response.data.hasReported)
           }
@@ -69,6 +70,22 @@ function Home() {
       }
     }
     checkIfReported()
+  },[selectedJob])
+
+  useEffect(()=>{
+    const checkIfApplied=async()=>{
+      if(selectedJob){
+        try {
+          const response=await axiosInstance.get(`/employee-checkApplied/${selectedJob._id}`)
+          if(response.data.success){
+            setHasApplied(response.data.hasApplied)
+          }
+        } catch (error) {
+          console.error('Error checking applied status:', error);
+        }
+      }
+    }
+    checkIfApplied()
   },[selectedJob])
 
   const applyJob = (id,easyApply,application) => {
@@ -244,8 +261,9 @@ function Home() {
                     {selectedJob.companyName}
                   </span>              
                       <div className="home-action-buttons">
-                    <button className="btn btn-primary" onClick={() => applyJob(selectedJob._id,selectedJob.easyApply,selectedJob.applicationUrl)}>
-                      {selectedJob.easyApply?'Easy Apply':'Apply now'}
+                    <button className="btn btn-primary" onClick={() => applyJob(selectedJob._id,selectedJob.easyApply,selectedJob.applicationUrl)}
+                      disabled={hasApplied}>
+                      {hasApplied?'Already Applied':selectedJob.easyApply?'Easy Apply':'Apply now'}
                       </button>
                   </div>
                   <div className="home-job-info">

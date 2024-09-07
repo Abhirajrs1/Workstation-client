@@ -25,7 +25,7 @@ function ReviewApplication() {
       const fetchJobDetails = async () => {
         try {
           const response = await axiosInstance.get(`/employee-getIndividualJobDetails/${id}`);
-          
+
           if (response.data.success) {
             setJobDetails(response.data.job);
           }
@@ -53,28 +53,28 @@ function ReviewApplication() {
     return <div className="loading">Loading...</div>;
   }
 
-  const handleApply = async() => {
+  const handleApply = async () => {
     try {
-        const applicationData={
-            name:user.username,
-            email:user.email,
-            contact:user.contact,
-            dob:user.dob,
-            totalExperience:yearsOfExperience,
-            currentCompany:currentCompany,
-            currentSalary:currentSalary,
-            expectedSalary:expectedSalary,
-            preferredLocation:preferredLocation,
-            resume:user.resume
-        }
-        const response=await axiosInstance.post(`/employee-applyJob?jobid=${id}&recruiterid=${jobDetails.jobPostedBy}`,applicationData)
-        if(response.data.success){
-                    navigate(`/employee-jobApplicationSuccess/${jobDetails.company}`)
-                  }else{
-                    navigate('/employee-jobApplicationFailure')
-                  }
+      const applicationData = {
+        name: user.username,
+        email: user.email,
+        contact: user.contact,
+        dob: user.dob,
+        totalExperience: yearsOfExperience,
+        currentCompany: currentCompany,
+        currentSalary: currentSalary,
+        expectedSalary: expectedSalary,
+        preferredLocation: preferredLocation,
+        resume: user.resume
+      }
+      const response = await axiosInstance.post(`/employee-applyJob?jobid=${id}&recruiterid=${jobDetails.jobPostedBy}`, applicationData)
+      if (response.data.success) {
+        navigate(`/employee-jobApplicationSuccess/${jobDetails.company}`)
+      } else {
+        navigate('/employee-jobApplicationFailure')
+      }
     } catch (error) {
-              navigate('/employee-jobApplicationFailure')
+      navigate('/employee-jobApplicationFailure')
     }
   };
 
@@ -91,10 +91,7 @@ function ReviewApplication() {
         <Card className="review-application-card">
           <Card.Body>
             <div className="review-application-header">
-              <Button variant="link" className="back-button" onClick={() => navigate(-1)}>
-                <i className="bi bi-arrow-left"></i>
-              </Button>
-              <Button variant="link" className="exit-button" onClick={() => navigate('/jobs')}>
+              <Button variant="link" className="back-button" onClick={() => navigate('/')}>
                 Exit
               </Button>
             </div>
@@ -137,15 +134,17 @@ function ReviewApplication() {
                       ))}
                   </ul>
                 </div>
+
                 <div className="user-detail">
                   <h5 className="detail-label">Skills:</h5>
                   <ul className="detail-list">
                     {user.Qualification.skills &&
                       user.Qualification.skills.map((skill, index) => (
-                        <li key={index}>{skill}</li>
+                        <li key={index}>{typeof skill === 'object' ? JSON.stringify(skill) : skill}</li>
                       ))}
                   </ul>
                 </div>
+
                 <div className="user-detail">
                   <h5 className="detail-label">Experience:</h5>
                   <ul className="detail-list">
@@ -159,6 +158,7 @@ function ReviewApplication() {
                       <li>No experience available</li>
                     )}
                   </ul>
+
                 </div>
                 <div className="user-detail">
                   <h5 className="detail-label">Resume:</h5>
@@ -167,6 +167,7 @@ function ReviewApplication() {
                   ) : (
                     <p className="detail-value">No resume available</p>
                   )}
+
                 </div>
               </div>
               <div className="additional-details">
