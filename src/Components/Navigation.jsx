@@ -31,7 +31,7 @@ function Navigation() {
         <Navbar.Collapse id="navbarNav">
           <Nav className="me-auto custom-font">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="#company-reviews">Company reviews</Nav.Link>
+            <Nav.Link href="/employee-reviews">Company reviews</Nav.Link>
             <Nav.Link href="#salary-guide">Salary guide</Nav.Link>
           </Nav>
           <Nav className="ms-auto align-items-center custom-font">

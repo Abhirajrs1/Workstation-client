@@ -1,0 +1,39 @@
+.candidate-company-reviews-container {
+    padding: 2rem 0;
+  }
+  
+  .candidate-company-reviews-heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  .candidate-company-reviews-search {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .candidate-company-reviews-list {
+    margin-top: 2rem;
+  }
+  
+  .candidate-company-reviews-card {
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .candidate-company-reviews-logo img {
+    max-width: 100px;
+    margin-bottom: 1rem;
+  }
+  
+  .candidate-company-reviews-rating {
+    font-weight: bold;
+    color: #ffc107; /* Bootstrap yellow */
+  }
+  
+  .candidate-company-reviews-links button {
+    margin: 0 0.5rem;
+    font-size: 0.875rem;
+  }
+  
