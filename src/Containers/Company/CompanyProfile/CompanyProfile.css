@@ -3,15 +3,6 @@
     margin: auto;
 }
 
-.company-profile-initials-circle {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 24px;
-    background-color: #333;
-    color: #fff;
-}
-
 .company-profile-details {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
@@ -53,4 +44,53 @@
 
 .company-profile-detail-row a:hover {
     text-decoration: underline;
+}
+
+.company-logo-container {
+    position: relative;
+    width: 130px; /* Set the width of the container */
+    height: 130px; /* Set the height of the container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.company-logo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.company-logo-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px dashed #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+}
+
+.logo-change-icon {
+    position: absolute;
+    bottom: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    background-color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo-change-icon svg {
+    font-size: 18px;
+    color: #007bff;
 }

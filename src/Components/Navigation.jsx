@@ -32,7 +32,8 @@ function Navigation() {
           <Nav className="me-auto custom-font">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/employee-reviews">Company reviews</Nav.Link>
-            <Nav.Link href="#salary-guide">Salary guide</Nav.Link>
+            <Nav.Link href="#salary-guide">About us</Nav.Link>
+            <Nav.Link href="#salary-guide">Contact</Nav.Link>
           </Nav>
           <Nav className="ms-auto align-items-center custom-font">
             {isAuthenticated ? (

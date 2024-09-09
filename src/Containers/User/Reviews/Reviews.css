@@ -1,16 +1,13 @@
 .candidate-company-reviews-container {
     padding: 2rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
   }
   
   .candidate-company-reviews-heading {
     font-size: 2.5rem;
     font-weight: bold;
-  }
-  
-  .candidate-company-reviews-search {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+    margin-bottom: 1rem;
   }
   
   .candidate-company-reviews-list {
@@ -18,22 +15,53 @@
   }
   
   .candidate-company-reviews-card {
-    padding: 1rem;
+    padding: 1.5rem;
     text-align: center;
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 300px;
+  }
+  
+  .candidate-company-reviews-card:hover {
+    transform: translateY(-5px);
   }
   
   .candidate-company-reviews-logo img {
-    max-width: 100px;
+    max-width: 80px;
     margin-bottom: 1rem;
+    border-radius: 50%;
+  }
+  
+  .candidate-company-reviews-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .candidate-company-reviews-rating {
+    margin-top: 0.5rem;
     font-weight: bold;
-    color: #ffc107; /* Bootstrap yellow */
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
-  .candidate-company-reviews-links button {
-    margin: 0 0.5rem;
-    font-size: 0.875rem;
+  .candidate-company-reviews-description {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #555;
+    min-height: 60px;
   }
+  
+  .candidate-company-reviews-title {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+  
   

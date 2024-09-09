@@ -30,7 +30,7 @@ function CompanyDocuments() {
                 formData.append('file', file);
                 formData.append('docType', docType);
 
-                const response = await axiosInstance.post('/company-uploaDocuments', formData, {
+                const response = await axiosInstance.post('/company-uploadDocuments', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
