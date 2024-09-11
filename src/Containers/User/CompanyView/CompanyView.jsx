@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Container, Row, Col, Card,Button } from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor';
 import Navigation from '../../../Components/Navigation';
 import './CompanyView.css';
@@ -9,6 +9,7 @@ function CompanyView() {
   const { id } = useParams();
   const [company, setCompany] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate=useNavigate()
 
   useEffect(() => {
     const fetchCompanyDetails = async () => {
@@ -34,6 +35,9 @@ function CompanyView() {
   if (!company) {
     return <p>Company not found.</p>;
   }
+  const handleViewReviews=()=>{
+    navigate(`/employee-viewReviews/${id}`)
+  }
 
   return (
     <>
@@ -51,6 +55,9 @@ function CompanyView() {
           <h1 className="company-view-title">{company.companyName}</h1>
           <p className="company-view-type">{company.typeOfCompany}</p>
         </Col>
+        <Col md="auto" className="text-right">
+            <Button variant="primary" onClick={handleViewReviews}>View Reviews</Button>
+          </Col>
       </Row>
 
       {/* Snapshot Section */}
@@ -74,27 +81,6 @@ function CompanyView() {
           </Card>
         </Col>
       </Row>
-
-      {/* About Section */}
-      {company.reviewsId && company.reviewsId.length > 0 && (
-        <Row className="mb-4">
-          <Col>
-            <Card className="company-view-card">
-              <Card.Body>
-                <Card.Title>Reviews</Card.Title>
-                {company.reviewsId.map((review, index) => (
-                  <div key={index} className="mb-3">
-                    <p><strong>Reviewer:</strong> {review.reviewerName}</p>
-                    <p><strong>Rating:</strong> {review.rating} / 5</p>
-                    <p><strong>Comment:</strong> {review.comment}</p>
-                    <p><small>{new Date(review.reviewDate).toLocaleDateString()}</small></p>
-                  </div>
-                ))}
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      )}
 
       {/* Contact Information Section */}
       <Row className="mb-4">

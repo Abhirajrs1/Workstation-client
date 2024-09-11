@@ -35,7 +35,7 @@ function ReNavigation() {
               <FaBell />
               <span className="ms-1">Notifications</span>
             </Nav.Link>
-            <Nav.Link as={Link} to="/messages" className="text-dark me-3">
+            <Nav.Link as={Link} to="/recruiter-Chat" className="text-dark me-3">
               <FaEnvelope />
               <span className="ms-1">Messages</span>
             </Nav.Link>

@@ -10,8 +10,12 @@
   border-bottom: 1px solid #e4e2e0;
 }
 
-.companynav-navbar-brand img {
+.companynav-logo {
   margin-left: 1rem;
+  border-radius: 50%; /* Make the image round */
+  height: 40px; /* Set the height of the logo */
+  width: 40px; /* Set the width of the logo */
+  object-fit: cover; /* Ensure the image covers the dimensions */
 }
 
 .companynav-dropdown-toggle::after {

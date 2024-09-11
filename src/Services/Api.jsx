@@ -61,6 +61,10 @@ import StartChat from "../Containers/User/Chat/StartChat";
 import EditPlans from "../Containers/Admin/Plans/EditPlans";
 import ShowReports from "../Containers/Admin/AdminJobs/ShowReports";
 import Reviews from "../Containers/User/Reviews/Reviews";
+import ViewReviews from "../Containers/User/Reviews/ViewReviews";
+import RecruiterChat from "../Containers/Recruiter/RecruiterMessage/RecruiterChat";
+import IndividualReviews from "../Containers/User/Reviews/IndividualReviews";
+import About from "../Components/About";
 
 function Api() {
   return (
@@ -73,6 +77,9 @@ function Api() {
         <Routes>
 
             <Route path="/" element={<Home/>}/>
+            <Route path="/about" element={<About/>}/>
+
+
             <Route path="/employee-signup" element={<SignUp/>}/>
             <Route path="/employee-login" element={<Login/>}/>
             <Route path="/employee-verifyOtp" element={<Otp/>}/>
@@ -89,8 +96,10 @@ function Api() {
             <Route path="/employee-reviewApplication/:id" element={<ReviewApplication/>}/>
             <Route path="/employee-applicationListing" element={<ApplicationListing/>}/>
             <Route path="/employee-companyView/:id" element={<CompanyView/>}/>
-            <Route path="/employee-startChat" element={<StartChat/>}/>
+            <Route path="/employee-startChat/:jobId/:employerId" element={<StartChat/>}/>
             <Route path="/employee-reviews" element={<Reviews/>}/>
+            <Route path="/employee-viewReviews/:id" element={<ViewReviews/>}/>
+            <Route path="/employee-individualReviews" element={<IndividualReviews/>}/>
 
 
             
@@ -108,6 +117,7 @@ function Api() {
             <Route path="/recruiter-showApplications" element={<JobApplications/>}/>
             <Route path="/recruiter-viewApplicationDetails/:id" element={<JobApplicationDetails/>}/>
             <Route path="/recruiter-planListing" element={<PlanListing/>}/>
+            <Route path="/recruiter-Chat" element={<RecruiterChat/>}/>
 
 
 

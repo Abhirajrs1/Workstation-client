@@ -26,8 +26,16 @@ function CompanyNavigation() {
     return (
         <Navbar className="companynav-navbar navbar-expand-lg navbar-light bg-white border-bottom">
             <Container fluid>
-                <Navbar.Brand as={Link} to="/company-home">
-                </Navbar.Brand>
+            <Navbar.Brand as={Link} to="/company-home">
+    {company?.logo && (
+        <img
+            src={company.logo}
+            alt="Company Logo"
+            className="companynav-logo" 
+        />
+    )}
+</Navbar.Brand>
+
                 <Navbar.Toggle aria-controls="navbar-nav" />
                 <Navbar.Collapse id="navbar-nav">
                     <Nav className="ms-auto align-items-center">
