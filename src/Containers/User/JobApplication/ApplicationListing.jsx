@@ -25,15 +25,14 @@ function ApplicationListing() {
   const handleMessageClick = async (jobId, employerId) => {
     try {
       const response = await axiosInstance.get(`/employee-getChatRoom/${jobId}/${employerId}`); 
-      console.log(response,"RESSSSSSSSSSSS");
-       
+      console.log(response,"RES");
       if (response.data.success) {
         navigate(`/employee-startChat/${jobId}/${employerId}`, {
           state: { room: response.data.room.chatRoom,
             recruiter: response.data.room.recruiter 
            }
         });
-      } else {
+      }
         const createResponse = await axiosInstance.post('/employee-createRoom', { jobId, employerId });  
         if (createResponse.data.success) {
           navigate(`/employee-startChat/${jobId}/${employerId}`, {
@@ -43,7 +42,6 @@ function ApplicationListing() {
         } else {
           console.error('Failed to create chat room:', createResponse.data.message);
         }
-      }
     } catch (error) {
       console.error('Error handling chat room:', error);
     }

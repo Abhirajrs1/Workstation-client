@@ -65,28 +65,39 @@
     padding: 15px;
     border-top: 1px solid #e9ecef;
     background-color: #f8f9fa;
-}
-
-.input-group {
     display: flex;
     align-items: center;
 }
 
-.input-icon {
+.input-group {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.attachment-button,
+.emoji-button {
     background-color: transparent;
     border: none;
-    margin-right: 10px;
     color: #6c757d;
+    font-size: 1.25rem;
 }
 
-.form-control {
+.message-input {
     border-radius: 20px;
-    padding-right: 50px;
+    padding-right: 80px; /* Space for the buttons */
+    margin-right: 2px; 
 }
 
-.start-chat-send-button {
-    border-radius: 20px;
+.send-button {
+    flex-shrink: 0;
+    height: 30px;
+    width: 80px; /* Set fixed width for consistency */
+}
+.emoji-picker-container {
     position: absolute;
-    right: 0;
-    z-index: 2;
-}
+    bottom: 60px;
+    right: 10px;
+    z-index: 1000;
+  }
+  

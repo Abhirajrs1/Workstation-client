@@ -1,67 +1,146 @@
 .recruiter-chat-container {
-    display: flex;
-    height: 100vh;
+  display: flex;
+  height: 100vh;
+  background-color: #f0f2f5;
 }
 
-.recruiter-chat-candidates-list {
-    width: 25%;
-    padding-right: 10px;
-    border-right: 1px solid #ddd;
+.recruiter-chat-sidebar {
+  width: 300px;
+  background-color: #ffffff;
+  border-right: 1px solid #e0e0e0;
+  overflow-y: auto;
 }
 
-.recruiter-chat-candidates-list h3 {
-    margin-bottom: 20px;
+.recruiter-chat-sidebar h3 {
+  padding: 20px;
+  margin: 0;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .recruiter-chat-candidate-item {
-    cursor: pointer;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.recruiter-chat-box {
-    width: 75%;
-    padding-left: 10px;
-    display: flex;
-    flex-direction: column;
+.recruiter-chat-candidate-item:hover,
+.recruiter-chat-candidate-item.active {
+  background-color: #f0f2f5;
 }
 
-.recruiter-chat-messages-container {
-    flex: 1;
-    overflow-y: auto;
-    margin-bottom: 20px;
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
+.recruiter-chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.recruiter-chat-header {
+  padding: 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.recruiter-chat-header h3 {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recruiter-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .message {
-    max-width: 70%;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    word-wrap: break-word;
+  max-width: 70%;
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  border-radius: 18px;
+  word-wrap: break-word;
 }
 
 .message.user {
-    align-self: flex-start;
-    background-color: #f0f0f0;
+  align-self: flex-start;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .message.recruiter {
-    align-self: flex-end;
-    background-color: #007bff;
-    color: white;
+  align-self: flex-end;
+  background-color: #0084ff;
+  color: white;
 }
 
-.message-content {
-    padding: 5px;
+.recruiter-chat-input-form {
+  padding: 10px;
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.recruiter-chat-input-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #f0f2f5;
+  border-radius: 20px;
+  width: 100%;
+  padding: 5px 15px;
+}
+
+.recruiter-chat-icon-button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5em;
+  margin-right: 10px;
+  cursor: pointer;
 }
 
 .recruiter-chat-input {
-    flex: 1;
+  flex: 1;
+  border: none;
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 20px;
+  outline: none;
+  width: calc(100% - 100px); /* Reduced width to make space for the icons */
 }
 
 .recruiter-chat-send-button {
-    border-radius: 0;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin-left: 10px;
+  font-size: 0.9em;
+}
+
+.recruiter-chat-send-button:disabled {
+  background-color: #007bff;
+  cursor: not-allowed;
+}
+
+/* Emoji Picker and Camera Button */
+.emoji-picker-wrapper {
+  position: absolute;
+  bottom: 60px; /* Adjust as necessary */
+  left: 20px;
+  z-index: 100;
+}
+
+.recruiter-chat-placeholder {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #7d7d7d;
+  text-align: center;
 }
