@@ -15,7 +15,7 @@ const JobApplicationDetails = () => {
         const fetchApplicationDetails = async () => {
             try {
                 const response = await axiosInstance.get(`/recruiter-getApplicationDetails/${id}`);
-                console.log(response.data);
+                console.log(response.data,"DATA");
                 setApplication(response.data.application);
             } catch (error) {
                 console.error('Error fetching application details:', error);
@@ -27,6 +27,10 @@ const JobApplicationDetails = () => {
 
     const handleBackClick = () => {
         navigate('/recruiter-showApplications');
+    };
+
+    const displayValue = (value) => {
+        return value ? value : 'Nil';
     };
 
     if (!application) {
@@ -46,56 +50,60 @@ const JobApplicationDetails = () => {
                 </Card.Header>
                 <Card.Body>
                     <Table striped bordered hover responsive className="application-details-table">
-                        <tbody>
-                            <tr>
-                                <th>Name</th>
-                                <td>{application.name}</td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td>{application.email}</td>
-                            </tr>
-                            <tr>
-                                <th>Contact</th>
-                                <td>{application.contact}</td>
-                            </tr>
-                            <tr>
-                                <th>Date of Birth</th>
-                                <td>{new Date(application.dob).toLocaleDateString()}</td>
-                            </tr>
-                            <tr>
-                                <th>Total Experience</th>
-                                <td>{application.totalExperience} years</td>
-                            </tr>
-                            <tr>
-                                <th>Current Company</th>
-                                <td>{application.currentCompany}</td>
-                            </tr>
-                            <tr>
-                                <th>Current Salary</th>
-                                <td>{application.currentSalary}</td>
-                            </tr>
-                            <tr>
-                                <th>Expected Salary</th>
-                                <td>{application.expectedSalary}</td>
-                            </tr>
-                            <tr>
-                                <th>Preferred Location</th>
-                                <td>{application.preferredLocation}</td>
-                            </tr>
-                            <tr>
-                                <th>City</th>
-                                <td>{application.city}</td>
-                            </tr>
-                            <tr>
-                                <th>Resume Link</th>
-                                <td><a href={application.resume} target="_blank" rel="noopener noreferrer">View Resume</a></td>
-                            </tr>
-                            <tr>
-                                <th>Job Id</th>
-                                <td>{application.jobId}</td>
-                            </tr>
-                        </tbody>
+                    <tbody>
+                                <tr>
+                                    <th>Name</th>
+                                    <td>{displayValue(application.name)}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>{displayValue(application.email)}</td>
+                                </tr>
+                                <tr>
+                                    <th>Contact</th>
+                                    <td>{displayValue(application.contact)}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date of Birth</th>
+                                    <td>{application.dob ? new Date(application.dob).toLocaleDateString() : 'Nil'}</td>
+                                </tr>
+                                <tr>
+                                    <th>Total Experience</th>
+                                    <td>{displayValue(application.totalExperience)} years</td>
+                                </tr>
+                                <tr>
+                                    <th>Current Company</th>
+                                    <td>{displayValue(application.currentCompany)}</td>
+                                </tr>
+                                <tr>
+                                    <th>Current Salary</th>
+                                    <td>{displayValue(application.currentSalary)}</td>
+                                </tr>
+                                <tr>
+                                    <th>Expected Salary</th>
+                                    <td>{displayValue(application.expectedSalary)}</td>
+                                </tr>
+                                <tr>
+                                    <th>Preferred Location</th>
+                                    <td>{displayValue(application.preferredLocation)}</td>
+                                </tr>
+                                <tr>
+                                    <th>Resume Link</th>
+                                    <td>
+                                        {application.resume ? (
+                                            <a href={application.resume} target="_blank" rel="noopener noreferrer">View Resume</a>
+                                        ) : 'Nil'}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Job Name</th>
+                                    <td>{displayValue(application.jobId ? application.jobId.jobTitle : null )}</td>
+                                </tr>
+                                <tr>
+                                    <th>Job Id</th>
+                                    <td>{displayValue(application.jobId ? application.jobId._id : null)}</td>
+                                </tr>
+                            </tbody>
                     </Table>
                 </Card.Body>
             </Card>

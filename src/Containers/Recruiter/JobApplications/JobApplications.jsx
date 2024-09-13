@@ -16,6 +16,8 @@ const JobApplications = () => {
         const fetchApplications = async () => {
             try {
                 const response = await axiosInstance.get(`/recruiter-getApplication/${recruiter._id}`);
+                console.log(response,"RES");
+                
                 setApplications(response.data.application);
             } catch (error) {
                 console.error('Error fetching applications:', error);
@@ -51,7 +53,7 @@ const JobApplications = () => {
                             <Table striped bordered hover className="job-applications-table">
                                 <thead>
                                     <tr>
-                                        <th>Job id</th>
+                                        <th>Job Title</th>
                                         <th>Applicant Name</th>
                                         <th>Email</th>
                                         <th>Contact</th>
@@ -61,7 +63,7 @@ const JobApplications = () => {
                                 <tbody>
                                     {applications.map((application) => (
                                         <tr key={application._id}>
-                                            <td>{application.jobId}</td>
+                                            <td>{application.jobId.jobTitle}</td>
                                             <td>{application.name}</td>
                                             <td>{application.email}</td>
                                             <td>{application.contact}</td>
