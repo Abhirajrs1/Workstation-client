@@ -8,7 +8,6 @@ import { FaCamera } from 'react-icons/fa';
 import Picker from 'emoji-picker-react';
 import ReNavigation from '../../../Components/ReNavigation';
 
-
 function RecruiterChat() {
   const socket = useRef();
   const [chats, setChats] = useState([]);
@@ -19,6 +18,7 @@ function RecruiterChat() {
   const { recruiter } = useContext(RecruiterAuth);
   const recruiterId = recruiter._id;
   const messagesEndRef = useRef(null);
+ 
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -40,6 +40,7 @@ function RecruiterChat() {
       if (response.data.success) {
         setMessages(response.data.messages || []);
         setSelectedChat(chats.find(c => c._id === chatId));
+       
       }
     } catch (error) {
       console.error('Error fetching messages:', error);
@@ -52,8 +53,13 @@ function RecruiterChat() {
       socket.current.emit("new-user-add", recruiterId);
     });
 
-    socket.current.on("receive-message", (data) => {
+    socket.current.on('receive-message', (data) => {
+      console.log("TYpe of data",typeof(data))
+      console.log("TYpe of",typeof(messages))
+      console.log("getting receive message from user",data,messages)
       setMessages((prevMessages) => [...prevMessages, data]);
+      // if (selectedChat && selectedChat._id === data.chatId) {
+      // }
     });
 
     return () => {
@@ -61,7 +67,7 @@ function RecruiterChat() {
         socket.current.disconnect();
       }
     };
-  }, [recruiterId]);
+  }, [recruiterId, selectedChat]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -71,20 +77,38 @@ function RecruiterChat() {
     e.preventDefault();
     if (!newMessage.trim() || !selectedChat) return;
 
+   
+
     const messageData = {
       chatId: selectedChat._id,
       message: newMessage,
+      senderId: recruiterId,
     };
+
+    // Optimistically update the UI
+    const optimisticMessage = {
+      ...messageData,
+      _id: new Date().toISOString(),
+      text: newMessage,
+    };
+    setMessages(prevMessages => [...prevMessages, optimisticMessage]);
 
     try {
       const response = await axiosInstance.post('/recruiter-sendMessage', messageData);
       if (response.data.success) {
-        setMessages(prevMessages => [...prevMessages, response.data.message]);
-        socket.current.emit('send-message', response.data.message);
+        console.log("esponse.data.message._id",selectedChat.members[0]._id)
         setNewMessage('');
+        console.log("userId",selectedChat.members[0]._id)
+        socket.current.emit('send-message', {
+          ...messageData,
+          // _id: response.data.message._id, 
+          receiverId:selectedChat.members[0]._id
+        });
+      } else {
+        console.error('Failed to send message:', response.data.message);
       }
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('Error sending message recrter:', error);
     }
   };
 
@@ -94,67 +118,67 @@ function RecruiterChat() {
 
   return (
     <>
-    <ReNavigation/>
-    <div className="recruiter-chat-container">
-      <div className="recruiter-chat-sidebar">
-        <h3>Chats</h3>
-        <ListGroup>
-          {chats.map((chat) => (
-            <ListGroup.Item
-              key={chat._id}
-              onClick={() => fetchMessages(chat._id)}
-              active={selectedChat && selectedChat._id === chat._id}
-              className="recruiter-chat-candidate-item"
-            >
-              {chat.members.find(member => member._id !== recruiterId)?.username || 'Unknown User'}
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-      </div>
-      <div className="recruiter-chat-main">
-        {selectedChat ? (
-          <>
-            <div className="recruiter-chat-header">
-              <h3>{selectedChat.members.find(member => member._id !== recruiterId)?.username || 'Unknown User'}</h3>
-            </div>
-            <div className="recruiter-chat-messages">
-              {messages.map((msg) => (
-                <div
-                  key={msg._id}
-                  className={`message ${msg.senderId === recruiterId ? 'recruiter' : 'user'}`}
-                >
-                  <div className="message-content">
-                    {msg.text}
+      <ReNavigation/>
+      <div className="recruiter-chat-container">
+        <div className="recruiter-chat-sidebar">
+          <h3>Chats</h3>
+          <ListGroup>
+            {chats.map((chat) => (
+              <ListGroup.Item
+                key={chat._id}
+                onClick={() => fetchMessages(chat._id)}
+                active={selectedChat && selectedChat._id === chat._id}
+                className="recruiter-chat-candidate-item"
+              >
+                {chat.members.find(member => member._id !== recruiterId)?.username || 'Unknown User'}
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </div>
+        <div className="recruiter-chat-main">
+          {selectedChat ? (
+            <>
+              <div className="recruiter-chat-header">
+                <h3>{selectedChat.members.find(member => member._id !== recruiterId)?.username || 'Unknown User'}</h3>
+              </div>
+              <div className="recruiter-chat-messages">
+                {messages.map((msg) => (
+                  <div
+                    key={msg._id}
+                    className={`message ${msg.senderId === recruiterId ? 'recruiter' : 'user'}`}
+                  >
+                    <div className="message-content">
+                      {msg.text||msg.message}
+                    </div>
                   </div>
-                </div>
-              ))}
-              <div ref={messagesEndRef} />
+                ))}
+                <div ref={messagesEndRef} />
+              </div>
+              <Form onSubmit={handleSendMessage} className="recruiter-chat-input-form">
+                <InputGroup>
+                  <span className="icon-button" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>😊</span>
+                  {showEmojiPicker && <Picker onEmojiClick={onEmojiClick} />}
+                  <FaCamera className="icon-button camera-icon" />
+                  <Form.Control
+                    type="text"
+                    placeholder="Type a message"
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    className="recruiter-chat-input"
+                  />
+                  <Button type="submit" className="recruiter-chat-send-button" disabled={!newMessage.trim()}>
+                    Send
+                  </Button>
+                </InputGroup>
+              </Form>
+            </>
+          ) : (
+            <div className="recruiter-chat-placeholder">
+              <p>Select a candidate to start chatting</p>
             </div>
-            <Form onSubmit={handleSendMessage} className="recruiter-chat-input-form">
-              <InputGroup>
-                <span className="icon-button" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>😊</span>
-                {showEmojiPicker && <Picker onEmojiClick={onEmojiClick} />}
-                <FaCamera className="icon-button camera-icon" />
-                <Form.Control
-                  type="text"
-                  placeholder="Type a message"
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  className="recruiter-chat-input"
-                />
-                <Button type="submit" className="recruiter-chat-send-button" disabled={!newMessage.trim()}>
-                  Send
-                </Button>
-              </InputGroup>
-            </Form>
-          </>
-        ) : (
-          <div className="recruiter-chat-placeholder">
-            <p>Select a candidate to start chatting</p>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
     </>
   );
 }
