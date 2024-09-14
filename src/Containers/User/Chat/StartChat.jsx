@@ -95,7 +95,7 @@ function StartChat() {
       console.log("response in start chat",response)
       if (response.data.success) {
         // Emit the message to the recipient via socket
-        console.log("recruiterId",recruiterId)
+      
         socket.current.emit('send-message', {
           ...messageData,
           receiverId: recruiterId,
