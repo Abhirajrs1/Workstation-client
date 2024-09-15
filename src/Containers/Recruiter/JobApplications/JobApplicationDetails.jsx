@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Container, Card, Table, Button } from 'react-bootstrap';
+import { Container, Card, Table, Button,Form } from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
 import { FaArrowLeft } from 'react-icons/fa';
 import './JobApplicationDetails.css';
@@ -9,6 +9,7 @@ import ReNavigation from '../../../Components/ReNavigation.jsx';
 const JobApplicationDetails = () => {
     const { id } = useParams();
     const [application, setApplication] = useState(null);
+    const [status,setStatus]=useState('Applied')
     const navigate=useNavigate()
 
     useEffect(() => {
@@ -17,6 +18,7 @@ const JobApplicationDetails = () => {
                 const response = await axiosInstance.get(`/recruiter-getApplicationDetails/${id}`);
                 console.log(response.data,"DATA");
                 setApplication(response.data.application);
+                setStatus(response.data.application.status || 'Applied')
             } catch (error) {
                 console.error('Error fetching application details:', error);
             }
@@ -31,6 +33,20 @@ const JobApplicationDetails = () => {
 
     const displayValue = (value) => {
         return value ? value : 'Nil';
+    };
+
+
+    const handleStatusChange = async (event) => {
+        const newStatus = event.target.value;
+        setStatus(newStatus);
+        try {
+            await axiosInstance.put(`/recruiter-updateApplicationStatus/${id}`, {
+                status: newStatus
+            });
+            console.log('Status updated successfully');
+        } catch (error) {
+            console.error('Error updating status:', error);
+        }
     };
 
     if (!application) {
@@ -102,6 +118,15 @@ const JobApplicationDetails = () => {
                                 <tr>
                                     <th>Job Id</th>
                                     <td>{displayValue(application.jobId ? application.jobId._id : null)}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <Form.Select value={status} onChange={handleStatusChange}>
+                                        {status === 'Applied' && <option value="Applied">Applied</option>}            
+                                        <option value="Interviewing">Interviewing</option>
+                                        <option value="Hired">Hired</option>
+                                        <option value="Rejected">Rejected</option>
+                                    </Form.Select>
                                 </tr>
                             </tbody>
                     </Table>

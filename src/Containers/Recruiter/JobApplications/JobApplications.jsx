@@ -57,6 +57,7 @@ const JobApplications = () => {
                                         <th>Applicant Name</th>
                                         <th>Email</th>
                                         <th>Contact</th>
+                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -67,6 +68,7 @@ const JobApplications = () => {
                                             <td>{application.name}</td>
                                             <td>{application.email}</td>
                                             <td>{application.contact}</td>
+                                            <td>{application.status}</td>
                                             <td>
                                                 <Button
                                                     variant="secondary"

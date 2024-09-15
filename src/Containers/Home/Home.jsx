@@ -43,7 +43,6 @@ function Home() {
           setLocations(locations);
           
         }
-
         const categoryResponse = await axiosInstance.get('/employee-getCategories');
         if (categoryResponse.data.success) {
           setCategories(categoryResponse.data.categories.map(cat => cat.categoryName));

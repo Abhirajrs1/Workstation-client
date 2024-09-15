@@ -1,26 +1,36 @@
+/* Container styling */
 .employee-application-listing-container {
   font-family: 'Mulish', sans-serif;
   margin-top: 20px;
 }
 
+/* Card styling */
 .employee-application-item {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  max-width: 500px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
 }
 
+/* Details section styling */
 .employee-application-details {
   padding: 20px;
+}
+
+.employee-job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .employee-job-title {
   font-size: 18px;
   font-weight: 700;
   color: #343a40;
-  margin-bottom: 5px;
+  margin: 0;
 }
 
 .employee-company-name {
@@ -41,47 +51,183 @@
   margin-bottom: 5px;
 }
 
-.employee-application-actions button{
+/* Status section styling */
+.employee-job-listingstatus {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+  flex-direction: column;
 }
 
-.employee-message-employer  {
+.status-listingheading {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0a2a49;
+  margin-bottom: 5px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Align items with space between */
+  width: 100%;
+}
+
+.status-icon {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+/* Status Animations */
+/* Applied (Pending) - Pulsing Blue */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.status-text-applied {
+  color: #007bff;
+}
+
+.status-icon-applied {
+  color: #007bff;
+  animation: pulse 1s infinite ease-in-out;
+}
+
+/* Rejected - Blinking Red */
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.status-text-rejected {
+  color: #dc3545;
+}
+
+.status-icon-rejected {
+  color: #dc3545;
+  animation: blink 1s infinite;
+}
+
+/* Interviewing - Bouncing Yellow */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.status-text-interviewing {
+  color: #ffc107;
+}
+
+.status-icon-interviewing {
+  color: #ffc107;
+  animation: bounce 1s infinite ease-in-out;
+}
+
+/* Hired - Pulsing Green */
+@keyframes pulseGreen {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.status-text-hired {
+  color: #28a745;
+}
+
+.status-icon-hired {
+  color: #28a745;
+  animation: pulseGreen 1s infinite ease-in-out;
+}
+
+/* Write Review button styling */
+.employee-write-review-button {
   font-family: 'Mulish', sans-serif;
   color: #ffffff;
-  background-color: #007bff;
+  background-color: #28a745;
   font-weight: 700;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
   border: none;
   padding: 8px 16px;
   border-radius: 5px;
+  margin-left: 20px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.employee-message-employer:hover {
-  background-color: #0056b3;
+.employee-write-review-button:hover {
+  background-color: #218838;
   color: #ffffff;
 }
 
-.employee-arrow-symbol {
-  font-weight: bold;
-  font-size: 18px;
-  margin-left: 5px;
-  display: inline-block;
-  transform: translateX(2px);
+/* Review Modal */
+.review-modal .modal-body {
+  padding: 20px;
 }
 
-.employee-no-applications-message {
-  text-align: center;
-  font-size: 18px;
-  font-weight: 600;
-  color: #6c757d;
-  margin-top: 20px;
+.review-modal .rating-stars {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.review-modal .star {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.review-modal .star.filled {
+  color: #ffd700;
+}
+
+.review-modal .form-control {
+  margin-top: 10px;
+}
+
+/* Review button styling */
+.review-submit-button {
+  background-color: #28a745;
+  color: #ffffff;
+  font-weight: 700;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  transition: background-color 0.3s ease;
+}
+
+.review-submit-button:hover {
+  background-color: #218838;
+}
+
+/* Close button styling */
+.review-close-button {
+  background-color: #6c757d;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  transition: background-color 0.3s ease;
+}
+
+.review-close-button:hover {
+  background-color: #5a6268;
 }

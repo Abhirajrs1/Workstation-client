@@ -1,20 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import Navigation from '../../../Components/Navigation';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Modal, Form } from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { FaClock, FaCheckCircle, FaTimesCircle, FaSpinner, FaStar } from 'react-icons/fa'; 
+import Swal from 'sweetalert2';
 
 function ApplicationListing() {
   const [applications, setApplications] = useState([]);
-  const navigate=useNavigate()
+  const [showModal, setShowModal] = useState(false); 
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
+  const [review, setReview] = useState('');
+  const [selectedCompanyId, setSelectedCompanyId] = useState(null);
+  const [hasReviewed, setHasReviewed] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchApplication = async () => {
       try {
         const response = await axiosInstance.get('/employee-getApplications');
         if (response.data.success) {
-          setApplications(response.data.applications);
-        }
+          const fetchedApplications = response.data.applications;
+          setApplications(fetchedApplications);
+            fetchedApplications.forEach(app => {
+            checkIfUserReviewed(app.companyId);
+          });        }
       } catch (error) {
         console.error(error);
       }
@@ -22,32 +33,117 @@ function ApplicationListing() {
     fetchApplication();
   }, []);
 
+  const checkIfUserReviewed = async (companyId) => {
+    try {
+      const response = await axiosInstance.get(`/employee-checkReview/${companyId}`);
+      if (response.data.success && response.data.hasReviewed) {
+        setHasReviewed(prev => ({ ...prev, [companyId]: true }));
+      } else {
+        setHasReviewed(prev => ({ ...prev, [companyId]: false }));
+      }
+    } catch (error) {
+      console.error('Error checking review status:', error);
+    }
+  };
+  
   const handleMessageClick = async (jobId, employerId) => {
     try {
-      const response = await axiosInstance.get(`/employee-getChatRoom/${jobId}/${employerId}`); 
-      console.log(response,"RES");
+      const response = await axiosInstance.get(`/employee-getChatRoom/${jobId}/${employerId}`);
       if (response.data.success) {
         navigate(`/employee-startChat/${jobId}/${employerId}`, {
-          state: { room: response.data.room.chatRoom,
-            recruiter: response.data.room.recruiter 
-           }
+          state: {
+            room: response.data.room.chatRoom,
+            recruiter: response.data.room.recruiter
+          }
         });
-      }
-        const createResponse = await axiosInstance.post('/employee-createRoom', { jobId, employerId });  
+      } else {
+        const createResponse = await axiosInstance.post('/employee-createRoom', { jobId, employerId });
         if (createResponse.data.success) {
           navigate(`/employee-startChat/${jobId}/${employerId}`, {
-            state: {room: createResponse.data.room.chatRoom, 
-              recruiter: createResponse.data.room.recruiter}
+            state: {
+              room: createResponse.data.room.chatRoom,
+              recruiter: createResponse.data.room.recruiter
+            }
           });
         } else {
           console.error('Failed to create chat room:', createResponse.data.message);
         }
+      }
     } catch (error) {
       console.error('Error handling chat room:', error);
     }
   };
+
+  const handleSubmitReview = async () => {
+    try {
+      const reviewData = {
+        rating,
+        comment: review,
+        company: selectedCompanyId,
+      };
+      const response = await axiosInstance.post('/employee-addReviewAndRating', { reviewData });
+      if (response.data.success) {
+        Swal.fire({
+          title: 'Review Submitted!',
+          text: 'Thank you for your review.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => {
+          setShowModal(false);
+          window.location.reload();
+        });
+      }
+    } catch (error) {
+      console.error('Error submitting review:', error);
+    }
+  };
+
+  const handleShowModal = (id) => {
+    setSelectedCompanyId(id); 
+    checkIfUserReviewed(id);
+    setShowModal(true);
+  };
   
-  
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setRating(0);
+    setReview('');
+  }
+
+  const getStatusIcon = (status) => {
+    switch (status.toLowerCase()) {
+      case 'applied':
+        return <FaSpinner className="status-icon status-icon-applied" />;
+      case 'rejected':
+        return <FaTimesCircle className="status-icon status-icon-rejected" />;
+      case 'interviewing':
+        return <FaClock className="status-icon status-icon-interviewing" />;
+      case 'hired':
+        return <FaCheckCircle className="status-icon status-icon-hired" />;
+      default:
+        return null;
+    }
+  };
+
+  const getStatusText = (status) => {
+    switch (status.toLowerCase()) {
+      case 'applied':
+        return 'Pending';
+      case 'rejected':
+        return 'Rejected';
+      case 'interviewing':
+        return 'Interviewing';
+      case 'hired':
+        return 'Hired';
+      default:
+        return status;
+    }
+  };
+
+  const isReviewButtonDisabled = (companyId) => {
+    return hasReviewed[companyId] || false;
+  };
+
   return (
     <>
       <Navigation />
@@ -59,16 +155,34 @@ function ApplicationListing() {
             <Card key={index} className="employee-application-item mt-4">
               <Card.Body>
                 <Row>
-                  <Col md={8} className="employee-application-details">
-                    <h3 className="employee-job-title">{application.jobId.jobTitle}</h3>
+                  <Col md={4} className="employee-application-details">
+                    <div className="employee-job-header">
+                      <h3 className="employee-job-title">{application.jobId.jobTitle}</h3>
+                    </div>
                     <p className="employee-company-name">{application.jobId.companyName}</p>
                     <p className="employee-location">{application.jobId.jobLocation}</p>
                     <p className="employee-applied-on">Applied on: {application.appliedOn}</p>
                   </Col>
+                  <Col md={4}>
+                    <div className="employee-job-listingstatus">
+                      <p className="status-listingheading">Status</p>
+                      <div className="status-indicator">
+                        {getStatusIcon(application.status)}
+                        <span className={`status-listingtext status-text-${application.status.toLowerCase()}`}>
+                          {getStatusText(application.status)}
+                        </span>
+                        {application.status.toLowerCase() === 'hired' && (
+                          <Button variant="link" disabled={isReviewButtonDisabled(application.companyId)} className="write-review-button" onClick={() => handleShowModal(application.companyId)}>
+                            Write Review
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </Col>
                   <Col md={4} className="employee-application-actions">
                     <Button
                       className="employee-message-employer"
-                      onClick={() => handleMessageClick(application.jobId._id,application.employerId)}
+                      onClick={() => handleMessageClick(application.jobId._id, application.employerId)}
                     >
                       Message employer <span className="employee-arrow-symbol">&rarr;</span>
                     </Button>
@@ -78,6 +192,48 @@ function ApplicationListing() {
             </Card>
           ))
         )}
+        <Modal show={showModal} onHide={handleCloseModal} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Write a Review</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h5>Rate Your Experience</h5>
+            <div className="star-rating mb-4">
+              {[...Array(5)].map((_, index) => {
+                index += 1;
+                return (
+                  <button
+                    type="button"
+                    key={index}
+                    className={`star-button ${index <= (hover || rating) ? 'on' : 'off'}`}
+                    onClick={() => setRating(index)}
+                    onMouseEnter={() => setHover(index)}
+                    onMouseLeave={() => setHover(rating)}
+                  >
+                    <FaStar className="star" />
+                  </button>
+                );
+              })}
+            </div>
+            <Form.Group>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Write your review..."
+                value={review}
+                onChange={(e) => setReview(e.target.value)}
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleSubmitReview}>
+              Submit Review
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
     </>
   );

@@ -22,9 +22,6 @@ function SideNav() {
       <Link to="/interviews" className="side-nav-link">
         <FaUsers /> <span>Interviews</span>
       </Link>
-      <Link to="/analytics" className="side-nav-link">
-        <FaChartBar /> <span>Analytics</span>
-      </Link>
     </div>
   );
 }
