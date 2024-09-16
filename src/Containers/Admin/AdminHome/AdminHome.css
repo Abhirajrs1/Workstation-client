@@ -43,8 +43,18 @@
 .admin-home-chart-container {
     max-width: 600px;
     width: 100%; 
-    height: 1000px;
+    height: 400px; /* Adjust height as needed */
     margin-top: 30px; 
+}
+
+.admin-home-pie-chart-container {
+    max-width: 650px; 
+    width: 100%; 
+    height: 400px; 
+    margin-top: 30px; 
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
 }
 
 .admin-home-loading-spinner {

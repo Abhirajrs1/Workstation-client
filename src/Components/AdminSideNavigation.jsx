@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
-import { FaTachometerAlt, FaDollarSign, FaBriefcase, FaPhone, FaLightbulb, FaUsers, FaComments, FaChartBar, FaTools, FaUserTie , FaThList,FaBuilding } from 'react-icons/fa';
+import { FaTachometerAlt, FaDollarSign, FaBriefcase, FaPhone, FaLightbulb, FaUsers, FaComments, FaChartBar, FaTools, FaUserTie , FaThList,FaBuilding,FaClipboardList } from 'react-icons/fa';
 import './AdminSideNavigation.css';
 
 function AdminSideNavigation() {
@@ -44,11 +44,11 @@ function AdminSideNavigation() {
         </Link>
       </Nav.Item>
       <Nav.Item className="side-nav-item">
-        <Link to="/interviews">
-          <FaComments /> Interviews
+        <Link to="/admin-orders">
+          <FaClipboardList  /> Orders
         </Link>
       </Nav.Item>
-      <Nav.Item className="side-nav-item">
+      {/* <Nav.Item className="side-nav-item">
         <Link to="/analytics">
           <FaChartBar /> Analytics
         </Link>
@@ -57,7 +57,7 @@ function AdminSideNavigation() {
         <Link to="/tools">
           <FaTools /> Tools
         </Link>
-      </Nav.Item>
+      </Nav.Item> */}
     </Nav>
   </div>
 

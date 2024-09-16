@@ -65,6 +65,7 @@ import ViewReviews from "../Containers/User/Reviews/ViewReviews";
 import RecruiterChat from "../Containers/Recruiter/RecruiterMessage/RecruiterChat";
 import IndividualReviews from "../Containers/User/Reviews/IndividualReviews";
 import About from "../Components/About";
+import Orders from "../Containers/Admin/AdminOrders/Orders";
 
 function Api() {
   return (
@@ -136,6 +137,7 @@ function Api() {
             <Route path="/admin-editPlans/:id" element={<EditPlans/>}/>
             <Route path="/admin-companies" element={<Companies/>}/>
             <Route path="/admin-companydetails/:id" element={<CompanyDetailedView/>}/>
+            <Route path="/admin-orders" element={<Orders/>}/>
 
 
 

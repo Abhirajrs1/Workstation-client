@@ -56,7 +56,9 @@ const PlanListing = () => {
               paymentId: response.razorpay_payment_id,
               orderId: response.razorpay_order_id,
               signature: response.razorpay_signature,
-              email: recruiter.email
+              email: recruiter.email,
+              amount:plan.amount,
+              planId:plan._id
             });
 
             if (paymentVerification.data.success) {

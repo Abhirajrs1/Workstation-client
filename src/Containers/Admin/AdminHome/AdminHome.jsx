@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import AdminSideNavigation from '../../../Components/AdminSideNavigation';
 import AdminNavigation from '../../../Components/AdminNavigation';
 import { AdminAuth } from '../../../Context/AdminContext';
-import { Bar } from 'react-chartjs-2'; 
+import { Bar,Pie} from 'react-chartjs-2'; 
 import Chart from 'chart.js/auto'; 
 import { useNavigate } from 'react-router-dom';
 import './AdminHome.css'; 
@@ -16,6 +16,11 @@ function AdminHome() {
     recruiters: 0,
     candidates: 0,
     jobs: 0,
+  });
+
+  const [categoryData, setCategoryData] = useState({
+    categories: [],
+    categoryCounts: [],
   });
 
   useEffect(() => {
@@ -34,8 +39,25 @@ function AdminHome() {
         console.error('An error occurred while fetching statistics', error);
       }
     }
+    const fetchCategoryStats=async()=>{
+      try {
+        const response=await axiosInstance.get('/admin-getCategoryStats')
+        console.log(response,"RES");
+        
+        if(response.data.success){
+          const categories = response.data.categories.map(cat => cat.name);
+          const categoryCounts = response.data.categories.map(cat => cat.count);
+          setCategoryData({ categories, categoryCounts });
+        }else{
+          console.log('Failed to fetch categories');
+        }
+      } catch (error) {
+        console.error('An error occurred while fetching categories', error);
+      }
+    }
     if(Authenticated){
       fetchStats()
+      fetchCategoryStats()
     }
   }, [Authenticated, navigate, loading]);
 
@@ -60,10 +82,44 @@ function AdminHome() {
     ],
   };
 
+  const pieChartData = {
+    labels: categoryData.categories, 
+    datasets: [
+      {
+        label:'Count',
+        data: categoryData.categoryCounts,
+        backgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56',
+          '#4BC0C0',
+          '#9966FF',
+          '#FF9F40',
+        ],
+        hoverOffset: 4,
+      },
+    ],
+  };
+
   const options = {
     scales: {
       y: {
         beginAtZero: true,
+      },
+    },
+  };
+
+  const pieOptions = {
+    plugins: {
+      title: {
+        display: true,
+        text: 'Categories',
+        font: {
+          size: 16,
+        },
+        padding: {
+          bottom: 20,
+        },
       },
     },
   };
@@ -91,6 +147,9 @@ function AdminHome() {
         <div className="admin-home-chart-container">
           <Bar data={data} options={options} />
         </div>
+        <div className="admin-home-pie-chart-container">
+            <Pie data={pieChartData} options={pieOptions} />
+          </div>
       </div>
     </div>
   );
