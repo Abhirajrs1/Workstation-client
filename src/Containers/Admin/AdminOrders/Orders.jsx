@@ -22,6 +22,8 @@ function Orders() {
         const fetchOrders = async () => {
             try {
                 const response = await axiosInstance.get(`/admin-orders?page=${page}&limit=${limit}`);
+                console.log(response,"RES");
+                
                 if (response.data.success) {
                     setOrders(response.data.orders);
                     setTotal(response.data.total);
@@ -62,28 +64,21 @@ function Orders() {
                                 <tr>
                                     <th>Sl. No</th>
                                     <th>Recruiter Name</th>
+                                    <th>Company</th>
                                     <th>Plan Name</th>
                                     <th>Amount</th>
                                     <th>Date</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {orders.map((order, index) => (
                                     <tr key={order._id}>
                                         <td>{index + 1}</td>
-                                        <td>{order.recruiterName}</td>
-                                        <td>{order.planName}</td>
+                                        <td>{order.userId.recruitername}</td>
+                                        <td>{order.userId.companyName}</td>
+                                        <td>{order.planId.planName}</td>
                                         <td>${order.amount}</td>
-                                        <td>{new Date(order.date).toLocaleDateString()}</td>
-                                        <td>
-                                            <Button
-                                                variant="info"
-                                                onClick={() => viewOrder(order._id)}
-                                            >
-                                                View
-                                            </Button>
-                                        </td>
+                                        <td>{new Date(order.orderDate).toLocaleDateString()}</td>
                                     </tr>
                                 ))}
                             </tbody>
