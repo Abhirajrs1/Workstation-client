@@ -23,6 +23,10 @@ function AdminHome() {
     categoryCounts: [],
   });
 
+  const [orderData, setOrderData] = useState({
+    totalOrders: 0,
+  });
+
   useEffect(() => {
     if (!Authenticated && !loading) {
       navigate('/admin-login');
@@ -41,9 +45,7 @@ function AdminHome() {
     }
     const fetchCategoryStats=async()=>{
       try {
-        const response=await axiosInstance.get('/admin-getCategoryStats')
-        console.log(response,"RES");
-        
+        const response=await axiosInstance.get('/admin-getCategoryStats')        
         if(response.data.success){
           const categories = response.data.categories.map(cat => cat.name);
           const categoryCounts = response.data.categories.map(cat => cat.count);
@@ -55,11 +57,40 @@ function AdminHome() {
         console.error('An error occurred while fetching categories', error);
       }
     }
+    const fetchOrderStats = async () => {
+      try {
+        const response = await axiosInstance.get('/admin-getOrderStats');
+        if (response.data.success) {
+          setOrderData({
+            totalOrders: response.data.totalOrders,
+          });
+        } else {
+          console.log('Failed to fetch order statistics');
+        }
+      } catch (error) {
+        console.error('An error occurred while fetching order statistics', error);
+      }
+    };
     if(Authenticated){
       fetchStats()
       fetchCategoryStats()
+      fetchOrderStats()
     }
   }, [Authenticated, navigate, loading]);
+
+
+  const orderChartData = {
+    labels: ['Orders'],
+    datasets: [
+      {
+        label: 'Orders',
+        data: [orderData.totalOrders],
+        backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+        borderColor: ['rgba(255, 99, 132, 1)'],
+        borderWidth: 1,
+      },
+    ],
+  };
 
   const data = {
     labels: ['Recruiters', 'Candidates', 'Jobs'],
@@ -107,6 +138,18 @@ function AdminHome() {
         beginAtZero: true,
       },
     },
+    plugins: {
+      title: {
+        display: true,
+        text: 'Orders', // Title for the Bar chart
+        font: {
+          size: 16,
+        },
+        padding: {
+          bottom: 20,
+        },
+      },
+    },
   };
 
   const pieOptions = {
@@ -147,10 +190,16 @@ function AdminHome() {
         <div className="admin-home-chart-container">
           <Bar data={data} options={options} />
         </div>
+
+        <div className="admin-home-charts">
         <div className="admin-home-pie-chart-container">
             <Pie data={pieChartData} options={pieOptions} />
           </div>
+          <div className="admin-home-orders-chart">
+            <Bar data={orderChartData} options={options} />
+          </div>
       </div>
+    </div>
     </div>
   );
 }

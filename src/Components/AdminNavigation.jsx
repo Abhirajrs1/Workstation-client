@@ -26,18 +26,6 @@ function AdminNavigation() {
                             <FaHome className="me-1" />
                             Home
                         </Nav.Link>
-                        <Nav.Link as={Link} to="/help" className="text-dark me-3">
-                            <FaQuestionCircle className="me-1" />
-                            Help
-                        </Nav.Link>
-                        <Nav.Link as={Link} to="/notifications" className="text-dark me-3">
-                            <FaBell />
-                            <span className="ms-1">Notifications</span>
-                        </Nav.Link>
-                        <Nav.Link as={Link} to="/messages" className="text-dark me-3">
-                            <FaEnvelope />
-                            <span className="ms-1">Messages</span>
-                        </Nav.Link>
                         <Nav.Link onClick={handleLogout} className="text-dark me-3">
                             <FaSignOutAlt />
                             <span className="ms-1">Logout</span>
