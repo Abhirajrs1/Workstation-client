@@ -14,9 +14,7 @@ function JobListing() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!loading && (!Authenticated || !recruiter)) {
-            navigate('/recruiter-login');
-        } else {
+        if (recruiter){
             const fetchJobs = async () => {
                 try {
                     const response = await axiosInstance.get(`/recruiter-showJobs/${recruiter._id}`);
@@ -32,7 +30,7 @@ function JobListing() {
             };
             fetchJobs();
         }
-    }, [loading, Authenticated, navigate, recruiter, recruiter._id]);
+    }, [ recruiter, recruiter._id]);
 
     const viewJob = (id) => {
         navigate(`/recruiter-viewJob/${id}`);

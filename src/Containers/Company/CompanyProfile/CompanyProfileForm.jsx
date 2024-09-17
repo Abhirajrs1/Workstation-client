@@ -28,9 +28,6 @@ function CompanyProfileForm() {
       });
 
       useEffect(() => {
-        if (!Authenticated && !loading) {
-          navigate('/company-login');
-        } else if (company) {
           setFormData({
             companyName: company.companyName || '',
             contactNumber: company.contactNumber || '',
@@ -45,8 +42,7 @@ function CompanyProfileForm() {
               country: 'India'
             }
           });
-        }
-      }, [company,Authenticated, navigate]);
+      }, [company]);
     
       const handleChange = (e) => {
         const { id, value } = e.target;

@@ -37,12 +37,6 @@ function Jobs() {
         setPage(data.selected + 1);
     };
 
-    useEffect(() => {
-        if (!Authenticated && !loading) {
-            navigate('/admin-login');
-        }
-    }, [Authenticated, navigate, loading]);
-
     const toggleListStatus = async (id, listStatus) => {
         try {
             const response = await axiosInstance.put(`/admin-jobs/${id}/list`);

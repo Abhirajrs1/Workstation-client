@@ -39,12 +39,6 @@ function Orders() {
         setPage(data.selected + 1);
     };
 
-    useEffect(() => {
-        if (!Authenticated && !loading) {
-            navigate('/admin-login');
-        }
-    }, [Authenticated, navigate, loading]);
-
     const viewOrder = (id) => {
         navigate(`/admin-orderdetails/${id}`);
     };

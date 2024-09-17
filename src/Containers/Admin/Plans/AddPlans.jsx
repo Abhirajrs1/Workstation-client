@@ -27,11 +27,6 @@ function AddPlans() {
             [name]: value
         });
     };
-    useEffect(() => {
-        if (!Authenticated && !loading) {
-            navigate('/admin-login');
-        }
-    }, [Authenticated, navigate, loading]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

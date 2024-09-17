@@ -28,9 +28,6 @@ function AdminHome() {
   });
 
   useEffect(() => {
-    if (!Authenticated && !loading) {
-      navigate('/admin-login');
-    }
     const fetchStats=async()=>{
       try {
         const response=await axiosInstance.get('/admin-getStats')

@@ -26,9 +26,7 @@ const ContactForm = () => {
       }]
   })
   useEffect(()=>{
-    if(!isAuthenticated && !loading){
-      navigate('/employee-login')
-    }else if(user){
+    if(user){
       setFormData({
         username:user.username||'',
         contact:user.contact ||'',
@@ -45,7 +43,7 @@ const ContactForm = () => {
         }
       })
     }
-  },[user,isAuthenticated,navigate])
+  },[user])
 
   const handleChange=(e)=>{
     const {id,value}=e.target

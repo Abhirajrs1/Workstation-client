@@ -17,10 +17,10 @@ function Profile() {
     const [isUploading, setIsUploading] = useState(false);
 
     useEffect(() => {
-        if (!isAuthenticated && !loading || user?.block) {
+        if ( user?.block) {
             navigate("/employee-login");
         }
-    }, [isAuthenticated, loading, navigate,user?.block]);
+    }, [user?.block]);
 
     useEffect(() => {
         if (user.description) {

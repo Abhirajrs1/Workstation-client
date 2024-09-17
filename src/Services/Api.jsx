@@ -66,6 +66,10 @@ import RecruiterChat from "../Containers/Recruiter/RecruiterMessage/RecruiterCha
 import IndividualReviews from "../Containers/User/Reviews/IndividualReviews";
 import About from "../Components/About";
 import Orders from "../Containers/Admin/AdminOrders/Orders";
+import PrivateRoutes from "./PrivateRoutes";
+import { RecruiterPrivateRoutes } from "./PrivateRoutes";
+import { AdminPrivateRoutes } from "./PrivateRoutes";
+import { CompanyPrivateRoutes } from "./PrivateRoutes";
 
 function Api() {
   return (
@@ -77,8 +81,13 @@ function Api() {
       <Router>
         <Routes>
 
+            {/* Candidate side public routes */}
+
             <Route path="/" element={<Home/>}/>
             <Route path="/about" element={<About/>}/>
+            <Route path="/employee-companyView/:id" element={<CompanyView/>}/>
+            <Route path="/employee-reviews" element={<Reviews/>}/>
+            <Route path="/employee-viewReviews/:id" element={<ViewReviews/>}/>
 
 
             <Route path="/employee-signup" element={<SignUp/>}/>
@@ -86,6 +95,10 @@ function Api() {
             <Route path="/employee-verifyOtp" element={<Otp/>}/>
             <Route path="/employee-forgotPassword" element={<ForgotPassword/>}/>
             <Route path="/employee-resetPassword/:token" element={<ResetPassword/>}/>
+
+            {/* Candidate side Private Routes */}
+
+            <Route element={<PrivateRoutes/>}>
             <Route path="/employee-profile" element={<Profile/>}/>
             <Route path="/employee-profile/editcontact" element={<ContactForm/>}/>
             <Route path="/employee-profile/qualifications" element={<Qualifications/>}/>
@@ -96,21 +109,23 @@ function Api() {
             <Route path="/employee-profile/workexperience" element={<WorkExperience/>}/>
             <Route path="/employee-reviewApplication/:id" element={<ReviewApplication/>}/>
             <Route path="/employee-applicationListing" element={<ApplicationListing/>}/>
-            <Route path="/employee-companyView/:id" element={<CompanyView/>}/>
             <Route path="/employee-startChat/:jobId/:employerId" element={<StartChat/>}/>
-            <Route path="/employee-reviews" element={<Reviews/>}/>
-            <Route path="/employee-viewReviews/:id" element={<ViewReviews/>}/>
             <Route path="/employee-individualReviews" element={<IndividualReviews/>}/>
+            </Route>
+           
 
+           {/* Recruiter public routes */}
 
-            
-
-            <Route path="/recruiter-home" element={<RecruiterHome/>}/>
             <Route path="/recruiter-signup" element={<RecruiterSignUp/>}/>
             <Route path="/recruiter-login" element={<RecruiterLogin/>}/>
             <Route path="/recruiter-verifyOtp" element={<RecruiterOtp/>}/>
             <Route path="/recruiter-forgotPassword" element={<RecruiterForgotPassword/>}/>
             <Route path="/recruiter-resetPassword/:token" element={<RecruiterResetPassword/>}/>
+
+            {/* Recruiter private Routes */}
+
+            <Route element={<RecruiterPrivateRoutes/>}>
+            <Route path="/recruiter-home" element={<RecruiterHome/>}/>
             <Route path='/recruiter-postJob' element={<JobPosting/>}/>
             <Route path="/recruiter-listJob" element={<JobListing/>}/>
             <Route path="/recruiter-viewJob/:id" element={<IndividualJob/>}/>
@@ -119,10 +134,15 @@ function Api() {
             <Route path="/recruiter-viewApplicationDetails/:id" element={<JobApplicationDetails/>}/>
             <Route path="/recruiter-planListing" element={<PlanListing/>}/>
             <Route path="/recruiter-Chat" element={<RecruiterChat/>}/>
+            </Route>
 
-
+            {/* Admin public routes */}
 
             <Route path="/admin-login" element={<AdminLogin/>}/>
+
+            {/* Admin private routes */}
+
+            <Route element={ <AdminPrivateRoutes/> }>
             <Route path="/admin-home" element={<AdminHome/>}/>
             <Route path="/admin-candidates" element={<Candidates/>}/>
             <Route path="/admin-recruiters" element={<Recruiters/>}/>
@@ -138,11 +158,17 @@ function Api() {
             <Route path="/admin-companies" element={<Companies/>}/>
             <Route path="/admin-companydetails/:id" element={<CompanyDetailedView/>}/>
             <Route path="/admin-orders" element={<Orders/>}/>
+            </Route>
 
 
+            {/* Company public routes */}
 
             <Route path="/company-signup" element={<CompanySignup/>}/>
             <Route path="/company-login" element={<CompanyLogin/>}/>
+            
+            {/* Company private routes */}
+
+            <Route element={<CompanyPrivateRoutes/>}>
             <Route path="/company-home" element={<CompanyHome/>}/>
             <Route path="/company-profile" element={<CompanyProfile/>}/>
             <Route path="/company-profile/editForm" element={<CompanyProfileForm/>}/>
@@ -150,6 +176,7 @@ function Api() {
             <Route path="/company-editAboutDetails" element={<EditAboutDetails/>}/>
             <Route path="/company-documents" element={<CompanyDocuments/>}/>
             <Route path="/company-reviews" element={<CompanyReviews/>}/>
+            </Route>
 
 
 

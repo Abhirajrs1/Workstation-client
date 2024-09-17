@@ -22,9 +22,6 @@ function EditPlans() {
     });
 
     useEffect(() => {
-        if (!Authenticated && !loading) {
-            navigate('/admin-login');
-        } else if (Authenticated) {
             const fetchPlanDetails = async () => {
                 try {
                     const response = await axiosInstance.get(`/admin-getPlans/${id}`);
@@ -43,8 +40,7 @@ function EditPlans() {
                 }
             };
             fetchPlanDetails();
-        }
-    }, [Authenticated, loading, navigate, id]);
+    }, [id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

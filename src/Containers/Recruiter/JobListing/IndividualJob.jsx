@@ -14,9 +14,6 @@ function IndividualJob() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!loading && !Authenticated) {
-            navigate('/recruiter-login');
-        } else {
             const fetchDetails = async () => {
                 try {
                     const response = await axiosInstance.get(`/recruiter-viewJob/${id}`);
@@ -30,8 +27,7 @@ function IndividualJob() {
                 }
             };
             fetchDetails();
-        }
-    }, [Authenticated, loading, navigate, id]);
+    }, [id]);
 
     if (!job) {
         return <div className="individual-job-loading">Loading...</div>;

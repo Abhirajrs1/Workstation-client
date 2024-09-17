@@ -28,11 +28,6 @@ function JobPosting() {
     applicationUrl: ''
   });
 
-  useEffect(() => {
-    if (!Authenticated && !loading) {
-      navigate('/recruiter-login');
-    }
-  }, [Authenticated, navigate, loading]);
 
   useEffect(() => {
     const fetchCategories = async () => {

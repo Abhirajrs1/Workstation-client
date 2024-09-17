@@ -58,8 +58,6 @@ function RecruiterChat() {
       console.log("TYpe of",typeof(messages))
       console.log("getting receive message from user",data,messages)
       setMessages((prevMessages) => [...prevMessages, data]);
-      // if (selectedChat && selectedChat._id === data.chatId) {
-      // }
     });
 
     return () => {
@@ -85,7 +83,6 @@ function RecruiterChat() {
       senderId: recruiterId,
     };
 
-    // Optimistically update the UI
     const optimisticMessage = {
       ...messageData,
       _id: new Date().toISOString(),
@@ -101,7 +98,6 @@ function RecruiterChat() {
         console.log("userId",selectedChat.members[0]._id)
         socket.current.emit('send-message', {
           ...messageData,
-          // _id: response.data.message._id, 
           receiverId:selectedChat.members[0]._id
         });
       } else {

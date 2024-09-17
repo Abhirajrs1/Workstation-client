@@ -23,7 +23,6 @@ function StartChat() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch initial messages
     const fetchMessages = async () => {
       try {
         if (chatId) {
@@ -55,9 +54,6 @@ function StartChat() {
       console.log("getting receive message from recrter",data,messages)
       console.log("Dta.room",data)
       setMessages((prevMessages) => [...prevMessages, data]);
-      // if (data.room === chatId) {
-      //   setMessages((prevMessages) => [...prevMessages, data]);
-      // }
     });
 
     return () => {

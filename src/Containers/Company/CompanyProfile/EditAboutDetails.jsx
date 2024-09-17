@@ -28,9 +28,6 @@ function EditAboutDetails() {
   });
 
   useEffect(() => {
-    if (!Authenticated && !loading) {
-      navigate('/company-login');
-    } else if (company) {
       setFormData({
         typeOfCompany: company.typeOfCompany || '',
         website: company.website || '',
@@ -45,8 +42,7 @@ function EditAboutDetails() {
           linkedin: company.socialMedia?.linkedin || '',
         },
       });
-    }
-  }, [company, Authenticated, navigate]);
+  }, [company]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;

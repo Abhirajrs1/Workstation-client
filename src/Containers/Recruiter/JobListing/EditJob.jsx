@@ -29,9 +29,6 @@ function EditJob() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    if (!Authenticated && !loading) {
-      navigate('/recruiter-login');
-    } else {
       const fetchJobDetails = async () => {
         try {
           const response = await axiosInstance.get(`/recruiter-viewJob/${id}`);
@@ -56,8 +53,7 @@ function EditJob() {
         }
       };
       fetchJobDetails();
-    }
-  }, [Authenticated, loading, navigate, id]);
+  }, [id]);
 
   useEffect(() => {
     const fetchCategories = async () => {

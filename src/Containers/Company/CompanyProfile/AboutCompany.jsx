@@ -10,12 +10,6 @@ function AboutCompany() {
     const { company, loading, Authenticated } = useContext(CompanyAuth);
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        if(!Authenticated && !loading || !company){
-            navigate('/company-login')
-        }
-    },[loading,Authenticated,company])
-
     return (
         <>
             <CompanyNavigation />

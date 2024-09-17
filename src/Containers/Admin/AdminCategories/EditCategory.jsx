@@ -25,23 +25,24 @@ function EditCategory() {
         });
     };
 
-    useEffect(() => {
-        if (!Authenticated && !loading) {
-            navigate('/admin-login');
-        }else{
-            fetchCategoryDetails()
-        }
-    }, [Authenticated, navigate, loading]);
-
-    const fetchCategoryDetails = async () => {
-        try {
-            const response = await axiosInstance.get(`admin-category/${id}`);
-            if (response.data.success) {
-                setFormData({
-                    categoryName: response.data.category.categoryName,
-                    description: response.data.category.categoryDescription
-                });
-            } else {
+    useEffect(()=>{
+        const fetchCategoryDetails = async () => {
+            try {
+                const response = await axiosInstance.get(`admin-category/${id}`);
+                if (response.data.success) {
+                    setFormData({
+                        categoryName: response.data.category.categoryName,
+                        description: response.data.category.categoryDescription
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Failed to load category details.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            } catch (error) {
                 Swal.fire({
                     title: 'Error!',
                     text: 'Failed to load category details.',
@@ -49,16 +50,11 @@ function EditCategory() {
                     confirmButtonText: 'OK'
                 });
             }
-        } catch (error) {
-            Swal.fire({
-                title: 'Error!',
-                text: 'Failed to load category details.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        }
-    };
+        };
+        fetchCategoryDetails()
+    },[])
 
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {

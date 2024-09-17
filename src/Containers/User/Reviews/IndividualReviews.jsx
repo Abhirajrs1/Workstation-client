@@ -19,12 +19,6 @@ function IndividualReviews() {
     const {user,isAuthenticated}=useContext(AuthContext)
     const navigate=useNavigate()
 
-    useEffect(()=>{
-        if(!isAuthenticated){
-            navigate('/employee-login')
-        }
-    },[isAuthenticated])
-
     useEffect(() => {
         const fetchUserReviews = async () => {
             try {

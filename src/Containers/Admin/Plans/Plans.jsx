@@ -37,12 +37,6 @@ function Plans() {
         setPage(data.selected + 1);
     };
 
-    useEffect(() => {
-        if (!Authenticated && !loading) {
-            navigate('/admin-login');
-        }
-    }, [Authenticated, navigate, loading]);
-
     const editPlan = (id) => {
         navigate(`/admin-editPlans/${id}`);
     };

@@ -17,9 +17,6 @@ const [stats, setStats] = useState({
 const navigate=useNavigate()
 
 useEffect(()=>{
-  if (!Authenticated && !loading) {
-    navigate('/company-login');
-  }
   const fetchCompanyStats = async () => {
     try {
       const response = await axiosInstance.get('/company-getStats');
@@ -32,12 +29,8 @@ useEffect(()=>{
       console.error('An error occurred while fetching company statistics', error);
     }
   };
-
-  if (Authenticated) {
     fetchCompanyStats();
-  }
-
-},[Authenticated,navigate,loading])
+},[])
 
 const data = {
   labels: ['Recruiters', 'Jobs'],

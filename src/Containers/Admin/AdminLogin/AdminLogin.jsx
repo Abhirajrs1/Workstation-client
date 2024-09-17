@@ -21,8 +21,6 @@ function AdminLogin() {
     }
   },[admin,navigate])
     
-
-
     const handleSubmit = async (e) => {
       e.preventDefault();
      try {

@@ -11,10 +11,10 @@ function RecruiterHome() {
     const navigate=useNavigate()
     const {recruiter,setRecruiter,loading,Authenticated}=useContext(RecruiterAuth)
 
-    useEffect(()=>{
-      if(!Authenticated&&!loading||!recruiter)
-        navigate('/recruiter-login')
-    },[Authenticated,loading,recruiter,navigate])
+    // useEffect(()=>{
+    //   if(!Authenticated&&!loading||!recruiter)
+    //     navigate('/recruiter-login')
+    // },[Authenticated,loading,recruiter,navigate])
 
     if (loading) {
         return <div>Loading...</div>;

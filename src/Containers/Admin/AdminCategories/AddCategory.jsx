@@ -24,12 +24,6 @@ function AddCategory() {
         });
     };
 
-    useEffect(() => {
-        if (!Authenticated && !loading) {
-            navigate('/admin-login');
-        }
-    }, [Authenticated, navigate, loading]);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {

@@ -19,9 +19,7 @@ function ReviewApplication() {
   const [yearsOfExperience, setYearsOfExperience] = useState('');
 
   useEffect(() => {
-    if (!isAuthenticated && !loading || !user) {
-      navigate('/employee-login');
-    } else {
+     if(user){
       const fetchJobDetails = async () => {
         try {
           const response = await axiosInstance.get(`/employee-getIndividualJobDetails/${id}`);
@@ -47,7 +45,7 @@ function ReviewApplication() {
       fetchJobDetails();
       fetchWorkExperience();
     }
-  }, [isAuthenticated, loading, user, id, navigate]);
+  }, [user, id]);
 
   if (!jobDetails) {
     return <div className="loading">Loading...</div>;

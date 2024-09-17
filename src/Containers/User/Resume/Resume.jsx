@@ -18,19 +18,13 @@ function Resume() {
     const [skills, setSkills] = useState([]);
 
     useEffect(() => {
-        if (!isAuthenticated && !loading) {
-            navigate("/employee-login");
-        } else {
             if (user?.Qualification?.education) {
                 setEducations(user.Qualification.education);
             }
-            if (user?.Qualification?.skills) {
+            else if (user?.Qualification?.skills) {
                 setSkills(user.Qualification.skills);
             }
-        }
-    }, [isAuthenticated, navigate, loading, user]);
-
-
+    }, [user]);
 
     const handleAddEducation = async (education) => {
         try {

@@ -37,12 +37,6 @@ function Companies() {
         setPage(data.selected + 1);
     };
 
-    useEffect(() => {
-        if (!Authenticated && !loading) {
-            navigate('/admin-login');
-        }
-    }, [Authenticated, navigate, loading]);
-
     const toggleCompanyStatus = async (id, status) => {
         try {
             const response = await axiosInstance.put(`/admin-companies/${id}/block`);

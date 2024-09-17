@@ -55,7 +55,6 @@ const JobApplicationDetails = () => {
 
     return (
         <>
-        {/* <ReNavigation/> */}
         <Container className="mt-5">
             <Card>
                 <Card.Header className="card-header-custom">

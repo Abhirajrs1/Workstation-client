@@ -37,12 +37,6 @@ function Categories() {
         setPage(data.selected + 1);
     };
 
-    useEffect(() => {
-        if (!Authenticated && !loading) {
-            navigate('/admin-login');
-        }
-    }, [Authenticated, navigate, loading]);
-
     const editCategory = (id) => {
         navigate(`/admin-editcategory/${id}`);
     };

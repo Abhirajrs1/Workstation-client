@@ -19,10 +19,10 @@ function CompanyProfile() {
     const [logoUrl,setLogoUrl]=useState(company?.logo||'')
 
     useEffect(() => {
-        if (!Authenticated && !loading || company?.block) {
+        if ( company?.block) {
             navigate("/company-login");
         }
-    }, [Authenticated, loading, navigate, company?.block]);
+    }, [ company?.block]);
 
     useEffect(() => {
         if (company.description) {

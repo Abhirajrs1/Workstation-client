@@ -12,13 +12,11 @@ const PlanListing = () => {
     const fetchPlans = async () => {
       try {
         const response = await axiosInstance.get('/recruiter-getPlans');
-        console.log(response); 
         setPlans(response.data.plans);
       } catch (error) {
         console.error('Error fetching plans:', error);
       }
     };
-
     fetchPlans();
   }, []);
 
@@ -94,7 +92,6 @@ const PlanListing = () => {
       alert('Something went wrong while processing the payment.');
     }
   };
-
 
   return (
     <div className="planslisting-container">

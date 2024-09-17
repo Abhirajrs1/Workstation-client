@@ -15,6 +15,12 @@ function RecruiterLogin() {
 
   const { RecruiterLogin, recruiter, Authenticated } = useContext(RecruiterAuth);
 
+  useEffect(()=>{
+    if(recruiter){
+      navigate('/recruiter-home')
+    }
+  },[recruiter,navigate])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
