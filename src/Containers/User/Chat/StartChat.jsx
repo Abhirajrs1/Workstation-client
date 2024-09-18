@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor';
 import { Form, Button, ListGroup, InputGroup } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FaSmile, FaPaperclip, FaArrowLeft } from 'react-icons/fa';
+import { FaSmile, FaPaperclip, FaArrowLeft, FaTimes } from 'react-icons/fa';
 import { AuthContext } from '../../../Context/UserContext';
 import { io } from 'socket.io-client';
 import EmojiPicker from 'emoji-picker-react';
@@ -20,10 +20,10 @@ function StartChat() {
   const chatId = state?.room?._id;
   const recruiterName = state?.recruiter?.recruitername || 'Recruiter';
   const messagesEndRef = useRef(null);
+  const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch initial messages
     const fetchMessages = async () => {
       try {
         if (chatId) {
@@ -40,24 +40,14 @@ function StartChat() {
   }, [chatId]);
 
   useEffect(() => {
-    // Set up socket connection
     socket.current = io('http://localhost:8800');
 
-    // Emit new user addition
     socket.current.on("connect", () => {
-    socket.current.emit('new-user-add', userId);
-  });
+      socket.current.emit('new-user-add', userId);
+    });
 
-    // Listen for incoming messages
     socket.current.on('receive-message', (data) => {
-      console.log("TYpe of",typeof(data))
-      console.log("TYpe of",typeof(messages))
-      console.log("getting receive message from recrter",data,messages)
-      console.log("Dta.room",data)
       setMessages((prevMessages) => [...prevMessages, data]);
-      // if (data.room === chatId) {
-      //   setMessages((prevMessages) => [...prevMessages, data]);
-      // }
     });
 
     return () => {
@@ -66,9 +56,8 @@ function StartChat() {
   }, [userId, chatId]);
 
   useEffect(() => {
-    // Scroll to the bottom of the chat
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [newMessage,messages]);
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -79,6 +68,7 @@ function StartChat() {
       room: chatId,
       senderId: userId,
       receiverId: recruiterId,
+      createdAt:Date.now()
     };
 
     try {
@@ -87,21 +77,15 @@ function StartChat() {
         text: newMessage,
       };
 
-      // Optimistically update the UI
       setMessages((prevMessages) => [...prevMessages, newLocalMessage]);
 
-      // Send the message to the server
       const response = await axiosInstance.post('/employee-sendMessage', messageData);
-      console.log("response in start chat",response)
       if (response.data.success) {
-        // Emit the message to the recipient via socket
-      
+
         socket.current.emit('send-message', {
           ...messageData,
           receiverId: recruiterId,
         });
-
-        // Clear input field and hide emoji picker
         setNewMessage('');
         setShowEmojiPicker(false);
       }
@@ -113,6 +97,43 @@ function StartChat() {
   const handleEmojiClick = (emojiData) => {
     setNewMessage((prevMessage) => prevMessage + emojiData.emoji);
   };
+
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await axiosInstance.post('/employee-uploadChatfile', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.data.success) {
+        const fileUrl = response.data.fileUrl;
+
+        const messageData = {
+          message: fileUrl,
+          room: chatId,
+          senderId: userId,
+          receiverId: recruiterId,
+          isFile: true,
+        };
+
+        setMessages((prevMessages) => [...prevMessages, messageData]);
+
+        // Emit the message to the socket
+        socket.current.emit('send-message', messageData);
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
+
+  
 
   return (
     <div className="chat-container">
@@ -130,7 +151,12 @@ function StartChat() {
               key={index}
               className={message.senderId !== userId ? 'user-message' : 'recruiter-message'}
             >
-              {message.text || message.message}
+              <div className="candidate-message-content">
+                {message.text || message.message}
+              </div>
+              <div className="candidate-message-timestamp">
+                {new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} 
+              </div>
             </ListGroup.Item>
           ))}
           <div ref={messagesEndRef} />
@@ -139,9 +165,15 @@ function StartChat() {
 
       <div className="chat-footer">
         <InputGroup>
-          <Button variant="light" className="attachment-button">
+          <Button variant="light" className="attachment-button" onClick={() => fileInputRef.current.click()}>
             <FaPaperclip />
           </Button>
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: 'none' }}
+            onChange={handleFileUpload}
+          />
           <Button
             variant="light"
             className="emoji-button"
@@ -151,6 +183,9 @@ function StartChat() {
           </Button>
           {showEmojiPicker && (
             <div className="emoji-picker-container">
+              <Button className="emoji-close-button" onClick={() => setShowEmojiPicker(false)}>
+                <FaTimes />
+              </Button>
               <EmojiPicker onEmojiClick={handleEmojiClick} />
             </div>
           )}
