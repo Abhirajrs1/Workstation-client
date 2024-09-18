@@ -2,10 +2,15 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    max-width: 600px;
+    max-width: 50%;
     margin: 0 auto;
     border: 1px solid #e9ecef;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
+
 
 .chat-header {
     background-color: #f8f9fa;
@@ -16,9 +21,9 @@
 }
 
 .chat-header h4 {
-    margin: 0;
+    margin-left: 30px;
     flex: 1;
-    text-align: center;
+    text-align: start;
 }
 
 .back-button {
@@ -32,6 +37,12 @@
     overflow-y: auto;
     padding: 15px;
     background-color: #f0f2f5;
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+}
+
+.chat-body::-webkit-scrollbar {
+    display: none; 
 }
 
 .chat-body .list-group {
@@ -47,18 +58,30 @@
     max-width: 70%;
     position: relative;
     word-break: break-word;
+    box-sizing: border-box;
 }
 
 .recruiter-message {
     align-self: flex-start;
-    background-color: #ffffff;
+    background-color: #007bff; 
+    color: white;
     margin-left: auto;
 }
 
 .user-message {
     align-self: flex-end;
-    background-color: #dcf8c6;
+    background-color: #ffff;
     margin-right: auto;
+}
+.candidate-message-content {
+    margin-bottom: 2px;
+}
+
+.candidate-message-timestamp {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    text-align: right;
+    margin-top: 5px;
 }
 
 .chat-footer {
@@ -73,6 +96,7 @@
     width: 100%;
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 .attachment-button,
@@ -80,24 +104,47 @@
     background-color: transparent;
     border: none;
     color: #6c757d;
-    font-size: 1.25rem;
+    font-size: 1.5rem; 
 }
 
 .message-input {
     border-radius: 20px;
-    padding-right: 80px; /* Space for the buttons */
-    margin-right: 2px; 
-}
+    padding-right: 80px; 
+    }
 
 .send-button {
     flex-shrink: 0;
-    height: 30px;
-    width: 80px; /* Set fixed width for consistency */
+    height: 36px;
+    width: 80px; 
+    margin: 10px;
 }
+
 .emoji-picker-container {
     position: absolute;
     bottom: 60px;
     right: 10px;
     z-index: 1000;
-  }
-  
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.emoji-close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #6c757d;
+    outline: none;
+    margin-left: 280px;
+}
+ 
+.emoji-close-button:hover{
+    color: #6c757d;
+    background-color: transparent;
+}
+
