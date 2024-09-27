@@ -25,7 +25,8 @@ function JobPosting() {
     education: '',
     category: '',
     easyApply: true,
-    applicationUrl: ''
+    applicationUrl: '',
+    expiryDate: ''
   });
 
 
@@ -63,8 +64,8 @@ function JobPosting() {
         title: 'Subscription Required',
         text: 'You need to subscribe to access this page.',
         icon: 'info',
-        timer: 3000, 
-        didClose: () => navigate('/recruiter-planListing') 
+        timer: 3000,
+        didClose: () => navigate('/recruiter-planListing')
       });
     }
   }, [recruiter.isSubscribed, navigate, loading]);
@@ -115,7 +116,8 @@ function JobPosting() {
           education: '',
           category: '',
           easyApply: true,
-          applicationUrl: ''
+          applicationUrl: '',
+           expiryDate: ''
         });
         navigate('/recruiter-listJob');
       } else {
@@ -137,7 +139,8 @@ function JobPosting() {
           education: '',
           category: '',
           easyApply: true,
-          applicationUrl: ''
+          applicationUrl: '',
+           expiryDate: ''
         });
       }
     } catch (error) {
@@ -180,11 +183,11 @@ function JobPosting() {
             </div>
             <div className="col-md-6">
               <label htmlFor="minPrice" className="form-label">Minimum Salary</label>
-              <input type="number" className="form-control" value={formData.minPrice} onChange={handleChange} id="minPrice" placeholder="100000" required />
+              <input type="number" className="form-control" value={formData.minPrice} onChange={handleChange} id="minPrice" placeholder="100000"    min="0"  required />
             </div>
             <div className="col-md-6">
               <label htmlFor="maxPrice" className="form-label">Maximum Salary</label>
-              <input type="number" className="form-control" value={formData.maxPrice} onChange={handleChange} id="maxPrice" placeholder="500000" required />
+              <input type="number" className="form-control" value={formData.maxPrice} onChange={handleChange} id="maxPrice" placeholder="500000"    min="0"  required />
             </div>
             <div className="col-md-6">
               <label htmlFor="jobLocation" className="form-label">Job Location</label>
@@ -192,7 +195,7 @@ function JobPosting() {
             </div>
             <div className="col-md-6">
               <label htmlFor="yearsOfExperience" className="form-label">Years of Experience</label>
-              <input type="number" className="form-control" id="yearsOfExperience" value={formData.yearsOfExperience} onChange={handleChange} placeholder="5" required />
+              <input type="number" className="form-control" id="yearsOfExperience" value={formData.yearsOfExperience} onChange={handleChange} placeholder="5"    min="0"  required />
             </div>
             <div className="col-md-6">
               <label htmlFor="employmentType" className="form-label">Employment Type</label>
@@ -216,6 +219,18 @@ function JobPosting() {
                 ))}
               </select>
             </div>
+            <div className="col-md-6">
+              <label htmlFor="expiryDate" className="form-label">Expiry Date</label>
+              <input
+                type="date"
+                className="form-control"
+                id="expiryDate"
+                value={formData.expiryDate}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
             <div className="col-12">
               <label htmlFor="skills" className="form-label">Skills</label>
               <input type="text" className="form-control" id="skills" value={formData.skills.join(', ')} onChange={handleSkillChange} placeholder="e.g., HTML, CSS, JavaScript" required />
@@ -240,7 +255,7 @@ function JobPosting() {
               </div>
             )}
             <div className="col-12">
-              <button type="submit" className="btn btn-primary">Post Job</button>
+              <button type="submit" className="btn btn-primary" style={{width:'200px'}}>Post Job</button>
             </div>
           </div>
         </form>

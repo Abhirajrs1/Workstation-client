@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button,Form,InputGroup} from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/adminInterceptor';
 import './Recruiters.css';
 import AdminSideNavigation from '../../../Components/AdminSideNavigation';
@@ -8,7 +8,7 @@ import { AdminAuth } from '../../../Context/AdminContext';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import ReactPaginate from 'react-paginate';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight,FaSearch } from 'react-icons/fa';
 
 
 
@@ -18,28 +18,44 @@ function Recruiters() {
     const [recruiters, setRecruiters] = useState([]);
     const [page,setPage]=useState(1)
     const [total,setTotal]=useState(0)
+    const [search, setSearch] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [noResults, setNoResults] = useState(false);
     const limit=5
 
 
     useEffect(() => {
         const fetchRecruiters = async () => {
             try {
-                const response = await axiosInstance.get(`/admin-recruiters?page=${page}&limit=${limit}`);
+                const response = await axiosInstance.get(`/admin-recruiters?page=${page}&limit=${limit}&companyName=${search}`);
                 if (response.data.success) {
                     setRecruiters(response.data.recruiters);
                     setTotal(response.data.total)
+                    setNoResults(response.data.recruiters.length === 0);
                 }
             } catch (error) {
                 console.error('Error fetching recruiters:', error);
             }
         };
         fetchRecruiters();
-    }, [page]);
+    }, [page,search]);
 
     
     const handlePageClick = (data) => {
         setPage(data.selected + 1);
     };
+
+    const handleSearch = () => {
+        setSearch(searchQuery);
+        setPage(1);
+    };
+
+    const handleClear=()=>{
+        setSearchQuery('');
+        setSearch(''); 
+        setPage(1);
+        setNoResults(false); 
+    }
 
     const toggleBlockStatus = async (id,blockStatus) => {
         try {
@@ -83,13 +99,32 @@ function Recruiters() {
                     <div className="user-management-header">
                         <h1>Recruiter Management</h1>
                     </div>
+                    <InputGroup className="recruiter-input-group mb-3">
+                        <Form.Control
+                            type="text"
+                            placeholder="Search recruiter by company"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <Button variant="outline-primary" onClick={handleSearch}>
+                            <FaSearch /> Search
+                        </Button>
+                        <Button variant="outline-secondary" onClick={handleClear}>
+                             Clear
+                        </Button>
+                    </InputGroup>
                     <div className="user-management-section">
+                    {noResults ? (
+                            <p>No recruiters found matching your search criteria.</p>
+                        ) : (
+                         <>
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
                                     <th>Sl. No</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Company</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -99,6 +134,7 @@ function Recruiters() {
                                         <td>{index + 1}</td>
                                         <td>{recruiter.recruitername}</td>
                                         <td>{recruiter.email}</td>
+                                        <td>{recruiter.companyName}</td>
                                         <td>
                                             <Button
                                                 variant={recruiter.block ? 'success' : 'danger'}
@@ -126,6 +162,8 @@ function Recruiters() {
                                 activeClassName={'active'}
                             />
                         </div>
+                        </>
+                        )}
                     </div>
                 </div>
             </div>

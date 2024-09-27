@@ -26,7 +26,8 @@ function RecruiterContext({children}) {
                                 timer: 5000,
                                 position: 'top-center',
                               });
-                              RecruiterLogout()
+                              await RecruiterLogout()
+                              window.location.reload(); 
                               return;
                         }
                         setRecruiter(recruiter)

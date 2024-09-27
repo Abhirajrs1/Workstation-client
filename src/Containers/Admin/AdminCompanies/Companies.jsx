@@ -91,6 +91,7 @@ function Companies() {
                             <th>Sl. No</th>
                             <th>Company Name</th>
                             <th>Email</th>
+                            <th>Type</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -100,6 +101,7 @@ function Companies() {
                                 <td>{index + 1}</td>
                                 <td>{company.companyName}</td>
                                 <td>{company.email}</td>
+                                <td>{company.typeOfCompany}</td>
                                 <td>
                                     <Button
                                         variant={company.block ? 'success' : 'danger'}

@@ -101,7 +101,7 @@ function AddCategory() {
                                         required
                                     />
                                 </Form.Group>
-                                <Button variant="primary" type="submit">
+                                <Button variant="primary" type="submit" style={{width:'200px'}}>
                                     Add Category
                                 </Button>
                             </Form>

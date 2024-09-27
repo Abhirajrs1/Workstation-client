@@ -124,6 +124,7 @@ function AddPlans() {
                                         name="planPrice"
                                         value={formData.planPrice}
                                         onChange={handleChange}
+                                        min={"0"}
                                         required
                                     />
                                 </Form.Group>
@@ -149,6 +150,7 @@ function AddPlans() {
                                             name="planDuration"
                                             value={formData.planDuration}
                                             onChange={handleChange}
+                                            min={"0"}
                                             required={formData.planType === 'duration'}
                                         />
                                     </Form.Group>

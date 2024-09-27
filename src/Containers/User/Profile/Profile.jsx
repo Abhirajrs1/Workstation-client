@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../Context/UserContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaFileAlt, FaChevronRight, FaUpload, FaBirthdayCake } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaFileAlt, FaChevronRight, FaUpload, FaBirthdayCake,FaTimes  } from 'react-icons/fa';
 import Navigation from '../../../Components/Navigation';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 import './Profile.css';
@@ -17,7 +17,7 @@ function Profile() {
     const [isUploading, setIsUploading] = useState(false);
 
     useEffect(() => {
-        if ( user?.block) {
+        if (user?.block) {
             navigate("/employee-login");
         }
     }, [user?.block]);
@@ -126,6 +126,17 @@ function Profile() {
         return null;
     }
 
+    const handleDeleteResume = async () => {
+            try {
+                const response = await axiosInstance.delete('/employee-deleteResume');
+                if (response.data.success) {
+                    setResumeUrl('');
+                }
+            } catch (error) {
+                console.error('Error deleting resume:', error);
+        }
+    };
+
     const userAddress = user.useraddress && user.useraddress.length > 0 ? user.useraddress[0] : {};
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -200,9 +211,16 @@ function Profile() {
                                 <Row className="mt-2">
                                     <Col xs={12}>
                                         {resumeUrl ? (
+                                            <>
                                             <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
                                                 <Button variant="link">View Resume</Button>
                                             </a>
+                                             <FaTimes
+                                                    style={{ cursor: 'pointer', color: 'red' }}
+                                                    onClick={handleDeleteResume}
+                                                    title="Delete Resume"
+                                                />
+                                            </>
                                         ) : (
                                             <div>
                                                 <input 
@@ -214,6 +232,7 @@ function Profile() {
                                                     variant="primary" 
                                                     onClick={handleUpload} 
                                                     disabled={isUploading}
+                                                    style={{width:'110px'}}
                                                 >
                                                     {isUploading ? 'Uploading...' : 'Attach Resume'}
                                                 </Button>
@@ -222,11 +241,6 @@ function Profile() {
                                     </Col>
                                 </Row>
                             </Card>
-                        </Col>
-                        <Col xs={2} className="text-end">
-                            <Link to="/employee-resume">
-                                <FaChevronRight style={{ cursor: 'pointer' }} />
-                            </Link>
                         </Col>
                     </Row>
                     <h5 className="profile-heading fw-bold">Improve your job matches</h5>
@@ -264,7 +278,7 @@ function Profile() {
                         </Form.Text>
                         <Button 
                             variant="primary" 
-                            className="mt-2" 
+                            className="mt-2" style={{width:'200px'}}
                             onClick={handleDescriptionSubmit}
                         >
                             Update Description

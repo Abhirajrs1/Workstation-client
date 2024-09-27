@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button,Form,InputGroup } from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/adminInterceptor.js';
 import './Jobs.css';
 import AdminSideNavigation from '../../../Components/AdminSideNavigation';
@@ -8,7 +8,7 @@ import { AdminAuth } from '../../../Context/AdminContext';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import ReactPaginate from 'react-paginate';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight,FaSearch } from 'react-icons/fa';
 
 function Jobs() {
     const { Authenticated, loading } = useContext(AdminAuth);
@@ -16,26 +16,61 @@ function Jobs() {
     const [jobs, setJobs] = useState([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [search, setSearch] = useState('');
+    const [category, setCategory] = useState(''); 
+    const [categories, setCategories] = useState([]); 
+    const [noResults, setNoResults] = useState(false);
     const limit = 5;
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await axiosInstance.get('/admin-categories');                 
+                setCategories(response.data.categories);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
 
     useEffect(() => {
         const fetchJobs = async () => {
             try {
-                const response = await axiosInstance.get(`/admin-jobs?page=${page}&limit=${limit}`);
+                const response = await axiosInstance.get(`/admin-jobs?page=${page}&limit=${limit}&search=${search}&category=${category}`);
                 if (response.data.success) {
                     setJobs(response.data.jobs);
                     setTotal(response.data.total);
+                    setNoResults(response.data.jobs.length === 0);
                 }
             } catch (error) {
                 console.error('Error fetching jobs:', error);
             }
         };
         fetchJobs();
-    }, [page]);
+    }, [page,search,category]);
 
     const handlePageClick = (data) => {
         setPage(data.selected + 1);
     };
+    const handleSearch = (e) => {
+        setSearch(searchQuery);
+        setPage(1);
+    };
+
+    const handleCategoryChange = (e) => {
+        setCategory(e.target.value);
+        setPage(1); 
+    };
+    const handleClear=()=>{
+        setSearchQuery('');
+        setSearch(''); 
+        setCategory(''); 
+        setPage(1);
+        setNoResults(false); 
+    }
 
     const toggleListStatus = async (id, listStatus) => {
         try {
@@ -84,7 +119,33 @@ function Jobs() {
                     <div className="user-management-header">
                         <h1>Job Management</h1>
                     </div>
+                    <InputGroup className="adminjobs-input-group mb-3">
+                        <Form.Control
+                            type="text"
+                            placeholder="Search jobs..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                         <Form.Select value={category} onChange={handleCategoryChange} style={{ marginLeft: '10px', width: '100px' }}>
+                            <option value="">All Categories</option>
+                            {categories.map((cat) => (
+                                <option key={cat._id} value={cat.categoryName}>
+                                    {cat.categoryName}
+                                </option>
+                            ))}
+                        </Form.Select>
+                        <Button variant="outline-primary" onClick={handleSearch}>
+                            <FaSearch /> Search
+                        </Button>
+                        <Button variant="outline-secondary" onClick={handleClear}>
+                             Clear
+                        </Button>
+                    </InputGroup>
                     <div className="user-management-section">
+                    {noResults ? (
+                            <p>No jobs found matching your search criteria.</p>
+                        ) : (
+                         <>
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
@@ -141,6 +202,8 @@ function Jobs() {
                                 activeClassName={'active'}
                             />
                         </div>
+                        </>
+                        )}
                     </div>
                 </div>
             </div>

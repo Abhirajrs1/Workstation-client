@@ -166,6 +166,7 @@ function EditJob() {
                 onChange={handleChange}
                 id="minPrice"
                 placeholder="100000"
+                min="0" 
                 required
               />
             </div>
@@ -178,6 +179,7 @@ function EditJob() {
                 onChange={handleChange}
                 id="maxPrice"
                 placeholder="500000"
+                min="0" 
                 required
               />
             </div>
@@ -202,6 +204,7 @@ function EditJob() {
                 value={formData.yearsOfExperience}
                 onChange={handleChange}
                 placeholder="5"
+                min="0" 
                 required
               />
             </div>

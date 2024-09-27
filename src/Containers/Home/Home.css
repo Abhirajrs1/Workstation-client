@@ -80,9 +80,9 @@ body {
   font-size: 16px;
   border-radius: 4px;
   cursor: pointer;
-  margin-left: 40px;
+  margin-left: 30px;
   transition: background-color 0.3s ease;
-  width: 100%;
+  width:100px;
 }
 
 /* New Location and Price Range Inputs */
@@ -141,6 +141,8 @@ body {
   flex-direction: column;
   gap: 10px; /* Increasing the gap between job cards */
 }
+
+
 
 .home-job-card {
   background-color: #fff;
@@ -262,7 +264,7 @@ body {
 }
 
 .home-clear-filters-button {
-  margin-left: 10px;
+  margin-left: 15px;
   margin-top: 10px;
 }
 
@@ -300,6 +302,18 @@ body {
   margin-right: 0.5rem; 
   font-size: 1 rem; 
   
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px; 
+  margin-bottom: 30px; 
+  margin-right: 200px; 
+  padding: 10px 0;
+  position: relative; 
+  background-color: #f8f9fa;
+  width: calc(100% - 100px);
+  z-index: 10; 
 }
 
 /* Responsive Styles */

@@ -122,6 +122,7 @@ function EditPlans() {
                                         name="planPrice"
                                         value={formData.planPrice}
                                         onChange={handleChange}
+                                        min={"0"}
                                         required
                                     />
                                 </Form.Group>
@@ -147,11 +148,12 @@ function EditPlans() {
                                             name="planDuration"
                                             value={formData.planDuration}
                                             onChange={handleChange}
+                                            min={"0"}
                                             required={formData.planType === 'duration'}
                                         />
                                     </Form.Group>
                                 )}
-                                <Button variant="primary" type="submit">
+                                <Button variant="primary" type="submit" style={{width:'200px'}}>
                                     Update Plan
                                 </Button>
                             </Form>

@@ -43,7 +43,6 @@ function CompanyDetailedView() {
                         <Card.Img variant="top" src={company.logo || '/default-logo.png'} className="company-logo" />
                         <Card.Body>
                             <Card.Title className="company-name">{company.companyName}</Card.Title>
-                            <Card.Text className="company-description">{company.companyDescription}</Card.Text>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -56,6 +55,7 @@ function CompanyDetailedView() {
                                 <ListGroup.Item><strong>Contact Number:</strong> {company.contactNumber}</ListGroup.Item>
                                 <ListGroup.Item><strong>Website:</strong> <a href={company.website} target="_blank" rel="noopener noreferrer">{company.website}</a></ListGroup.Item>
                                 <ListGroup.Item><strong>Established Year:</strong> {company.establishedYear}</ListGroup.Item>
+                                <ListGroup.Item><strong>Type of Company:</strong> {company.typeOfCompany}</ListGroup.Item>
                                 <ListGroup.Item><strong>Headquarters:</strong> {company.headQuarters}</ListGroup.Item>
                                 <ListGroup.Item><strong>CEO Name:</strong> {company.ceoName}</ListGroup.Item>
                                 <ListGroup.Item><strong>Employees:</strong> {company.minEmployees} - {company.maxEmployees}</ListGroup.Item>

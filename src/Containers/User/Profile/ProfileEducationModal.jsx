@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext,useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { AuthContext } from '../../../Context/UserContext';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 import './ProfileEducationModal.css';
 
-const ProfileEducationModal = ({ show, handleClose }) => {
+const ProfileEducationModal = ({ show, handleClose,educationData }) => {
   const { user, setUser } = useContext(AuthContext);
   const [education, setEducation] = useState({
     levelOfEducation: '',
@@ -20,6 +20,26 @@ const ProfileEducationModal = ({ show, handleClose }) => {
     percentage: ''
   });
 
+  useEffect(()=>{
+    if(educationData){
+      setEducation(educationData)
+    }else{
+      setEducation({
+        levelOfEducation: '',
+        degree: '',
+        specialization: '',
+        city: '',
+        state: '',
+        country: '',
+        collegeName: '',
+        startDate: '',
+        endDate: '',
+        courseType: '',
+        percentage: ''
+      });
+    }
+  },[educationData])
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEducation((prevState) => ({
@@ -31,14 +51,32 @@ const ProfileEducationModal = ({ show, handleClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post(`/employee-addQualification/education/${user.email}`, {
-        education
-      });
+      let response
+      if(educationData){
+        response=await axiosInstance.put(`/employee-editEducation/${educationData._id}`,{education})
+      }else{
+        response = await axiosInstance.post(`/employee-addQualification/education/${user.email}`, {
+          education
+        });
+      }
+      console.log(response,"RESSSSS");
       if (response.data.success) {
         setUser(response.data.user);
-        await axiosInstance.post('/employee-addresumeeducation', { education })
         localStorage.setItem('user', JSON.stringify(response.data.user));
         handleClose();
+        setEducation({
+          levelOfEducation: '',
+          degree: '',
+          specialization: '',
+          city: '',
+          state: '',
+          country: '',
+          collegeName: '',
+          startDate: '',
+          endDate: '',
+          courseType: '',
+          percentage: ''
+        });
       }
     } catch (error) {
       console.log(error);
@@ -48,7 +86,7 @@ const ProfileEducationModal = ({ show, handleClose }) => {
   return (
     <Modal show={show} onHide={handleClose} className="profile-education-modal">
       <Modal.Header closeButton>
-        <Modal.Title>Add Education</Modal.Title>
+        <Modal.Title>{educationData ? 'Edit Education' : 'Add Education'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>

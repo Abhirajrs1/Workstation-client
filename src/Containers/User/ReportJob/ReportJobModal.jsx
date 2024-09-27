@@ -113,7 +113,7 @@ function ReportJobModal({ show, handleClose, jobTitle,jobId, companyName }) {
               number, or any details that may personally identify you.
             </p>
           </div>
-          <Button variant="primary" type="submit" block>
+          <Button variant="primary" style={{}} type="submit" block>
             Report
           </Button>
         </Form>

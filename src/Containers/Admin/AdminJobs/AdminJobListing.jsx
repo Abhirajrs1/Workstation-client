@@ -97,7 +97,7 @@ function AdminJobListing() {
                                 <Button variant="warning" className='admin-job-listing-report-item' onClick={handleShowReports}>
                                     View Reports ({job.reportCount})
                                 </Button>
-                                <Button variant="primary"  onClick={() => navigate('/admin-jobs')}>Back to Jobs</Button>
+                                <Button variant="primary" style={{width:"200px"}}  onClick={() => navigate('/admin-jobs')}>Back to Jobs</Button>
                             </Card.Body>
                         </Card>
                     </Col>

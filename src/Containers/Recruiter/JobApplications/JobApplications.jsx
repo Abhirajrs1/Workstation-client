@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Table, Button, Container, Card } from 'react-bootstrap';
+import { Table, Button, Container, Card,Alert } from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
 import { RecruiterAuth } from '../../../Context/RecruiterContext';
 import ReNavigation from '../../../Components/ReNavigation.jsx';
 import { FaArrowLeft } from 'react-icons/fa';
 import './JobApplications.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const JobApplications = () => {
+    const {id}=useParams()
     const [applications, setApplications] = useState([]);
     const { recruiter } = useContext(RecruiterAuth);
     const navigate=useNavigate()
@@ -15,9 +16,7 @@ const JobApplications = () => {
     useEffect(() => {
         const fetchApplications = async () => {
             try {
-                const response = await axiosInstance.get(`/recruiter-getApplication/${recruiter._id}`);
-                console.log(response,"RES");
-                
+                const response = await axiosInstance.get(`/recruiter-getApplication/${id}`);                
                 setApplications(response.data.application);
             } catch (error) {
                 console.error('Error fetching applications:', error);
@@ -28,7 +27,7 @@ const JobApplications = () => {
     }, [recruiter._id]);
 
     const handleBackClick = () => {
-        navigate('/recruiter-home')
+        navigate(`/recruiter-viewJob/${id}`)
     };
 
     const viewDetails=(id)=>{
@@ -49,6 +48,11 @@ const JobApplications = () => {
                         <span className="header-title">Job Applications</span>
                     </Card.Header>
                     <Card.Body>
+                    {applications.length === 0 ? (
+                            <Alert variant="warning" className="text-center">
+                                No applications available for this job.
+                            </Alert>
+                        ) : (
                         <div className="table-responsive">
                             <Table striped bordered hover className="job-applications-table">
                                 <thead>
@@ -82,6 +86,7 @@ const JobApplications = () => {
                                 </tbody>
                             </Table>
                         </div>
+                         )}
                     </Card.Body>
                 </Card>
             </Container>

@@ -69,7 +69,7 @@ const options = {
             <h3>Recruiters</h3>
             <p>{stats.recruiters}</p>
           </div>
-          <div className="company-home-card" onClick={() => navigate('/company-jobs')}>
+          <div className="company-home-card" >
             <h3>Jobs</h3>
             <p>{stats.jobs}</p>
           </div>

@@ -36,23 +36,28 @@ function CompanyDocuments() {
                     },
                 });
 
-                // Extract file URL from the response
                 const { fileUrl } = response.data;
-
-                // Update documents state and company context with the new file URL
                 setDocuments(prevState => ({ ...prevState, [docType]: fileUrl }));
                 setCompany(prevState => ({ ...prevState, [docType]: fileUrl }));
+                setTimeout(() => {
+                    window.location.reload(); 
+                }, 100);
             } catch (error) {
                 console.error('File upload error:', error);
             }
         }
     };
 
-    // const handleDeleteDocument = async (docType) => {
-    //     // Optionally implement deletion logic
-    //     setDocuments(prevState => ({ ...prevState, [docType]: '' }));
-    //     setCompany(prevState => ({ ...prevState, [docType]: '' }));
-    // };
+    const handleDeleteDocument = async (docType) => {
+        try {
+            await axiosInstance.delete(`/company-deleteDocument?docType=${docType}`);
+            setDocuments(prevState => ({ ...prevState, [docType]: '' }));
+            setCompany(prevState => ({ ...prevState, [docType]: '' }));
+        } catch (error) {
+            console.error('Error deleting document:', error);
+        }
+    };
+    
 
     return (
         <>
@@ -73,9 +78,9 @@ function CompanyDocuments() {
                                             <a href={documents[docType]} target="_blank" rel="noopener noreferrer" className="view-document">
                                                 <FaFileAlt /> View Document
                                             </a>
-                                            {/* <Button variant="outline-danger" size="sm" onClick={() => handleDeleteDocument(docType)}>
+                                            <Button variant="outline-danger" size="sm" onClick={() => handleDeleteDocument(docType)}>
                                                 <FaTrash /> Remove
-                                            </Button> */}
+                                            </Button>
                                         </div>
                                     ) : (
                                         <div className="upload-section">

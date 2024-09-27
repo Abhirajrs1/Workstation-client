@@ -16,12 +16,6 @@ function SideNav() {
       <Link to="/recruiter-listJob" className="side-nav-link">
         <FaBriefcase /> <span>Jobs</span>
       </Link>
-      <Link to="/recruiter-showApplications" className="side-nav-link">
-        <FaUsers /> <span>Applications</span>
-      </Link>
-      <Link to="/interviews" className="side-nav-link">
-        <FaUsers /> <span>Interviews</span>
-      </Link>
     </div>
   );
 }

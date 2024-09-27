@@ -28,7 +28,7 @@ const JobApplicationDetails = () => {
     }, [id]);
 
     const handleBackClick = () => {
-        navigate('/recruiter-showApplications');
+        navigate(-1);
     };
 
     const displayValue = (value) => {

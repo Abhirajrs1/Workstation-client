@@ -101,9 +101,9 @@ function CompanyView() {
           <Card className="company-view-card">
             <Card.Body>
               <Card.Title>Social Media</Card.Title>
-              {company.socialMedia.linkedin && <p><strong>LinkedIn:</strong> <a href={company.socialMedia.linkedin}>{company.socialMedia.linkedin}</a></p>}
-              {company.socialMedia.twitter && <p><strong>Twitter:</strong> <a href={company.socialMedia.twitter}>{company.socialMedia.twitter}</a></p>}
-              {company.socialMedia.facebook && <p><strong>Facebook:</strong> <a href={company.socialMedia.facebook}>{company.socialMedia.facebook}</a></p>}
+              {company?.socialMedia?.linkedin && <p><strong>LinkedIn:</strong> <a href={company?.socialMedia?.linkedin}>{company?.socialMedia?.linkedin}</a></p>}
+              {company?.socialMedia?.twitter && <p><strong>Twitter:</strong> <a href={company?.socialMedia?.twitter}>{company?.socialMedia?.twitter}</a></p>}
+              {company?.socialMedia?.facebook && <p><strong>Facebook:</strong> <a href={company?.socialMedia?.facebook}>{company?.socialMedia?.facebook}</a></p>}
             </Card.Body>
           </Card>
         </Col>

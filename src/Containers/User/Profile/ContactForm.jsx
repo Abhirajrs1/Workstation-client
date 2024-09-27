@@ -72,7 +72,7 @@ const ContactForm = () => {
         dob: formData.dob, 
         useraddress:[formData.useraddress]
       }
-      const response=await axiosInstance.put(`/employee-updateContact/${user.email}`,{updatedUserContact},{
+      const response=await axiosInstance.put('/employee-updateContact',{updatedUserContact},{
         headers:{
           'Authorization':`Bearer ${localStorage.getItem('token')}`
         }
@@ -250,7 +250,7 @@ const ContactForm = () => {
                   </div>
                 </div>
                 <div className="d-flex justify-content-center mt-4">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary" style={{width:'200px'}}>
                     Save
                   </button>
                 </div>

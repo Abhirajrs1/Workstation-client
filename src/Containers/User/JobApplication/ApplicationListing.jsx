@@ -1,37 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import Navigation from '../../../Components/Navigation';
-import { Container, Row, Col, Card, Button, Modal, Form } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Modal, Form, InputGroup } from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 import { useNavigate } from 'react-router-dom';
-import { FaClock, FaCheckCircle, FaTimesCircle, FaSpinner, FaStar } from 'react-icons/fa'; 
+import { FaClock, FaCheckCircle, FaTimesCircle, FaSpinner, FaStar, FaArrowRight, FaArrowLeft, FaSearch } from 'react-icons/fa';
+import ReactPaginate from 'react-paginate';
 import Swal from 'sweetalert2';
 
 function ApplicationListing() {
   const [applications, setApplications] = useState([]);
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
+  const [filteredApplications, setFilteredApplications] = useState([]);
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [review, setReview] = useState('');
   const [selectedCompanyId, setSelectedCompanyId] = useState(null);
   const [hasReviewed, setHasReviewed] = useState(false);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
+  const limit = 10;
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchApplication = async () => {
       try {
-        const response = await axiosInstance.get('/employee-getApplications');
+        const response = await axiosInstance.get(`/employee-getApplications?page=${page}&limit=${limit}`)
         if (response.data.success) {
           const fetchedApplications = response.data.applications;
           setApplications(fetchedApplications);
-            fetchedApplications.forEach(app => {
+          setFilteredApplications(fetchedApplications);
+          fetchedApplications.forEach(app => {
             checkIfUserReviewed(app.companyId);
-          });        }
+          });
+          setTotal(response.data.total)
+        }
       } catch (error) {
         console.error(error);
       }
     };
     fetchApplication();
-  }, []);
+  }, [page]);
+
+  const handleSearchFilter = () => {
+    const filtered = applications.filter(application =>
+      application.jobId.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredApplications(filtered);
+  }
 
   const checkIfUserReviewed = async (companyId) => {
     try {
@@ -45,7 +61,7 @@ function ApplicationListing() {
       console.error('Error checking review status:', error);
     }
   };
-  
+
   const handleMessageClick = async (jobId, employerId) => {
     try {
       const response = await axiosInstance.get(`/employee-getChatRoom/${jobId}/${employerId}`);
@@ -98,17 +114,32 @@ function ApplicationListing() {
     }
   };
 
+
+
   const handleShowModal = (id) => {
-    setSelectedCompanyId(id); 
+    setSelectedCompanyId(id);
     checkIfUserReviewed(id);
     setShowModal(true);
   };
-  
+
   const handleCloseModal = () => {
     setShowModal(false);
     setRating(0);
     setReview('');
   }
+
+  const handleSearch = async () => {
+    try {
+      const response = await axiosInstance.get(`/employee-getSearchApplication?searchTerm=${searchTerm}&page=${page}&limit=${limit}`);
+      if (response.data.success) {
+        const fetchedApplications = response.data.applications;
+        setApplications(fetchedApplications);
+        setTotal(response.data.total);
+      }
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+    }
+  };
 
   const getStatusIcon = (status) => {
     switch (status.toLowerCase()) {
@@ -144,14 +175,64 @@ function ApplicationListing() {
     return hasReviewed[companyId] || false;
   };
 
+
+  const handleClearSearch = () => {
+    setSearchTerm('');
+    setFilteredApplications(applications);
+  };
+
   return (
     <>
       <Navigation />
       <Container className="employee-application-listing-container">
-        {applications.length === 0 ? (
+        <div className="search-wrapper">
+          <InputGroup>
+            <Form.Control
+              type="text"
+              style={{
+                marginTop: '20px',
+                maxWidth: '1000px',
+                borderRadius: '5px',
+              }}
+              placeholder="Search applications..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button
+              style={{
+                backgroundColor: '#007bff',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '5px',
+                padding: '0 10px',
+                width: '100px',
+                height: '35px',
+                marginTop: '20px',
+                transition: 'background-color 0.3s ease'
+              }}
+              onClick={handleSearchFilter}
+            >
+              Search
+            </button>
+            <button style={{
+              backgroundColor: 'grey', color: 'black', border: 'none',
+              borderRadius: '5px',
+              padding: '0 10px',
+              width: '100px',
+              height: '35px',
+              marginTop: '20px',
+              transition: 'background-color 0.3s ease'
+            }}
+              onClick={handleClearSearch}
+              variant="secondary" disabled={!searchTerm}>
+              Clear
+            </button>
+          </InputGroup>
+        </div>
+        {filteredApplications.length === 0 ? (
           <div className="employee-no-applications-message">No applications available</div>
         ) : (
-          applications.map((application, index) => (
+          filteredApplications.map((application, index) => (
             <Card key={index} className="employee-application-item mt-4">
               <Card.Body>
                 <Row>
@@ -181,10 +262,10 @@ function ApplicationListing() {
                   </Col>
                   <Col md={4} className="employee-application-actions">
                     <Button
-                      className="employee-message-employer"
+                      className="employee-message-employer" style={{width:'160px'}}
                       onClick={() => handleMessageClick(application.jobId._id, application.employerId)}
                     >
-                      Message employer <span className="employee-arrow-symbol">&rarr;</span>
+                      Message to employer <span className="employee-arrow-symbol">&rarr;</span>
                     </Button>
                   </Col>
                 </Row>
@@ -226,11 +307,12 @@ function ApplicationListing() {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
+           
+            <Button variant="primary" style={{width:'150px'}} onClick={handleSubmitReview}>
+              Submit Review
+            </Button>
             <Button variant="secondary" onClick={handleCloseModal}>
               Close
-            </Button>
-            <Button variant="primary" onClick={handleSubmitReview}>
-              Submit Review
             </Button>
           </Modal.Footer>
         </Modal>

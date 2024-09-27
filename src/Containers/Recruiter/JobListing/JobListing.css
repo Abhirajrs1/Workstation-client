@@ -157,3 +157,76 @@
 }
 
 
+/* Search container */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px; /* Add gap between input and buttons */
+}
+
+.search-container input {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 620px;
+    font-size: 1rem;
+}
+
+.search-container button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4285f4;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.search-container button:hover {
+    background-color: #3367d6;
+}
+
+.joblisting-clear {
+    background-color: #f44336; 
+}
+
+.clear-button:hover {
+    background-color: #d32f2f;
+}
+
+/* Pagination controls */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Spacing between buttons */
+    margin-top: 20px;
+    position:sticky;
+}
+
+.pagination-controls button {
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: none;
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+.pagination-controls button:hover {
+    background-color: #ccc;
+}
+
+.pagination-controls .active {
+    background-color: #4285f4;
+    color: white;
+}
+
+.pagination-controls button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+
+

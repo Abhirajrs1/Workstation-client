@@ -8,8 +8,8 @@ import './AdminNavigation.css'
 function AdminNavigation() {
     const {admin,AdminLogout}=useContext(AdminAuth)
     const navigate=useNavigate()
-    const handleLogout=()=>{
-        AdminLogout()
+    const handleLogout=async()=>{
+        await AdminLogout()
         navigate('/admin-login')
     }
 

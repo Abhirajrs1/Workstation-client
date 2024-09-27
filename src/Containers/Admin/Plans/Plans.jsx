@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button,InputGroup,Form } from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/adminInterceptor';
 import './Plans.css';
 import AdminSideNavigation from '../../../Components/AdminSideNavigation';
 import AdminNavigation from '../../../Components/AdminNavigation';
 import { AdminAuth } from '../../../Context/AdminContext';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaArrowRight, FaEdit,FaTrash } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaEdit,FaTrash,FaSearch } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import ReactPaginate from 'react-paginate';
 
@@ -16,25 +16,43 @@ function Plans() {
     const [plans, setPlans] = useState([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
+    const [search, setSearch] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [noResults, setNoResults] = useState(false);
     const limit = 5;
 
     useEffect(() => {
         const fetchPlans = async () => {
             try {
-                const response = await axiosInstance.get(`/admin-plans?page=${page}&limit=${limit}`);
+                const response = await axiosInstance.get(`/admin-plans?page=${page}&limit=${limit}&search=${search}`);                
                 if (response.data.success) {
                     setPlans(response.data.plans);
                     setTotal(response.data.total);
+                    setNoResults(response.data.plans.length === 0);
                 }
             } catch (error) {
                 console.error('Error fetching plans:', error);
             }
         };
         fetchPlans();
-    }, [page]);
+    }, [page,search]);
 
     const handlePageClick = (data) => {
         setPage(data.selected + 1);
+    };
+
+
+    const handleSearch = () => {
+        setSearch(searchQuery);
+        setPage(1); 
+    };
+
+
+    const handleClear = () => {
+        setSearchQuery('');
+        setSearch(''); 
+        setPage(1);   
+        setNoResults(false);
     };
 
     const editPlan = (id) => {
@@ -91,6 +109,20 @@ function Plans() {
                     <div className="plans-management-header">
                         <h1>Plan Management</h1>
                     </div>
+                    <InputGroup className="plans-input-group mb-3">
+                        <Form.Control
+                            type="text"
+                            placeholder="Search plan by name"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <Button variant="outline-primary" onClick={handleSearch}>
+                            <FaSearch /> Search
+                        </Button>
+                        <Button variant="outline-secondary" onClick={handleClear}>
+                             Clear
+                        </Button>
+                    </InputGroup>
                     <Button 
                         variant="primary" 
                         onClick={addPlan} 
@@ -99,6 +131,10 @@ function Plans() {
                         Add Plan
                     </Button>
                     <div className="plans-management-section">
+                    {noResults ? (
+                            <p>No plans found matching your search criteria.</p>
+                        ) : (
+                         <>
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
@@ -149,6 +185,8 @@ function Plans() {
                                 activeClassName={'active'}
                             />
                         </div>
+                         </>
+                        )}
                     </div>
                 </div>
             </div>

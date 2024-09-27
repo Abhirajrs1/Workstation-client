@@ -125,7 +125,7 @@ function EditCategory() {
                             required
                         />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" type="submit" style={{width:'200px'}}>
                         Edit Category
                     </Button>
                 </Form>

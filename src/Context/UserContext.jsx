@@ -6,7 +6,7 @@ export const AuthContext=createContext()
 
 function UserContext({children}) {
      const [user,setUser]=useState(JSON.parse(localStorage.getItem('user')) || null);
-     const [loading,setLoading]=useState(true)
+     const [loading,setLoading]=useState(true)     
 
      useEffect(()=>{
          const checkAuthenticated=async()=>{

@@ -10,8 +10,10 @@ import { Link, useNavigate } from 'react-router-dom';
 function Navigation() {
   const { user, isAuthenticated, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  
+  
 
-  const handleLogout = () => {
+  const handleLogout = () => {  
     logout();
     navigate('/');
   };
@@ -36,14 +38,8 @@ function Navigation() {
             {/* <Nav.Link href="#salary-guide">Contact</Nav.Link> */}
           </Nav>
           <Nav className="ms-auto align-items-center custom-font">
-            {isAuthenticated ? (
+            {isAuthenticated && user ? (
               <>
-                <Nav.Link href="#messages">
-                  <FaEnvelope className="icon-btn" />
-                </Nav.Link>
-                <Nav.Link href="#notifications">
-                  <FaBell className="icon-btn" />
-                </Nav.Link>
                 <Dropdown align="end">
                   <Dropdown.Toggle variant="light" id="dropdown-profile" className="icon-btn">
                     <FaUser />
@@ -53,8 +49,6 @@ function Navigation() {
                     <Dropdown.Item as={Link} to={'/employee-profile'}>Profile</Dropdown.Item>
                     <Dropdown.Item as={Link} to={'/employee-applicationListing'}>My Applications</Dropdown.Item>
                     <Dropdown.Item href="/employee-individualReviews">My Reviews</Dropdown.Item>
-                    <Dropdown.Item href="#/settings">Settings</Dropdown.Item>
-                    <Dropdown.Item href="#/help">Help Centre</Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item onClick={handleLogout}>Sign Out</Dropdown.Item>
                   </Dropdown.Menu>

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button,Form } from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/adminInterceptor';
 import './Categories.css';
 import AdminSideNavigation from '../../../Components/AdminSideNavigation';

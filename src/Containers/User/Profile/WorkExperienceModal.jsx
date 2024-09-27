@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 import './WorkExperienceModal.css';
 
-const WorkExperienceModal = ({ show, handleClose, onSuccess }) => {
+const WorkExperienceModal = ({ show, handleClose, onSuccess,initialData }) => {
   const [formData, setFormData] = useState({
     jobTitle: '',
     companyName: '',
@@ -15,6 +15,22 @@ const WorkExperienceModal = ({ show, handleClose, onSuccess }) => {
     salary: ''
   });
 
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }else{
+      setFormData({jobTitle: '',
+        companyName: '',
+        city: '',
+        state: '',
+        country: '',
+        startDate: '',
+        endDate: '',
+        salary: ''
+      })
+    }
+  }, [initialData]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
@@ -25,10 +41,35 @@ const WorkExperienceModal = ({ show, handleClose, onSuccess }) => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axiosInstance.post('/employee-addworkexperience', formData);
+      let response
+      if(initialData){
+        response=await axiosInstance.put(`/employee-editWorkExperience/${initialData._id}`,formData)
+      }else{
+        response = await axiosInstance.post('/employee-addworkexperience', formData);
+        setFormData({
+          jobTitle: '',
+          companyName: '',
+          city: '',
+          state: '',
+          country: '',
+          startDate: '',
+          endDate: '',
+          salary: ''
+        });
+      }
       if (response.data.success) {
-        onSuccess(); // Call the onSuccess callback to refresh the work experiences
-        handleClose(); // Close the modal
+        onSuccess(); 
+        handleClose(); 
+        setFormData({
+          jobTitle: '',
+          companyName: '',
+          city: '',
+          state: '',
+          country: '',
+          startDate: '',
+          endDate: '',
+          salary: ''
+        });
       }
     } catch (error) {
       console.error('Error adding work experience:', error);
@@ -116,7 +157,7 @@ const WorkExperienceModal = ({ show, handleClose, onSuccess }) => {
               type="number"
               name="salary"
               placeholder="Enter salary"
-              value={formData.salary}
+              value={formData.currentSalary}
               onChange={handleChange}
             />
           </Form.Group>
@@ -124,7 +165,7 @@ const WorkExperienceModal = ({ show, handleClose, onSuccess }) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="primary" onClick={handleSubmit}>
-          Save Changes
+        {initialData ? 'Update' : 'Save Changes'}
         </Button>
       </Modal.Footer>
     </Modal>

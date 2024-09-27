@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaBriefcase, FaPlus } from 'react-icons/fa';
+import { FaBriefcase, FaPlus,FaEdit, FaTrash} from 'react-icons/fa';
 import { AuthContext } from '../../../Context/UserContext';
 import Navigation from '../../../Components/Navigation';
 import WorkExperienceModal from './WorkExperienceModal';
@@ -10,34 +10,35 @@ import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js
 const WorkExperience = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState('');
   const [workExperiences, setWorkExperiences] = useState([]);
-  const { user, loading } = useContext(AuthContext);
+  const [initialData,setInitialData]=useState(null)
+  const { user, loading } = useContext(AuthContext);  
 
   useEffect(() => {
-    const fetchWorkExperience = async () => {
-      try {
-        const response = await axiosInstance.get('/employee-getWorkExperience');
-        if (response.data.success) {
-          setWorkExperiences(response.data.experiences);
-        }
-      } catch (error) {
-        console.error('Error fetching work experiences:', error);
-      }
-    };
-
     if (user) {
       fetchWorkExperience();
     }
   }, [user]);
 
-  const handleOpenModal = () => {
-    setModalType('workExperience');
+  const fetchWorkExperience = async () => {
+    try {
+      const response = await axiosInstance.get('/employee-getWorkExperience');
+      if (response.data.success) {
+        setWorkExperiences(response.data.experiences);
+      }
+    } catch (error) {
+      console.error('Error fetching work experiences:', error);
+    }
+  };
+
+  const handleOpenModal = (experience=null) => {
+    setInitialData(experience);
     setShowModal(true);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setInitialData(null)
   };
 
   const refreshWorkExperiences = async () => {
@@ -48,6 +49,17 @@ const WorkExperience = () => {
       }
     } catch (error) {
       console.error('Error refreshing work experiences:', error);
+    }
+  };
+
+  const handleDelete = async (experienceId) => {
+    try {
+      const response=await axiosInstance.delete(`/employee-deleteWorkExperience/${experienceId}`);      
+      if(response.data.success){
+        fetchWorkExperience();
+      }
+    } catch (error) {
+      console.error('Error deleting work experience:', error);
     }
   };
 
@@ -88,6 +100,16 @@ const WorkExperience = () => {
                         <p>{experience.startDate} - {experience.endDate}</p>
                         <p>Salary: {experience.currentSalary ? `$${experience.currentSalary}` : 'N/A'}</p>
                       </div>
+                      <div className="workexperience-actions">
+                      <FaEdit 
+                        className="edit-icon" 
+                        onClick={() => handleOpenModal(experience)} 
+                      />
+                      <FaTrash 
+                        className="delete-icon" 
+                        onClick={() => handleDelete(experience._id)} 
+                      />
+                    </div>
                     </div>
                   ))}
                 </>
@@ -102,11 +124,12 @@ const WorkExperience = () => {
           </div>
         </div>
       </div>
-      {modalType === 'workExperience' && (
+      {showModal && (
         <WorkExperienceModal
           show={showModal}
           handleClose={handleCloseModal}
           onSuccess={refreshWorkExperiences} 
+          initialData={initialData}
         />
       )}
     </div>

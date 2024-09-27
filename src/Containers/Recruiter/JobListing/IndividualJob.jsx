@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Container, Row, Col, Card, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Card, Badge,Button } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
 import { RecruiterAuth } from '../../../Context/RecruiterContext.jsx';
 import './IndividualJob.css';
 import ReNavigation from '../../../Components/ReNavigation.jsx';
-import { FaBriefcase, FaMapMarkerAlt, FaDollarSign, FaClock, FaGraduationCap, FaBuilding } from 'react-icons/fa';
+import { FaBriefcase, FaMapMarkerAlt, FaDollarSign, FaClock, FaGraduationCap, FaBuilding,FaCalendarAlt} from 'react-icons/fa';
 
 function IndividualJob() {
     const [job, setJob] = useState(null);
@@ -29,9 +29,20 @@ function IndividualJob() {
             fetchDetails();
     }, [id]);
 
+    const handleViewApplicants = () => {
+        navigate(`/recruiter-showApplications/${id}`); 
+    };
+
     if (!job) {
         return <div className="individual-job-loading">Loading...</div>;
     }
+
+    const formatDate = (dateString) => {
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-GB', options);
+    };
+
+    const formattedExpiryDate = formatDate(job.expiryDate);
 
     return (
         <>
@@ -67,6 +78,13 @@ function IndividualJob() {
                                         <span><FaBriefcase /> {job.employmentType}</span>
                                         <span><FaDollarSign /> ${job.minPrice} - ${job.maxPrice}</span>
                                     </div>
+                                </Col>
+                            </Row>
+                            <Row className="mt-3">
+                                <Col md={8}>
+                                    <Button variant="secondary" className="individual-job-view-applicants-btn" onClick={handleViewApplicants}>
+                                        View Applicants
+                                    </Button>
                                 </Col>
                             </Row>
                         </Card.Body>
@@ -114,6 +132,8 @@ function IndividualJob() {
                                         <li><FaDollarSign /> Salary: ${job.minPrice} - ${job.maxPrice}</li>
                                         <li><FaClock /> Experience: {job.yearsOfExperience} years</li>
                                         <li><FaGraduationCap /> Education: {job.education}</li>
+                                        <li><FaCalendarAlt /> Posted On: {job.jobPostedOn}</li> 
+                                        <li><FaCalendarAlt/>Expiry Date: {formattedExpiryDate}</li>
                                     </ul>
                                 </Card.Body>
                             </Card>

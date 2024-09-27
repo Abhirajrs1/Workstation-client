@@ -50,6 +50,8 @@
   .report-job-modal .btn-primary {
     background-color: #085ff7;
     border-color: #085ff7;
+    width: 200px;
+    margin-left: 130px;
   }
   
   .report-job-modal .btn-primary:hover {
