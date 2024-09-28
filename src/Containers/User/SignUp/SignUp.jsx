@@ -15,9 +15,6 @@ function SignUp() {
     const [confirmPassword,setConfirmPassword]=useState("")
     const [errors,setErrors]=useState({})
     const {user}=useContext(AuthContext)
-
-
-
     const navigate=useNavigate()
 
   useEffect(()=>{
@@ -111,7 +108,7 @@ function SignUp() {
               placeholder="Username"
               autoComplete="off"
               value={username}
-              onChange={(e) => setUsername(e.target.value.replace(/[^a-zA-Z]/g, ''))}
+              onChange={(e) => setUsername(e.target.value.replace(/[^a-zA-Z.]/g, ''))}
             />
             {errors.username && <div className="invalid-feedback mb-2">{errors.username}</div>}
             <input

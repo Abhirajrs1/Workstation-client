@@ -130,7 +130,7 @@ function RecruiterSignup() {  // Renamed the component
                             placeholder="Recruiter name"
                             autoComplete="off"
                             value={recruitername}
-                            onChange={(e) => setRecruitername(e.target.value.replace(/[^a-zA-Z]/g, ''))}
+                            onChange={(e) => setRecruitername(e.target.value.replace(/[^a-zA-Z.]/g, ''))}
                         />
                         {errors.recruitername && <div className="invalid-feedback mb-2">{errors.recruitername}</div>}
                         <input

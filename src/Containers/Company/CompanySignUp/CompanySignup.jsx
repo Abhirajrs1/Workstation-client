@@ -114,7 +114,7 @@ function CompanySignup() {
                             placeholder="Company Name"
                             autoComplete="off"
                             value={companyName}
-                            onChange={(e) => setCompanyName(e.target.value.replace(/[^a-zA-Z]/g, ''))}
+                            onChange={(e) => setCompanyName(e.target.value.replace(/[^a-zA-Z.]/g, ''))}
                         />
                         {errors.companyName && <div className="invalid-feedback mb-2">{errors.companyName}</div>}
                         <input
