@@ -162,7 +162,17 @@ function Home() {
   };
 
   const handleBackClick = () => {
-    window.location.reload()
+    setSearchTerm('');
+    setSelectedCategory('');
+    setSelectedLocation('');
+    setSelectedPriceRange('');
+    setFilteredJobs(jobs);
+    if (jobs.length > 0) {
+      setSelectedJob(jobs[0]);
+    } else {
+      setSelectedJob(null);
+    }
+
   };
 
   const handleReportJob = () => {
