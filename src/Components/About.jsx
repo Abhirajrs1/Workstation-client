@@ -1,8 +1,8 @@
 import React from 'react';
 import './About.css';
-import about1Image from '../Assets/about1.jpg'
-import about2Image from '../Assets/about2.jpg'
-import about3Image from '../Assets/about3.jpg'
+import about1Image from '../assets/about1.jpg'
+import about2Image from '../assets/about2.jpg'
+import about3Image from '../assets/about3.jpg'
 import Navigation from './Navigation';
 
 function About() {

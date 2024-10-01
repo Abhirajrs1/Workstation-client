@@ -4,17 +4,12 @@ import SideNav from '../../../Components/SideNav'
 import './RecruiterHome.css'
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { RecruiterAuth } from '../../../Context/RecruiterContext';
-import employee from '../../../Assets/employee.jpg'
+import employee from '../../../assets/employee.jpg'
 import { useNavigate } from 'react-router-dom';
 
 function RecruiterHome() {
     const navigate=useNavigate()
     const {recruiter,setRecruiter,loading,Authenticated}=useContext(RecruiterAuth)
-
-    // useEffect(()=>{
-    //   if(!Authenticated&&!loading||!recruiter)
-    //     navigate('/recruiter-login')
-    // },[Authenticated,loading,recruiter,navigate])
 
     if (loading) {
         return <div>Loading...</div>;

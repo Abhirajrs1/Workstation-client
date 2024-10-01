@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate,Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './ForgotPassword.css'; 
-import logo from '../../../Assets/logo3.png'
+import logo from '../../../assets/logo3.png'
 import axiosInstance from '../../../Services/Interceptor/candidateInterceptor.js';
 
 function ForgotPassword() {

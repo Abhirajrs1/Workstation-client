@@ -1,11 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
 import axiosInstance from '../../../Services/Interceptor/companyInterceptor.js';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { validateCompanySignupForm } from '../../../Utilis/helper.js';
 import { CompanyAuth } from '../../../Context/CompanyContext.jsx';
-import logo from '../../../Assets/logo2.png';
+import logo from '../../../assets/logo2.png';
 import './CompanySignup.css';
 
 function CompanySignup() {

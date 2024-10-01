@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import logo from '../../../Assets/logo2.png'
-import backgroundImage from '../../../Assets/front.jpeg'
+import logo from '../../../assets/logo2.png'
+import backgroundImage from '../../../assets/front.jpeg'
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateLoginForm } from '../../../Utilis/helper.js';

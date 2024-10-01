@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-// import logo from '../../../Assets/logo2.png';
+import logo from '../../../assets/logo2.png';
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateSignupForm } from '../../../Utilis/helper.js';
@@ -81,7 +81,7 @@ function SignUp() {
         <div className="signup-container d-flex align-items-center justify-content-center ">
       <div className="d-flex">
         <div className="banner p-4 d-flex flex-column align-items-center justify-content-center">
-          <img alt="Logo" width="300" className="mb-3" />
+          <img alt="Logo" src={logo} width="300" className="mb-3" />
         </div>
         <div className="form p-4 bg-white d-flex flex-column align-items-center justify-content-center">
             <div className='link'>

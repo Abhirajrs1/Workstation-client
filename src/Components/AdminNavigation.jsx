@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { FaQuestionCircle, FaBell, FaEnvelope, FaCaretDown, FaLaptopCode, FaHome, FaSignOutAlt } from 'react-icons/fa';
-import logo from '../Assets/logo2.png';
+import logo from '../assets/logo2.png';
 import { AdminAuth } from '../Context/AdminContext';
 import './AdminNavigation.css'
 function AdminNavigation() {
