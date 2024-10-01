@@ -1,19 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200..1000&display=swap');
 
-.recruiterlogin-container {
+.adminlogin-container {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
   min-width: 100%;
-  background: url("../../../Assets/front.jpeg") no-repeat center center;
+  background: url("../../../Assets/company.jpg") no-repeat center center;
   background-size: cover; 
   font-family: 'Mulish', sans-serif;    
   backdrop-filter: blur(7px);
 }
 
+.adminlogin-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(7px);
+}
+
 .banner {
-  position: relative; 
+  position: relative;
   border-radius: 10px 0 0 10px;
   padding: 40px;
   display: flex;
@@ -21,28 +32,12 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-}
-
-.banner::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* background: rgba(0, 0, 0, 0.5);  */
-  border-radius: 10px 0 0 10px; /* Match the border-radius */
-  z-index: 1; /* Place the overlay below the content */
-}
-
-.banner > * {
-  position: relative; /* Ensure the content is above the overlay */
   z-index: 2;
 }
 
 .banner img {
   margin-bottom: 20px;
-  max-width: 100%; 
+  max-width: 100%;
 }
 
 .form {
@@ -53,7 +48,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex: 1; 
+  flex: 1;
+  z-index: 2;
 }
 
 .form h2 {
@@ -62,7 +58,7 @@
 
 .form img {
   height: 70px;
-  width: 70px; 
+  width: 70px;
 }
 
 .form form {
@@ -90,7 +86,7 @@
 }
 
 .invalid-feedback {
-  display: block; 
+  display: block;
   color: red;
 }
 

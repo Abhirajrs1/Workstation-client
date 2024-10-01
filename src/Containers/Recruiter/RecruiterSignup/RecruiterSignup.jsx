@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import logo from '../../../Assets/logo2.png';
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,7 +7,7 @@ import './RecruiterSignup.css';
 import { RecruiterAuth } from '../../../Context/RecruiterContext.jsx';
 import axiosInstance from '../../../Services/Interceptor/recruiterInterceptor.js';
 
-function RecruiterSignup() {  // Renamed the component
+function RecruiterSignup() {  
     const [recruitername, setRecruitername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

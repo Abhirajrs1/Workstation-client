@@ -5,7 +5,6 @@ import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateLoginForm } from '../../../Utilis/helper.js';
 import { AuthContext } from '../../../Context/UserContext.jsx';
-import google from '../../../Assets/google.jpg'
 import { FaGoogle } from 'react-icons/fa';
 import './Login.css';
 
