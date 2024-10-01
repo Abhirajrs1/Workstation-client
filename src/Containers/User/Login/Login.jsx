@@ -52,7 +52,7 @@ function Login() {
     }
   };
   const handleGoogle=()=>{
-    window.open(`http://localhost:3000/auth/google/callback`, "_self"); 
+    window.open(`https://api.workstation.today/auth/google/callback`, "_self"); 
    }
 
   return (
