@@ -126,7 +126,7 @@ function UserContext({children}) {
            }
            const handleGoogleCallback = async () => {
             try {
-              const response = await axios.get('http://localhost:3000/auth/google/callback');
+              const response = await axiosInstance.get('/auth/google/callback');
               if (response.data.success) {
                 setUser(response.data.user);
                 localStorage.setItem('token', response.data.token);
