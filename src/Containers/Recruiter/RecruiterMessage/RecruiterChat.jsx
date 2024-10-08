@@ -92,7 +92,7 @@ function RecruiterChat() {
   };
 
   useEffect(() => {
-    socket.current = io("http://localhost:8800");
+    socket.current = io("https://socket.workstation.today");
     socket.current.on("connect", () => {
       socket.current.emit("new-user-add", recruiterId);
     });
