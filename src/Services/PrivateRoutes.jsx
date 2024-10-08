@@ -3,22 +3,22 @@ import Cookies from 'js-cookie'
 import { Navigate, Outlet } from 'react-router-dom';
 
 function PrivateRoutes() {
-  const Cookie = Cookies.get("accessToken");
-  return Cookie ? <Outlet/> : <Navigate to='/employee-login'/>
+  const token=localStorage.getItem('token')
+  return token ? <Outlet/> : <Navigate to='/employee-login'/>
 }
 export default PrivateRoutes
 
 export function RecruiterPrivateRoutes() {
-    const Cookie = Cookies.get("recruiteraccessToken");
-    return Cookie ? <Outlet/> : <Navigate to='/recruiter-login'/>
+    const recruiterToken=localStorage.getItem('recruitertoken')
+    return recruiterToken ? <Outlet/> : <Navigate to='/recruiter-login'/>
   }
   
   export function AdminPrivateRoutes() {
-    const Cookie = Cookies.get("adminaccessToken");
-    return Cookie ? <Outlet/> : <Navigate to='/admin-login'/>
+    const adminToken = localStorage.getItem('admintoken')
+    return adminToken ? <Outlet/> : <Navigate to='/admin-login'/>
   }
 
   export function CompanyPrivateRoutes() {
-    const Cookie = Cookies.get("companyaccessToken");
-    return Cookie ? <Outlet/> : <Navigate to='/company-login'/>
+    const companyToken = localStorage.getItem('companytoken')
+    return companyToken ? <Outlet/> : <Navigate to='/company-login'/>
   }
