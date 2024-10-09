@@ -56,6 +56,9 @@ function AdminLogin() {
     backgroundPosition: 'center center',
     backgroundSize: 'cover',
     position: 'relative',
+    width: '100%',
+    height: '100%',
+    minHeight: '100vh',
   };
   
   const overlayStyle = {
@@ -68,7 +71,7 @@ function AdminLogin() {
   };
 
   return (
-    <div className="adminlogin-container d-flex align-items-center justify-content-center "  style={containerStyle}>
+    <div className="adminlogin-container d-flex align-items-center justify-content-center w-100 h-100" style={containerStyle}>
         <div style={overlayStyle}></div>
       <div className="d-flex" style={{ position: 'relative', zIndex: 2 }}>
         <div className="banner p-4 d-flex flex-column align-items-center justify-content-center">
