@@ -105,9 +105,9 @@ function AdminLogin() {
               onChange={(e) => setPassword(e.target.value)}
             />
             {errors.password && <div className="invalid-feedback ">{errors.password}</div>}
-            {/* <button type="submit" className="btn btn-primary mb-3 w-100">
+            <button type="submit" className="btn btn-primary mb-3 w-100">
               Sign In
-            </button> */}
+            </button>
           </form>
         </div>
       </div>
